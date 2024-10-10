@@ -26,19 +26,27 @@ jobs:
 
     - name: Check Python syntax
       run: |
-        find . -name "*.py" -exec sh -c 'python -m py_compile {} && exit $?' \;
+        find . -name "*.py" -print0 | while IFS= read -r -d '' file; do
+          python -m py_compile "$file" || exit 1
+        done
 
     - name: Run Python tests
       run: |
-        find . -type d -name "python" -exec sh -c 'cd "$0" && python -m unittest discover && exit $?' {} \;
+        find . -type d -name "python" -print0 | while IFS= read -r -d '' dir; do
+          cd "$dir" && python -m unittest discover || exit 1
+        done
 
     - name: Install C++ dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
 
     - name: Check C++ syntax
       run: |
-        find . -name "*.cpp" -exec sh -c 'g++ -fsyntax-only -std=c++11 -o /dev/null -S "$0" && exit $?' {} \;
+        find . -name "*.cpp" -print0 | while IFS= read -r -d '' file; do
+          g++ -fsyntax-only -std=c++11 -o /dev/null -S "$file" || exit 1
+        done
 
     - name: Build and run C++ tests
       run: |
-        find . -type d -name "cpp" -exec sh -c 'cd "$0" && mkdir -p build && cd build && cmake .. && make && ./mytests && exit $?' {} \;
+        find . -type d -name "cpp" -print0 | while IFS= read -r -d '' dir; do
+          cd "$dir" && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
+        done
