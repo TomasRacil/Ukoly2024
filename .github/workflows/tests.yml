@@ -1,0 +1,36 @@
+name: C++ and Python Tests
+
+on:
+  push:
+    branches-ignore: [ "main" ] # Run on all branches EXCEPT main
+  pull_request:
+    branches-ignore: [ "main" ] # Run on all branches EXCEPT main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Python dependencies
+      run: python -m pip install --upgrade pip
+
+    - name: Check Python syntax
+        run: |
+          find . -name "*.py" -exec python -m py_compile {} \;
+
+    - name: Run Python tests
+      run: |
+        find . -type d -name "python" -exec sh -c 'cd "$0" && python -m unittest discover' {} \;
+
+    - name: Install C++ dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
+
+    - name: Check C++ syntax
+      run: |
+        find . -name "*.cpp" -exec sh -c 'g++ -fsyntax-only -std=c++11 -o /dev/null -S "$0" || exit 1' {} \;
+
+    - name: Build and run C++ tests
+      run: |
+        find . -type d -name "cpp" -exec sh -c 'cd "$0" && mkdir -p build && cd build && cmake .. && make && mytest' {} \; 

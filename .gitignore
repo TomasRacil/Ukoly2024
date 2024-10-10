@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache
 
 # Ignorování souborů specifických pro C++
 *.o
@@ -45,3 +46,7 @@ __pycache__/
 # Ignorování dalších obecných souborů a adresářů
 .DS_Store
 Thumbs.db
+
+TEST
+build
+*.cmake
