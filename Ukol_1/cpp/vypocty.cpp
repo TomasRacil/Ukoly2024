@@ -1,3 +1,4 @@
+// #include "vypocty.h"
 #include <iostream>
 #include <vector>
 
@@ -25,6 +26,7 @@ double median(const std::vector<int> &cisla)
     return 0;
 }
 
+#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
     std::cout << "Zadejte seznam čísel oddělených čárkou: ";
@@ -41,3 +43,4 @@ int main()
 
     return 0;
 }
+#endif // __TEST__

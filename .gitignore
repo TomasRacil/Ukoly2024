@@ -45,3 +45,7 @@ __pycache__/
 # Ignorování dalších obecných souborů a adresářů
 .DS_Store
 Thumbs.db
+
+TEST
+build
+*.cmake
