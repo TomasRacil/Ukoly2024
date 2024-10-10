@@ -2,9 +2,17 @@ name: C++ and Python Tests
 
 on:
   push:
-    branches: [ "!main" ] # Run on all branches EXCEPT main
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!main'   # excludes master
   pull_request:
-    branches: [ "!main" ] # Run on all branches EXCEPT main
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!main'   # excludes master
 
 jobs:
   build:
