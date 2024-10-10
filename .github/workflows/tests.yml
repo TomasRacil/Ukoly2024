@@ -2,9 +2,9 @@ name: C++ and Python Tests
 
 on:
   push:
-    branches-ignore: [ "main" ] # Run on all branches EXCEPT main
+    branches: [ "!main" ] # Run on all branches EXCEPT main
   pull_request:
-    branches-ignore: [ "main" ] # Run on all branches EXCEPT main
+    branches: [ "!main" ] # Run on all branches EXCEPT main
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
 
     - name: Check Python syntax
       run: |
-        find . -name "*.py" -exec python -m py_compile && exit $? {} \;
+        find . -name "*.py" -exec sh -c 'python -m py_compile {} && exit $?' \;
 
     - name: Run Python tests
       run: |
@@ -33,4 +33,4 @@ jobs:
 
     - name: Build and run C++ tests
       run: |
-        find . -type d -name "cpp" -exec sh -c 'cd "$0" && mkdir -p build && cd build && cmake .. && make && ./mytests; && exit $?' {} \;'
+        find . -type d -name "cpp" -exec sh -c 'cd "$0" && mkdir -p build && cd build && cmake .. && make && ./mytests && exit $?' {} \;
