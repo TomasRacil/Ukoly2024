@@ -19,6 +19,10 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
+    if len(cisla) == 0: return 0
+    soucin = 1
+    for cislo in cisla: soucin*=cislo
+    return soucin
     pass  # TODO: Implementujte funkci
 
 
