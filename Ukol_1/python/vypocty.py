@@ -31,7 +31,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass  # TODO: Implementujte funkci
+    pass
 
 
 def median(cisla: list[int]) -> float:
