@@ -6,7 +6,7 @@
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
   // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+  return "ahoj";
 }
 
 // Funkce pro Caesarovu šifru
