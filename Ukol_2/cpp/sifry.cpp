@@ -1,3 +1,4 @@
+#include <cctype>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -5,38 +6,65 @@
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
-  // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+    std::ifstream soubor(jmeno_souboru, std::ios::in | std::ios::binary);
+    if (soubor)
+    {
+        std::string obsah((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
+        soubor.close();
+        return obsah;
+    }
+    else
+    {
+        std::cerr << "Soubor " << jmeno_souboru << " se nepodarilo otevrit." << std::endl;
+        return "";
+    }
 }
 
 // Funkce pro Caesarovu šifru
 std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
-  // Implementace Caesarovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+    std::string result = text;
+    for (std::size_t i = 0; i != text.size(); ++i)
+    {
+        if (!std::isalpha(text[i])) continue;
+
+        char zaklad = std::isupper(text[i]) ? 'A' : 'a';
+        result[i] = (text[i] - zaklad + (sifrovat ? posun : -posun) + 26) % 26 + zaklad;
+    }
+    return result;
 }
 
 // Funkce pro Vigenerovu šifru
 std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  // Implementace Vigenerovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+    // Implementace Vigenerovy šifry
+    // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
+    std::string result = text;
+    for (std::size_t i = 0; i != text.size(); ++i)
+    {
+        result[i] += (sifrovat ? 1 : -1) * (klic[i % klic.size()] - 'a');
+    }
+    return result;
 }
 
 // Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  // Implementace XOR šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+    if (klic.empty()) return "";
+    // sifrovani a desifrovani je stejny
+    std::string result = text;
+    for (size_t i = 0; i < text.size(); ++i)
+        result[i] ^= klic[i % klic.size()];
+    return result;
 }
 
 // Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
   // Implementace funkce pro uložení řetězce do souboru
+  std::ofstream soubor(jmeno_souboru, std::ios::out | std::ios::binary);
+  soubor << obsah;
+  soubor.close();
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
