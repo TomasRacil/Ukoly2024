@@ -2,8 +2,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-#include <locale>
-#include <codecvt>
+
 
 // Funkce pro otevření souboru
 string otevri_soubor(const string& jmeno_souboru)
@@ -64,8 +63,6 @@ string vigener_sifra(const string& text, const string& klic, bool sifrovat)
 			klicIndex = (klicIndex + 1) % klicDelka;
 		}
 	}
-
-
 	return vysledek;
 }
 
@@ -120,9 +117,9 @@ int main()
 
 	// Šifrování textu pomocí XOR šifry
 	string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
-	cout << "len: " << vstupni_text.size() << endl;
+	//cout << "len: " << vstupni_text.size() << endl; hledal jsem chybu
 	cout << "Xor sifra: " << sifrovany_text_xor << endl;
-	cout << "Xor sifra len: " << sifrovany_text_xor.size() << endl;
+	//cout << "Xor sifra len: " << sifrovany_text_xor.size() << endl; hledal jsem chybu
 
 	// Uložení šifrovaných textů do souborů
 	uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
