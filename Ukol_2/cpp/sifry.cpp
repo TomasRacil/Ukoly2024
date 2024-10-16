@@ -86,7 +86,6 @@ void uloz_do_souboru(const string& jmeno_souboru, const string& obsah)
 	if (!vystupni_soubor)
 	{
 		cout << "Nemohu otevrit soubor: " << jmeno_souboru << endl;
-		return;
 	}
 	vystupni_soubor << obsah;
 }
