@@ -1,4 +1,4 @@
-/*
+
 #include "gtest/gtest.h"
 #include "sifry.cpp" // Předpokládám, že kód je v souboru vypocty.cpp
 
@@ -71,4 +71,3 @@ ASSERT_EQ(obsah_souboru, testovaci_text);
 // Vyčištění - odstranění testovacího souboru
 remove(jmeno_souboru.c_str());
 }
-*/
