@@ -62,7 +62,19 @@ void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 int main()
 {
   // Načtení vstupního souboru
-  std::string vstupni_text = otevri_soubor("vstup.txt");
+  string vstupni_text = otevri_soubor("vstup.txt");
+
+  if(!vstupni_text.empty()) {
+    cout << "Obsah souboru:" << endl;
+    cout << vstupni_text << endl;
+  }
+  else {
+    cout << "Soubor je prazdny" << endl;
+
+    return 0;
+  }
+  
+  
 
   // Šifrování textu pomocí Caesarovy šifry
   std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
