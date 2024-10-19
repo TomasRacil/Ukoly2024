@@ -9,8 +9,9 @@ string otevri_soubor(const string &jmeno_souboru)
 {
   ifstream soubor(jmeno_souboru);
   string obsah;
+  strig radek;
   if (soubor.is_open()) {
-    string radek;
+    
     while (getline(soubor, radek)) {
       obsah += radek + "\n";
     }
@@ -25,11 +26,17 @@ string caesar_sifra(const string &text, int posun, bool sifrovat)
 {
   string upraveny_text = text;
   posun = sifrovat ? posun : -posun;
-
+  
+  bool je_pismeno(char c) {
+  return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');}
+  
+  bool je_velke_pismeno(char c){
+  return c >= 'A' && c <= 'Z';
+}
   
   for (char &c : upraveny_text) {
-    if(isalpha(c)):
-      char zacatek_abecedy = isupper(c) ? 'A' : 'a';
+    if(je_pismeno(c)) {
+      char zacatek_abecedy = je_velke_pismenno(c) ? 'A' : 'a';
       c = zacatek_abecedy + (c - zacatek_abecedy + posun + 26) % 26;
   }
 }
@@ -73,11 +80,12 @@ int main()
 
     return 0;
   }
-  
-  
+
 
   // Šifrování textu pomocí Caesarovy šifry
-  std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
+  string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
+  cout << "Zasifrovany text:" << endl;
+  
   std::cout << sifrovany_text_caesar << std::endl;
 
   // Šifrování textu pomocí Vigenerovy šifry
