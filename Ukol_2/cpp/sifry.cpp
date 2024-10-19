@@ -2,19 +2,38 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 // Funkce pro otevření souboru
-std::string otevri_soubor(const std::string &jmeno_souboru)
+string otevri_soubor(const string &jmeno_souboru)
 {
-  // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+  ifstream soubor(jmeno_souboru);
+  string obsah;
+  if (soubor.is_open()) {
+    string radek;
+    while (getline(soubor, radek)) {
+      obsah += radek + "\n";
+    }
+    soubor.close();
+  }
+  
+  return obsah;
 }
 
 // Funkce pro Caesarovu šifru
-std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
+string caesar_sifra(const string &text, int posun, bool sifrovat)
 {
-  // Implementace Caesarovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  string upraveny_text = text;
+  posun = sifrovat ? posun : -posun;
+
+  
+  for (char &c : upraveny_text) {
+    if(isalpha(c)):
+      char zacatek_abecedy = isupper(c) ? 'A' : 'a';
+      c = zacatek_abecedy + (c - zacatek_abecedy + posun + 26) % 26;
+  }
+}
+return upraveny_text;
 }
 
 // Funkce pro Vigenerovu šifru
