@@ -71,22 +71,12 @@ int main()
   // Načtení vstupního souboru
   string vstupni_text = otevri_soubor("vstup.txt");
 
-  if(!vstupni_text.empty()) {
-    cout << "Obsah souboru:" << endl;
-    cout << vstupni_text << endl;
-  }
-  else {
-    cout << "Soubor je prazdny" << endl;
-
-    return 0;
-  }
-
 
   // Šifrování textu pomocí Caesarovy šifry
   string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
-  cout << "Zasifrovany text:" << endl;
-  
   std::cout << sifrovany_text_caesar << std::endl;
+  
+
 
   // Šifrování textu pomocí Vigenerovy šifry
   std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
