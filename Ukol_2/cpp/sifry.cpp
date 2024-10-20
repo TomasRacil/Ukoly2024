@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <filesystem>
+
 
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru) {
@@ -11,7 +11,6 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
     //pokud soubor neexistuje
     if (!soubor) {
         std::cerr << "Chyba: Soubor neexistuje " << jmeno_souboru << std::endl;
-        std::cerr << "Aktuální pracovní adresář: " << std::filesystem::current_path() << std::endl;
         //vrácení prázdného řetězce
         return "";
     }
@@ -21,8 +20,8 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
         //vrácení prázdného řetězce
         return "";
     }
-    //přečtení obsahu souboru
-    std::string obsah((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
+    //přečtení obsahu souboru, označí si začátek a konec (konec je ) souboru a poté si obsah souboru uloží do proměnné obsah
+    std::string obsah = std::string((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
     //vrácení obsahu souboru
     return obsah;
 }
