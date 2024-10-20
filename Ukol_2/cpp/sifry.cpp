@@ -20,7 +20,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
         //vrácení prázdného řetězce
         return "";
     }
-    //přečtení obsahu souboru, označí si začátek a konec (konec je ) souboru a poté si obsah souboru uloží do proměnné obsah
+    //přečtení obsahu souboru, označí si začátek a konec souboru a poté si obsah souboru uloží do proměnné obsah
     std::string obsah = std::string((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
     //vrácení obsahu souboru
     return obsah;
