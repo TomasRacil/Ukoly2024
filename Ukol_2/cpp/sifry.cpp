@@ -25,7 +25,7 @@ string otevri_soubor(const string &jmeno_souboru)
 // Funkce pro Caesarovu šifru
 string caesar_sifra(const string &text, int posun, bool sifrovat)
 {
-  string upraveny_text = text;
+  string vysledek = "";
   posun = sifrovat ? posun : -posun;
   
   bool je_pismeno(char c) {
@@ -47,7 +47,7 @@ return upraveny_text;
 // Funkce pro Vigenerovu šifru
 string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  string vysledek;
+  string vysledek = "";
   int klic_delka = klic.lenght();
   int text_delka = text.lenght();
 
@@ -75,15 +75,40 @@ string vigener_sifra(const std::string &text, const std::string &klic, bool sifr
 // Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
+  string vysledek = "";
+  int klic_delka = klic.lenght();
+  int text_delka = text.lenght();
+
+  for (int i = 0; i < text_delka; i++)
+    {
+      char znak = text[i];
+
+      znak = znak ^ klic[i % delka_klice];
+      vysledek += znak;
+
+      
   // Implementace XOR šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  return vysledek;
 }
 
 // Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
-  // Implementace funkce pro uložení řetězce do souboru
+  ofstream soubor(jmeno_souboru);
+  if(!soubor) {
+cerr << Nelze otevrit soubor << jmeno_souboru << endl;
+return;
+  }
+
+soubor << obsah;
+
+  if(soubor.bad){
+cerr << Chyba pri zapisu do souboru << jmeno_souboru << endl;
+  }
+
+    soubor.close();
+
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
