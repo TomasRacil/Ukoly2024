@@ -1,13 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+using namespace std;
 
 #include <string.h>
 #include <ctype.h>
 
-#define UTF_8_VALUES_CNT 256
+//arrays for storing alphabet characters
+char lowercase_alphabet[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+char uppercase_alphabet[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 
-using namespace std;
 
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru)
@@ -43,6 +45,12 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
   return input_txt;
 }
 
+
+char shift_char (char c, int shift) {
+  //shifts alphabet char by shift modulo alphabet and returns new char
+  return (isupper(c)) ? ((uppercase_alphabet[(26 + c - 'A' + shift) % 26])) : (lowercase_alphabet[(26 + c - 'a' + shift) % 26]);
+}
+
 // Funkce pro Caesarovu šifru
 std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
@@ -51,9 +59,12 @@ std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
   
   string output;
   for (int i=0;i<text.length();++i)
-    //add shift to text[i], modulo so it doesn't exceed range of UTF-8 encoding
     //ternary expression: (condition) ? (true) : (false)
-    (sifrovat) ? (output += (text[i] + posun) % UTF_8_VALUES_CNT) : (output += (text[i] - posun) % UTF_8_VALUES_CNT);
+    //shift alphabetic characters, skip others
+    if(isalpha(text[i]))
+      output += (sifrovat) ? (shift_char(text[i], posun)) : (shift_char(text[i], -1 * posun));
+    else
+      output += text[i];
   
   return output;
 }
@@ -64,10 +75,22 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
   // Implementace Vigenerovy šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
   string output;
-  for (int i=0;i<text.length();++i)
+  int posun;
+  for (int i=0;i<text.length();++i) {
     //same as Caesar's cipher, but shift of every character is determined by value of corresponding character in keyword
     //if key is too short, it repeats
-    (sifrovat) ? (output += ((text[i] + klic[i % klic.length()]) % UTF_8_VALUES_CNT)) : (output += (text[i] - klic[i % klic.length()]) % UTF_8_VALUES_CNT);
+    //shift alphabetic characters according to calculated shift, skip non_alphabetic characters
+    if(isalpha(text[i])) {
+      //calculate shift
+      posun = (isupper(klic[i % klic.length()])) ? (klic[i % klic.length()] - 'A') : (klic[i % klic.length()] - 'a');
+      //if sifrovat is false, shift is passed as negative
+      output += (sifrovat) ? (shift_char(text[i], posun)) : (shift_char(text[i], -1 * posun));
+    }
+    else {
+      output += text[i];
+    }
+  }
+    
   return output;
 }
 
@@ -78,7 +101,7 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
   string output;
 
-  //encoding and decoding is the same function, no need to use bool sifrovat
+  //encoding and decoding is the same function, bool sifrovat is meaningless
   for (int i=0;i<text.length();++i)
     //xor each character with corresponding character in key
     output += (text[i] ^ klic[i % klic.length()]);
