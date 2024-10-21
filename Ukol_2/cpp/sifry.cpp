@@ -42,7 +42,9 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
     std::string result = text;
     for (std::size_t i = 0; i != text.size(); ++i)
     {
-        result[i] += (sifrovat ? 1 : -1) * (klic[i % klic.size()] - 'a');
+        char zaklad = std::isupper(text[i]) ? 'A' : 'a';
+        int posun = klic[i % klic.size()] - zaklad;
+        result[i] = (text[i] - zaklad + (sifrovat ? posun : -posun) + 26) % 26 + zaklad;
     }
     return result;
 }
