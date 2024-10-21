@@ -9,17 +9,25 @@ using namespace std;
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
   // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  ifstream soubor_vstup(jmeno_souboru);
-  if (!soubor_vstup.is_open()) {
-    std::cerr << "Failed to open the file!" << std::endl;
-    return "Failed to open the file!";
-  }
+  std::ifstream vstupniSoubor(jmeno_souboru);
+    std::string obsah;
+    
+    // Ověření, zda byl soubor úspěšně otevřen
+    if (!vstupniSoubor.is_open()) {
+        std::cerr << "Nepodařilo se otevřít soubor: " << jmeno_souboru << std::endl;
+        return "";
+    }
 
-   std::stringstream buffer;
-    buffer << soubor_vstup.rdbuf(); // Read the file content into the stringstream
+    // Čtení obsahu souboru
+    std::string radek;
+    while (std::getline(vstupniSoubor, radek)) {
+        obsah += radek + "\n";  // Přidání řádku do obsahu
+    }
 
-    std::string fileContent = buffer.str();
-  return fileContent;
+    // Uzavření vstupního souboru
+    vstupniSoubor.close();
+
+    return obsah;  // Vrací obsah souboru jako jeden řetězec
 }
 
 // Funkce pro Caesarovu šifru
@@ -156,19 +164,19 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
   // Implementace funkce pro uložení řetězce do souboru
-  std::ofstream outFile(jmeno_souboru); // Otevření souboru pro zápis
-
-    // Zkontrolujeme, zda se soubor otevřel správně
-    if (!outFile) {
-        std::cerr << "Chyba při otevírání souboru: " << jmeno_souboru << std::endl;
+  std::ofstream vystupniSoubor(jmeno_souboru, std::ios::app); // Použití std::ios::app pro přidání textu na konec souboru
+    
+    // Ověření, zda byl soubor úspěšně otevřen
+    if (!vystupniSoubor.is_open()) {
+        std::cerr << "Nepodařilo se otevřít soubor: " << jmeno_souboru << std::endl;
         return;
     }
 
-    // Zapisujeme řetězec do souboru
-    outFile << obsah;
+    // Zápis textu do souboru
+    vystupniSoubor << obsah << std::endl;
 
-    // Zavřeme soubor
-    outFile.close();
+    // Uzavření výstupního souboru
+    vystupniSoubor.close();
     std::cout << "Data byla úspěšně uložena do souboru: " << jmeno_souboru << std::endl;
 }
 
