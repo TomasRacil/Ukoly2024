@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+// bal bal
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string& jmeno_souboru)
 {
