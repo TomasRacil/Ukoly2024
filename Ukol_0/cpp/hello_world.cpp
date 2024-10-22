@@ -1,10 +1,10 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
-
+// komentář
 std::string hello_world()
 {
-    return "";
+    return "Hello world!";
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
