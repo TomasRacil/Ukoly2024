@@ -1,7 +1,7 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
-
+// komentář
 std::string hello_world()
 {
     return "Hello world!";
