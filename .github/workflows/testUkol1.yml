@@ -1,4 +1,4 @@
-name: Python syntax check
+name: C++ and Python Ukol 1 Tests
 
 on:
   push:
@@ -6,22 +6,28 @@ on:
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
       - '**'        # matches every branch
+      - '!main'   # excludes master
   pull_request:
     branches:    
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
       - '**'        # matches every branch
+      - '!main'   # excludes master
 
 jobs:
-  python_syntax_check:
+  python_test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Install Python dependencies
       run: python -m pip install --upgrade pip
-    - name: Check Python syntax
-      run: |
-        find . -name "*.py" -print0 | while IFS= read -r -d '' file; do
-          python -m py_compile "$file" || exit 1
-        done
+    - name: Run Python tests
+      run: cd Ukol_1/python && python -m unittest discover || exit 1
+  cpp_test:
+    runs-on: ubuntu-latests
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install C++ dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
+    - name: Build and run C++ tests
+      run: cd Ukol_1/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1

@@ -1,4 +1,4 @@
-name: C++ and Python Tests
+name: C++ Syntax Tests
 
 on:
   push:
@@ -6,13 +6,11 @@ on:
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
       - '**'        # matches every branch
-      - '!main'   # excludes master
   pull_request:
     branches:    
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
       - '**'        # matches every branch
-      - '!main'   # excludes master
 
 jobs:
   cpp_syntax_check:
@@ -25,15 +23,4 @@ jobs:
       run: |
         find . -name "*.cpp" -print0 | while IFS= read -r -d '' file; do
           g++ -fsyntax-only -std=c++11 -o /dev/null -S "$file" || exit 1
-        done
-  cpp_tests:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Install C++ dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
-    - name: Build and run C++ tests
-      run: |
-        find . -type d -name "cpp" -print0 | while IFS= read -r -d '' dir; do
-          cd "$dir" && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
         done
