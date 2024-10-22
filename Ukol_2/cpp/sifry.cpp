@@ -41,19 +41,20 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
   */
 }
 
-// z charu na octal escape
+
 string charToOctalEscape(char ch) {
     stringstream ss;
     ss << "\\" << oct << setw(3) << setfill('0') << static_cast<int>(ch);
     return ss.str();
 }
-// z octal escape do charu
+
 string octalEscapeToChar(const string& octalStr) {
     string result;
     size_t i = 0;
 
     while (i < octalStr.length()) {
         if (octalStr[i] == '\\') {
+
             string octalValue = octalStr.substr(i + 1, 3);
             int asciiValue = stoi(octalValue, nullptr, 8);
 
@@ -62,6 +63,7 @@ string octalEscapeToChar(const string& octalStr) {
 
             i += 4;
         } else {
+
             result += octalStr[i];
             i++;
         }
@@ -75,9 +77,6 @@ string octalEscapeToChar(const string& octalStr) {
 // Funkce pro Caesarovu šifru
 std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
-  
-
-
 
   // Implementace Caesarovy šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
@@ -118,7 +117,6 @@ std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 // Funkce pro Vigenerovu šifru
 std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  
 
   string lowerCaseText = text;
   transform(lowerCaseText.begin(),lowerCaseText.end(), lowerCaseText.begin(), ::tolower);
@@ -186,10 +184,10 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
 
 
 
-
+// Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
-
+  // Implementace funkce pro uložení řetězce do souboru
 
   ofstream file(jmeno_souboru);
   if(!file.is_open()){
