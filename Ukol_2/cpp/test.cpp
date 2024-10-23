@@ -3,8 +3,8 @@
 
 TEST(SifrovaciAlgoritmyTest, OtevriSoubor)
 {
-    std::string ocekavany_obsah = "Toto je tajná zpráva!\n";
-    std::string obsah_souboru = otevri_soubor("vstup.txt");
+    std::string ocekavany_obsah = "Toto je tajna zprava!";
+    std::string obsah_souboru = otevri_soubor("../vstup.txt");
     ASSERT_EQ(obsah_souboru, ocekavany_obsah);
 }
 
@@ -19,41 +19,41 @@ TEST(SifrovaciAlgoritmyTest, CaesarSifra)
     std::string text = "ahoj";
     // Testy s různými posuny
     ASSERT_EQ(caesar_sifra(text, 1, true), "bipk");
-    ASSERT_EQ(caesar_sifra(text, 5, true), "eptl");
-    ASSERT_EQ(caesar_sifra(text, 25, true), "zgnr");
+    ASSERT_EQ(caesar_sifra(text, 5, true), "fmto");
+    ASSERT_EQ(caesar_sifra(text, 25, true), "zgni");
 
     // Testy dešifrování
     ASSERT_EQ(caesar_sifra("dkrm", 3, false), text);
-    ASSERT_EQ(caesar_sifra("eptl", 5, false), text);
-    ASSERT_EQ(caesar_sifra("zgnr", 25, false), text);
+    ASSERT_EQ(caesar_sifra("fmto", 5, false), text);
+    ASSERT_EQ(caesar_sifra("zgni", 25, false), text);
 }
 
 TEST(SifrovaciAlgoritmyTest, VigenerSifra)
 {
     std::string text = "ahoj";
     // Testy s různými klíči
-    ASSERT_EQ(vigener_sifra(text, "tajny", true), "kftm");
-    ASSERT_EQ(vigener_sifra(text, "heslo", true), "lbuq");
-    ASSERT_EQ(vigener_sifra(text, "klic", true), "ljub");
+    ASSERT_EQ(vigener_sifra(text, "tajny", true), "thxw");
+    ASSERT_EQ(vigener_sifra(text, "heslo", true), "hlgu");
+    ASSERT_EQ(vigener_sifra(text, "klic", true), "kswl");
 
     // Testy dešifrování
-    ASSERT_EQ(vigener_sifra("kftm", "tajny", false), text);
-    ASSERT_EQ(vigener_sifra("lbuq", "heslo", false), text);
-    ASSERT_EQ(vigener_sifra("ljub", "klic", false), text);
+    ASSERT_EQ(vigener_sifra("thxw", "tajny", false), text);
+    ASSERT_EQ(vigener_sifra("hlgu", "heslo", false), text);
+    ASSERT_EQ(vigener_sifra("kswl", "klic", false), text);
 }
 
 TEST(SifrovaciAlgoritmyTest, XORSifra)
 {
     std::string text = "ahoj";
     // Testy s různými klíči
-    ASSERT_EQ(xor_sifra(text, "tajny", true), "\x06\x1d\x1a\x0b");
-    ASSERT_EQ(xor_sifra(text, "heslo", true), "\x02\x1b\x16\x0d");
-    ASSERT_EQ(xor_sifra(text, "klic", true), "\x02\x1b\x16\x0d");
+    ASSERT_EQ(xor_sifra(text, "tajny", true), "\025\t\005\004");
+    ASSERT_EQ(xor_sifra(text, "heslo", true), "\t\r\034\006");
+    ASSERT_EQ(xor_sifra(text, "klic", true), "\n\004\006\t");
 
     // Testy dešifrování
-    ASSERT_EQ(xor_sifra("\x06\x1d\x1a\x0b", "tajny", false), text);
-    ASSERT_EQ(xor_sifra("\x02\x1b\x16\x0d", "heslo", false), text);
-    ASSERT_EQ(xor_sifra("\x02\x1b\x16\x0d", "klic", false), text);
+    ASSERT_EQ(xor_sifra("\025\t\005\004", "tajny", false), text);
+    ASSERT_EQ(xor_sifra("\t\r\034\006", "heslo", false), text);
+    ASSERT_EQ(xor_sifra("\n\004\006\t", "klic", false), text);
 }
 
 TEST(SifrovaciAlgoritmyTest, UlozDoSouboru)
