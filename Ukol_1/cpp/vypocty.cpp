@@ -1,46 +1,58 @@
-// #include "vypocty.h"
+
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
 
-int soucet(const std::vector<int> &cisla)
-{
-    // TODO: Implementujte funkci
-    return 0;
-}
-
-int soucin(const std::vector<int> &cisla)
-{
-    // TODO: Implementujte funkci
-    return 0;
-}
-
-double prumer(const std::vector<int> &cisla)
-{
-    // TODO: Implementujte funkci
-    return 0;
-}
-
-double median(const std::vector<int> &cisla)
-{
-    // TODO: Implementujte funkci
-    return 0;
-}
-
-#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
-    std::string vstup;
-    std::getline(std::cin, vstup);
+    int num;
+    string zero;
+    int soucet = 0;
+    int nasobeni = 1;
+    int pocet = 0;
+    double prumer = 0;
+    double median = 0;
+    cout << "Zadejte čísla: ";
+    vector <int> numbers;
+    
 
-    std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    while (true)
+    {
+        num = fgetc(stdin);
+        if (num == ',' || num == '\n' || num == EOF)
+        {
+            int cislo = atoi(zero.c_str());
+            soucet += cislo;
+            pocet++;
+            nasobeni *= cislo;
+            numbers.push_back(cislo);
+            zero = "";
+            if (num =='\n' || num == EOF)
+            {
+                break;
+            }
+        }
+        else
+            zero += num;
+    }
+        sort(numbers.begin(), numbers.end());
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+        if (pocet % 2 == 0)
+        {
+            median = ((double)numbers[pocet / 2] + numbers[pocet / 2 - 1]) / 2;
+        }
+        else
+        {
+            median = numbers[pocet / 2];
+        }
+        prumer = (double)soucet / pocet;
 
-    return 0;
+        cout << setprecision(3) << "  Soucet: " << soucet;
+        cout << "  Nasobek: " << nasobeni;
+        cout << "  Prumer: " << prumer;
+        cout << "  Median: " << median;
+        
+        return 0;
 }
-#endif // __TEST__
