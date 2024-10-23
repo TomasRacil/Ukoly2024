@@ -5,6 +5,7 @@
 std::string hello_world()
 {
     return "Hello world!";
+    return "";
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
