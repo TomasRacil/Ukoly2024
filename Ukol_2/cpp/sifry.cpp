@@ -88,29 +88,22 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
 // Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
     std::string vysledek;
+
     if (sifrovat) {
         for (size_t i = 0; i < text.length(); ++i) {
             unsigned char ctext = text[i];
             unsigned char cklic = klic[i % klic.length()];
-
+            
             unsigned char zasifrovanyChar = ctext ^ cklic;
-            vysledek += std::bitset<8>(zasifrovanyChar).to_string() + "  ";
+            vysledek += zasifrovanyChar;  
         }
     } else {
-        std::string binarniznak;
-        std::string desifrovanytext;
-        for (size_t i = 0; i < text.length(); i =i+10) {  // +10 protoze bity zabiraji 8 znaku +2 mezera
-            binarniznak = text.substr(i, 10);
-
-            std::bitset<8> bits(binarniznak);
-            desifrovanytext = desifrovanytext+char(bits.to_ulong()); //zpatky se prevede na ascii hodnotu
-        }
-        for (size_t i = 0; i < desifrovanytext.length(); ++i) {
-            unsigned char ctext = desifrovanytext[i];
+        for (size_t i = 0; i < text.length(); ++i) {
+            unsigned char ctext = text[i];
             unsigned char cklic = klic[i % klic.length()];
-
-            unsigned char czasifrovany = ctext ^ cklic;
-            vysledek += czasifrovany;
+            
+            unsigned char desifrovanyChar = ctext ^ cklic;
+            vysledek += desifrovanyChar; 
         }
     }
     return vysledek;    
