@@ -1,60 +1,46 @@
+
 def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
+    soucet = 0
+    for k in range(len(cisla)):
+        soucet += cisla[k]
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součet čísel.
-    """
-    pass
-
+    return soucet
 
 def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
+    nasobeni = 1
+    for k in range(len(cisla)):
+        nasobeni *= cisla[k]
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
-
+    return nasobeni
 
 def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
+    soucet = 1
+    pocet = len(cisla)
+    for k in range(pocet):
+        soucet += cisla[k]
+    prum = float(soucet/pocet)
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
+    return prum
 
 
 def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Medián čísel.
-    """
-    pass  # TODO: Implementujte funkci
+   delka = len(cisla)
+   cisla.sort()
+   if(delka % 2 == 0):
+       return (cisla[delka//2 - 1] + cisla[delka//2]) / 2
+   else:
+       return cisla[delka//2]
 
 
 def main():
-    """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
-    vstup = input("Zadejte seznam čísel oddělených čárkou: ")
+    """Na�te vstup od u�ivatele, zavol� funkce pro v�po�et a vyp�e v�sledky."""
+    vstup = input("Zadejte seznam ��sel odd�len�ch ��rkou: ")
     cisla = [int(cislo) for cislo in vstup.split(",")]
 
-    print("Součet:", soucet(cisla))
-    print("Součin:", soucin(cisla))
-    print("Průměrná hodnota:", prumer(cisla))
-    print("Medián:", median(cisla))
+    print("Sou�et:", soucet(cisla))
+    print("Sou�in:", soucin(cisla))
+    print("Pr�m�rn� hodnota:", prumer(cisla))
+    print("Medi�n:", median(cisla))
 
 
 if __name__ == "__main__":
