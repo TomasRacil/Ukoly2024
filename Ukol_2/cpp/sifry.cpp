@@ -15,7 +15,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
     std::string obsah;
     std::string radek;
     while (std::getline(soubor, radek)) {
-        obsah += radek + "\n";  // Přidáme každý řádek k celkovému obsahu
+        obsah += radek;
     }
 
     return obsah;
