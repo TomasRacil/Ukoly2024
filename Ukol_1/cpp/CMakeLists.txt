@@ -1,58 +1,25 @@
+cmake_minimum_required(VERSION 3.0)
+project(Ukol_1)
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iomanip>
-using namespace std;
 
-int main()
-{
-    int num;
-    string zero;
-    int soucet = 0;
-    int nasobeni = 1;
-    int pocet = 0;
-    double prumer = 0;
-    double median = 0;
-    cout << "Zadejte čísla: ";
-    vector <int> numbers;
-    
 
-    while (true)
-    {
-        num = fgetc(stdin);
-        if (num == ',' || num == '\n' || num == EOF)
-        {
-            int cislo = atoi(zero.c_str());
-            soucet += cislo;
-            pocet++;
-            nasobeni *= cislo;
-            numbers.push_back(cislo);
-            zero = "";
-            if (num =='\n' || num == EOF)
-            {
-                break;
-            }
-        }
-        else
-            zero += num;
-    }
-        sort(numbers.begin(), numbers.end());
+# Add your main executable
+add_executable(vypocty ${CMAKE_CURRENT_SOURCE_DIR}/vypocty.cpp)
 
-        if (pocet % 2 == 0)
-        {
-            median = ((double)numbers[pocet / 2] + numbers[pocet / 2 - 1]) / 2;
-        }
-        else
-        {
-            median = numbers[pocet / 2];
-        }
-        prumer = (double)soucet / pocet;
+# Set the build directory to be a subdirectory of the project directory
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 
-        cout << setprecision(3) << "  Soucet: " << soucet;
-        cout << "  Nasobek: " << nasobeni;
-        cout << "  Prumer: " << prumer;
-        cout << "  Median: " << median;
-        
-        return 0;
-}
+# Add your test executable
+add_executable(mytests ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
+
+# Najdi Google Test framework
+enable_testing()
+find_package(GTest REQUIRED)
+# Propoj test s Google Testem
+include_directories(${GTEST_INCLUDE_DIRS})
+target_link_libraries(mytests GTest::gtest_main pthread) 
+
+# Define __TEST__ for the test compilation
+target_compile_definitions(mytests PRIVATE __TEST__)
+
+add_test(NAME mytests COMMAND mytests)
