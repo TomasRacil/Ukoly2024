@@ -53,7 +53,10 @@
         "set": "cpp",
         "iomanip": "cpp",
         "cinttypes": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "chrono": "cpp",
+        "list": "cpp",
+        "ratio": "cpp"
     },
     "cmake.sourceDirectory": "/Users/josefkaspar/Racil/Ukoly2024-1/Ukol_2/cpp"
 }
