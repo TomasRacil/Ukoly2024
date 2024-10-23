@@ -1,3 +1,6 @@
+import math
+
+
 def soucet(cisla: list[int]) -> int:
     """Vypočítá součet čísel v seznamu.
 
@@ -7,7 +10,8 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
-    pass
+    return sum(cisla)
+
 
 
 def soucin(cisla: list[int]) -> int:
@@ -19,7 +23,7 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    return math.prod(cisla)
 
 
 def prumer(cisla: list[int]) -> float:
@@ -31,7 +35,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass
+    return sum(cisla) / len(cisla)
 
 
 def median(cisla: list[int]) -> float:
@@ -43,7 +47,12 @@ def median(cisla: list[int]) -> float:
     Returns:
       Medián čísel.
     """
-    pass  # TODO: Implementujte funkci
+    cisla.sort()
+    delka = len(cisla)
+    if delka % 2 == 0:
+        return (cisla[delka // 2 - 1] + cisla[delka // 2]) / 2
+    else:
+        return cisla[delka // 2]
 
 
 def main():
