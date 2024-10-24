@@ -58,7 +58,11 @@ def median(cisla: list[int]) -> float:
 def main():
     """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
-    cisla = [int(cislo) for cislo in vstup.split(",")]
+    cisla = [int(cislo) for cislo in vstup.split(",") if cislo.strip() != "" and cislo.strip().isdigit()]
+    if not cisla:
+        print("Nebyla zadána žádná čísla.")
+        return
+
 
     print("Součet:", soucet(cisla))
     print("Součin:", soucin(cisla))
