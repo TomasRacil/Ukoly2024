@@ -21,6 +21,9 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
     }
     //přečtení obsahu souboru, označí si začátek a konec (konec je ) souboru a poté si obsah souboru uloží do proměnné obsah
     std::string obsah = std::string((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
+     if(obsah.empty()){
+        std::cerr << "Chyba: Soubor je prázdný " << jmeno_souboru << std::endl;
+    }
     //vrácení obsahu souboru
     return obsah;
 }
