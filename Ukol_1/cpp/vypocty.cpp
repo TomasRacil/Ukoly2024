@@ -52,6 +52,11 @@ int main()
     while (std::getline(ss, temp, ',')) {
         cisla.push_back(std::stoi(temp));
     }
+    
+     if(cisla.size() == 0){
+        std::cout << "Nezadal jste zadne cislo." << std::endl;
+        return 1;
+    }
 
     std::cout << "Soucet: " << soucet(cisla) << std::endl;
     std::cout << "Soucin: " << soucin(cisla) << std::endl;
