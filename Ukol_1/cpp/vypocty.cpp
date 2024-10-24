@@ -49,6 +49,10 @@ int main()
     std::vector<int> cisla;
     std::stringstream ss(vstup);
     std::string temp;
+     if(vstup.find_first_not_of("0123456789,") != std::string::npos){
+        std::cout << "Nezadal jste cislo." << std::endl;
+        return 1;
+    }
     while (std::getline(ss, temp, ',')) {
         cisla.push_back(std::stoi(temp));
     }
