@@ -1,46 +1,71 @@
-// #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 int soucet(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sct = 0;
+    for (int i : cisla) {
+        sct += i;
+    }
+    return sct;
 }
 
 int soucin(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sc = 1;
+    for (int i : cisla) {
+        sc *= i;
+    }
+    return sc;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    double avg = 0;
+    for (int i : cisla) {
+        avg += i;
+    }
+    avg = avg / cisla.size();
+    return avg;
 }
 
 double median(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    double med = 0;
+    if (cisla.size() % 2 == 0) {
+        med = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2;
+    } else {
+        med = cisla[cisla.size() / 2];
+    }
+    return med;
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::cout << "Zadejte seznam cisel oddelených carkou: ";
     std::string vstup;
     std::getline(std::cin, vstup);
-
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    std::stringstream ss(vstup);
+    std::string temp;
+     if(vstup.find_first_not_of("0123456789,") != std::string::npos){
+        std::cout << "Nezadal jste cislo." << std::endl;
+        return 1;
+    }
+    while (std::getline(ss, temp, ',')) {
+        cisla.push_back(std::stoi(temp));
+    }
+    
+     if(cisla.size() == 0){
+        std::cout << "Nezadal jste zadne cislo." << std::endl;
+        return 1;
+    }
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+    std::cout << "Soucet: " << soucet(cisla) << std::endl;
+    std::cout << "Soucin: " << soucin(cisla) << std::endl;
+    std::cout << "Prumerna hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "Median: " << median(cisla) << std::endl;
 
     return 0;
 }
-#endif // __TEST__
