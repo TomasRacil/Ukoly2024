@@ -1,47 +1,115 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <bitset>
 
 // Funkce pro otevření souboru
-std::string otevri_soubor(const std::string &jmeno_souboru)
-{
-  // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+std::string otevri_soubor(const std::string &jmeno_souboru) {
+  std::ifstream soubor(jmeno_souboru);
+  if (!soubor.is_open()) {
+      std::cout << "Nejde otevřít soubor: " <<jmeno_souboru;
+      return "";
+  }
+
+  std::string data((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>()); //precte cely soubor a nacte vse do 'data' 
+
+
+  return data;
 }
 
+// Funkce pro ulozeni do souboru
+void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &data) {
+  std::ofstream soubor(jmeno_souboru);
+  if (!soubor.is_open()) {
+      std::cout <<"Nejde otevřít soubor: " << jmeno_souboru;
+      return;
+  }
+
+  soubor << data;
+}
+
+
 // Funkce pro Caesarovu šifru
-std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
-{
-  // Implementace Caesarovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+std::string caesar_sifra(const std::string &text, int posun, bool sifrovat) {
+  std::string slovo = text;
+  char pismeno[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+  char Vpismeno[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+  for (int i = 0; i < slovo.length(); i++) {
+      for (int j = 0; j < 26; j++) {
+          if(slovo[i] == pismeno[j]) {
+            if(sifrovat)
+                slovo[i] = (pismeno[(j + posun) % 26]);
+            else
+                slovo[i] =(pismeno[(j - posun + 26) % 26]);
+            break;
+          }
+          else if (slovo[i] == Vpismeno[j]){
+            if(sifrovat)
+              slovo[i]=Vpismeno[(j+posun) % 26];
+            else
+              slovo[i]=Vpismeno[(j-posun + 26)%26];
+            break;
+          }
+      }
+  }
+  return slovo;
 }
 
 // Funkce pro Vigenerovu šifru
-std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
-{
-  // Implementace Vigenerovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
+  std::string slovo = text;
+  int j = 0;
+  int delkaklice = klic.length();
+  for (int i = 0; i < slovo.length(); i++) {
+      char slova = slovo[i];
+      if (isalpha(slovo[i])) {
+          int x = klic[j % delkaklice] - 'a';
+          if (islower(slova)){
+            if(sifrovat)
+                slovo[i]=(slova -'a'+ x) % 26+'a';
+            else
+                slovo[i]=(slova-'a'-x +26)%26+'a';
+        }else{
+            if (sifrovat)
+                slovo[i]=(slova-'A'+x) % 26 + 'A';
+            else
+                slovo[i]=(slova-'A'-x+26) % 26 + 'A';
+        }
+          j++;
+      }
+      
+  }
+  return slovo; 
+
 }
+
+
 
 // Funkce pro XOR šifru
-std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
-{
-  // Implementace XOR šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
-}
+std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
+    std::string vysledek;
 
-// Funkce pro uložení řetězce do souboru
-void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
-{
-  // Implementace funkce pro uložení řetězce do souboru
+    if (sifrovat) {
+        for (size_t i = 0; i < text.length(); ++i) {
+            unsigned char ctext = text[i];
+            unsigned char cklic = klic[i % klic.length()];
+            
+            unsigned char zasifrovanyChar = ctext ^ cklic;
+            vysledek += zasifrovanyChar;  
+        }
+    } else {
+        for (size_t i = 0; i < text.length(); ++i) {
+            unsigned char ctext = text[i];
+            unsigned char cklic = klic[i % klic.length()];
+            
+            unsigned char desifrovanyChar = ctext ^ cklic;
+            vysledek += desifrovanyChar; 
+        }
+    }
+    return vysledek;    
 }
-
-#ifndef __TEST__ // Add this preprocessor guard
-int main()
-{
+#ifndef __TEST__  // Add this preprocessor guard
+int main() {
   // Načtení vstupního souboru
   std::string vstupni_text = otevri_soubor("vstup.txt");
 
@@ -69,4 +137,4 @@ int main()
 
   return 0;
 }
-#endif // __TEST__
+#endif  // __TEST__
