@@ -20,6 +20,9 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
+    if not cisla:  # Kontrola, zda je seznam prázdný
+        return 0
+
     soucin = 1
     for číslo in cisla:
         soucin *= číslo
