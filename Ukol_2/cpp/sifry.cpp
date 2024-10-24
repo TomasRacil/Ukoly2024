@@ -6,23 +6,16 @@ using namespace std;
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
-  string vstupni_text = "";
   // Implementace funkce pro otevření souboru a načtení jeho obsahu
   fstream myFile;
-  myFile.open(jmeno_souboru, ios::in);
+  myFile.open(jmeno_souboru, ios::in | ios::binary);
   if(myFile.is_open()) 
   {
-    string radek;
-    while(getline(myFile,radek)) 
-    {
-      vstupni_text += radek + "\n";
-    }
-    myFile.close();
-    return vstupni_text;
+    return {std::istreambuf_iterator<char>(myFile), std::istreambuf_iterator<char>()};
   }    
   else
   {
-    return "Soubor se nepodařilo otevřít";
+    return "";
   }
 
 }
@@ -169,7 +162,7 @@ void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
   // Implementace funkce pro uložení řetězce do souboru
   fstream myFile;
-  myFile.open(jmeno_souboru, ios::out);
+  myFile.open(jmeno_souboru, ios::out | ios::binary);
   if(myFile.is_open())
   {
     myFile << obsah;
