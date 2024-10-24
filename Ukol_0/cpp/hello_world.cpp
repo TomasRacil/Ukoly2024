@@ -4,6 +4,7 @@
 
 std::string hello_world()
 {
+    return "Hello world!";
     return "";
 }
 
