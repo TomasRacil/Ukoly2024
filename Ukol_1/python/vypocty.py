@@ -20,6 +20,7 @@ def soucin(cisla: list[int]) -> int:
       Součin čísel.
     """
     from functools import reduce
+    if len(cisla) == 0: return 0
     return reduce(lambda x, y: x * y, cisla, 1)
 
 
