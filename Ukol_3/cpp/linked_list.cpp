@@ -127,9 +127,11 @@ void deleteAtBeginning(Node **head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node **head)
 {
-    if ((*head)->next == nullptr)
+    if ((*head)->next == nullptr) {
         deleteAtBeginning(head); //list only has one node
-
+        return;
+    }
+    
     Node *second_last = *head;
 
     //find second last node
