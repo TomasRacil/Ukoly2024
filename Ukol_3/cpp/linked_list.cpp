@@ -61,6 +61,7 @@ void insertAtEnd(Node **head, const int data)
 {
     if (*head == nullptr) {
         insertAtBeginning(head, data); //list is empty, thus inserting at beginning is the same thing as inserting at the end
+        return;
     }
 
     //end points to last node in list
