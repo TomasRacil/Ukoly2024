@@ -269,7 +269,7 @@ int main()
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
-    deleteAtIndex(head, 0);
+    deleteAtIndex(head, 1);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
     return 0;
