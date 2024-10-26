@@ -13,7 +13,7 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
     Node *current = head;
     while(current != nullptr) {
-        os << current->data << " ";
+        os << current->data;
         current = current->next;
     }
     return os;
