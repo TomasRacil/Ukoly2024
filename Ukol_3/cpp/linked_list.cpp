@@ -141,23 +141,27 @@ void deleteAtEnd(Node **head)
 }
 
 // Funkce pro smazani uzlu na indexu
-//Had to edit the function to take **head instead *head as an argument, because passing by value only lead to segfault when index was 0
-void deleteAtIndex(Node **head, int index)
+//The function should take **head instead *head as an argument, because passing by value only to segfault when index is 0
+void deleteAtIndex(Node *head, int index)
 {
-    if (*head == nullptr)
+    if (head == nullptr)
         return; //list is empty already
     if (index < 0) {
         cerr << "Error: Index out of scope!\n";
-        deleteList(head);
+        deleteList(&head);
         exit(1);
     }
-    if (index == 0) {
-        deleteAtBeginning(head);
-        return;
-    }
+    //if (index == 0) {
+        /*
+        IMPORTANT:
+        This condidition is impossible to handle because of bad argument of this function.
+        If pointer to first node is only passed by value and the first node is deleted, new linking of the pointer doesn't transfer to main()
+        and further dereference of the pointer leads to segmentation fault.
+        */
+    //}
 
     Node *previous;
-    Node *node = *head;
+    Node *node = head;
     for (int i=0;i<index;++i) {
         if (node->next == nullptr)
             return; //index out of scope
@@ -265,7 +269,7 @@ int main()
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
-    deleteAtIndex(&head, 0);
+    deleteAtIndex(head, 0);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
     return 0;
