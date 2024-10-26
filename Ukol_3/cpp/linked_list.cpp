@@ -14,7 +14,7 @@ std::ostream &operator<<(std::ostream &os, Node *head)
     Node *current = head;
     while(current != nullptr) {
         os << current->data;
-        if ((current = current->next) != nullptr) cout << " ";
+        if ((current = current->next) != nullptr) os << " ";
     }
     return os;
 }
