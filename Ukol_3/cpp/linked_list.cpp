@@ -10,11 +10,11 @@ struct Node
 // Funkce pro vytvoření nového uzlu
 Node *createNode(int data)
 {
-    Node *newNode = new Node(); // Alokace paměti pro nový uzel
+    Node *newNode = new Node();
     newNode->data = data;
     newNode->next = nullptr;
     return newNode;
-} 
+}
 
 // Funkce pro vložení uzlu na začátek seznamu
 void insertAtBeginning(Node **head, int data)
@@ -130,7 +130,7 @@ int findFirstOccurrence(Node *head, int value)
         head = head->next;
         index++;
     }
-    return -1; // Pokud hodnota není nalezena
+    return -1;
 }
 
 // Funkce pro třídění seznamu (bubble sort)
@@ -177,14 +177,16 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
     Node *temp = head;
     while (temp != nullptr) {
-        os << temp->data << " -> ";
+        os << temp->data;
+        if (temp->next != nullptr) {
+            os << " ";
+        }
         temp = temp->next;
     }
-    os << "nullptr";
     return os;
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
+#ifndef __TEST__
 int main()
 {
     // Vytvoření seznamu
