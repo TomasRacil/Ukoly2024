@@ -98,14 +98,20 @@ void deleteAtEnd(Node **head)
 // Funkce pro smazání uzlu na specifickém indexu
 void deleteAtIndex(Node **head, int index)
 {
+    if (*head == nullptr) return;
+
+    // Pokud je index 0, smažeme první uzel a aktualizujeme head
     if (index == 0) {
-        deleteAtBeginning(head);
+        Node* temp = *head;
+        *head = (*head)->next;
+        delete temp;
         return;
     }
 
     Node *temp = *head;
     int i = 0;
 
+    // Najdeme uzel před požadovaným indexem
     while (temp != nullptr && i < index - 1) {
         temp = temp->next;
         i++;
@@ -116,6 +122,7 @@ void deleteAtIndex(Node **head, int index)
         return;
     }
 
+    // Provedeme smazání uzlu na požadovaném indexu
     Node *nodeToDelete = temp->next;
     temp->next = temp->next->next;
     delete nodeToDelete;
