@@ -17,7 +17,7 @@
 using namespace std;
 
 // Caesarova šifra
-string caesarCipher(string text, int shift) 
+string caesar(string text, int shift) 
 {
     string result = "";
     for (char& c : text) {
@@ -31,7 +31,7 @@ string caesarCipher(string text, int shift)
 }
 
 // XOR šifra
-string xorCipher(string text, string key) 
+string xorSifra(string text, string key) 
 {
     string result = "";
     int keyLength = key.length();
@@ -42,7 +42,7 @@ string xorCipher(string text, string key)
 }
 
 // Vigenérova šifra
-string vigenereCipher(string text, string key, bool encrypt) 
+string vigenere(string text, string key, bool encrypt) 
 {
     string result = "";
     int keyIndex = 0;
@@ -102,7 +102,7 @@ vector<vector<char>> generatePlayfairSquare(string key)
 }
 
 // Playfairova šifra: Šifrování a dešifrování
-string playfairCipher(string text, string key, bool encrypt) 
+string playfair(string text, string key, bool encrypt) 
 {
     string preprocessed = preprocessPlayfair(text);
     if (encrypt && preprocessed.length() % 2 != 0) {
@@ -145,6 +145,7 @@ string playfairCipher(string text, string key, bool encrypt)
     return result;
 }
 
+#ifndef __TEST__
 //hlavní funkce
 int main() 
 {
@@ -174,7 +175,7 @@ int main()
             int shift;
             cout << "Zadej číselný posun pro Caesarovu šifru: ";
             cin >> shift;
-            resultText = caesarCipher(text, (action == 1) ? shift : 26 - shift);
+            resultText = caesar(text, (action == 1) ? shift : 26 - shift);
             break;
         }
 
@@ -183,7 +184,7 @@ int main()
             string key;
             cout << "Zadej binární klíč pro XOR šifru: ";
             cin >> key;
-            resultText = xorCipher(text, key);
+            resultText = xorSifra(text, key);
             break;
         }
 
@@ -192,7 +193,7 @@ int main()
             string key;
             cout << "Zadej slovní klíč pro Vigenérovu šifru: ";
             cin >> key;
-            resultText = vigenereCipher(text, key, action == 1);
+            resultText = vigenere(text, key, action == 1);
             break;
         }
         
@@ -201,7 +202,7 @@ int main()
             string key;
             cout << "Zadej slovní klíč pro Playfairovu šifru: ";
             cin >> key;
-            resultText = playfairCipher(text, key, action == 1);
+            resultText = playfair(text, key, action == 1);
             break;
         }
         default:
@@ -222,3 +223,4 @@ int main()
     cout << "Text byl " << ((action == 1) ? "zašifrován" : "dešifrován") << " a uložen do souboru " << outputPath << endl;
     return 0;
 }
+#endif
