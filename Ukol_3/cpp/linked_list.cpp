@@ -89,7 +89,7 @@ void deleteAtEnd(Node **head)
 }
 
 // Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node *head, int index)
+void deleteAtIndex(Node **head, int index)
 {
     if (*head == nullptr || index < 0) return;
     if (index == 0) {
@@ -171,7 +171,7 @@ int main()
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
-    deleteAtIndex(head, 1);
+    deleteAtIndex(&head, 1);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
 
