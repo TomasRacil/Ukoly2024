@@ -67,6 +67,7 @@ void deleteAtBeginning(Node **head)
     Node* temp = *head;
     *head = (*head)->next;
     delete temp;
+
 }
 
 // Funkce pro smazání uzlu z konce seznamu
