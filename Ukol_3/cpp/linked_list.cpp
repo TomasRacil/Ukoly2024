@@ -214,6 +214,10 @@ std::ostream &operator<<(std::ostream &os, Node *head)
     while (temp != nullptr) // Dokud není první uzel nullptr
     {
         os << temp->data << " "; // Vytiskne hodnotu uzlu
+        if (temp->next != nullptr) // Pokud není poslední uzel
+        {
+            os << " "; // Vytiskne mezery
+        }
         temp = temp->next;     // Přesune se na další uzel
     }
     return os;
