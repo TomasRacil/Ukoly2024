@@ -134,7 +134,7 @@ void deleteAtIndex(Node **head, int index)
     }
 
     Node *nodeToDelete = temp->next;
-    temp->next = temp->next->next;
+    temp->next = nodeToDelete->next;
     delete nodeToDelete;
 }
 
