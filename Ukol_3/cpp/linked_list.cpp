@@ -13,7 +13,7 @@ Node *createNode(int data)
     Node *novyuzel=new Node();
     novyuzel->data=data;
     novyuzel->next=nullptr;
-    return nullptr;
+    return novyuzel;
 }
 
 // Funkce pro vložení uzlu na začátek seznamu
@@ -87,6 +87,13 @@ void deleteAtBeginning(Node **head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node **head)
 {
+  if(*head==nullptr)
+    return;
+  if((*head)->next==nullptr){
+    delete *head;
+    *head=nullptr;
+    return;
+  }
   Node **soucastny=head;
   while((*soucastny)->next->next != nullptr){
     soucastny= &((*soucastny)->next);
@@ -99,13 +106,6 @@ void deleteAtEnd(Node **head)
 // Funkce pro smazani uzlu na indexu
 void deleteAtIndex(Node *head, int index)
 {
-  Node *docastny=head;
-  for(int i=0;i<index-1 && docastny !=nullptr;i++){
-    docastny=docastny->next;
-  }
-  if(docastny==nullptr||docastny->next==nullptr)
-    return;
-  
   if(head==nullptr){
     return;
   }
@@ -114,6 +114,12 @@ void deleteAtIndex(Node *head, int index)
     deleteAtBeginning(&head);
     return;
   }
+  Node *docastny=head;
+  for(int i=0;i<index-1 && docastny !=nullptr;i++){
+    docastny=docastny->next;
+  }
+  if(docastny==nullptr||docastny->next==nullptr)
+    return;
 
   Node *smazanizlu=docastny->next;
   docastny->next=smazanizlu->next;
