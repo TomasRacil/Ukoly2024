@@ -94,6 +94,7 @@ void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
     soubor.close(); // Zavření souboru
 }
 
+#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
     // Načtení vstupního souboru
@@ -133,3 +134,4 @@ int main()
 
     return 0; // Konec programu
 }
+#endif // __TEST__
