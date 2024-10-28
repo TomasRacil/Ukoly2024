@@ -15,7 +15,7 @@ string otevri_soubor(const string &jmeno_souboru)
 // kontrola jestli se soubor otevrel
   if (!f.is_open()){
     cerr << "Soubor " << jmeno_souboru << " se nepodarilo otevrit." << endl; // kdyz se soubor neotevre, kod ukoncim a vypisu chybovou spravu
-    exit(1);
+    return"";
   }
 // nacteni souboru do stringu
   while(f.get(tmp)){
