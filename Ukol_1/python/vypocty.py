@@ -19,9 +19,10 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    soucin = 1
+    soucin = 0
     for cislo in cisla:
         soucin *= cislo
+    raise ValueError('Prazdny seznam')
     return soucin
 
 
@@ -34,6 +35,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
+    raise ValueError('Prazdny seznam')
     return sum(cisla) / len(cisla) if cisla else 0
 
 
