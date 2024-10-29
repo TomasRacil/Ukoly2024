@@ -1,9 +1,9 @@
-// #include "vypocty.h"
 #include <iostream>
 #include <vector>
 #include <sstream>
 #include <algorithm>
 #include <numeric>  // Pro std::accumulate
+#include <stdexcept> // Pro výjimky
 
 // Funkce pro výpočet součtu čísel
 int soucet(const std::vector<int> &cisla)
@@ -20,12 +20,16 @@ int soucin(const std::vector<int> &cisla)
 // Funkce pro výpočet průměru čísel
 double prumer(const std::vector<int> &cisla)
 {
+    if (cisla.empty())
+        throw std::runtime_error("Prázdný seznam."); // Vyhození výjimky pro prázdný vektor
     return static_cast<double>(soucet(cisla)) / cisla.size(); // Součet dělený počtem prvků
 }
 
 // Funkce pro výpočet mediánu
 double median(const std::vector<int> &cisla)
 {
+    if (cisla.empty())
+        throw std::runtime_error("Prázdný seznam."); // Vyhození výjimky pro prázdný vektor
     std::vector<int> kopie = cisla; // Vytvoříme kopii vektoru, abychom mohli řadit
     std::sort(kopie.begin(), kopie.end()); // Seřadíme čísla
     int n = kopie.size();
@@ -62,3 +66,4 @@ int main()
     return 0;
 }
 #endif // __TEST__
+

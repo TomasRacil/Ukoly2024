@@ -1,6 +1,6 @@
-// #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <string> // Přidáno pro použití std::string
 
 std::string hello_world()
 {
@@ -14,3 +14,4 @@ int main()
     return 0;
 }
 #endif // __TEST__
+
