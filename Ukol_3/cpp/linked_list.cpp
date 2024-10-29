@@ -10,7 +10,7 @@ struct Node
 // Funkce pro vytvoření nového uzlu
 Node *createNode(int data)
 {
-    Node *newNode = new Node;
+    Node *newNode = new Node;  //doufam že se to už nahralo
     newNode->data = data;
     newNode->next = nullptr;
     return newNode;
