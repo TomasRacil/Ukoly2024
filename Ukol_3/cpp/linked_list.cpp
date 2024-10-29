@@ -183,8 +183,12 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
     while (head != nullptr)
     {
-        os << head->data << " "; // Tiskne hodnoty uzlů
+        os << head->data; // Tiskne hodnoty uzlů
         head = head->next;
+        if (head != nullptr) // Přidá mezeru pouze pokud není konec seznamu
+        {
+            os << " ";
+        }
     }
     return os;
 }
@@ -214,3 +218,4 @@ int main()
     return 0;
 }
 #endif // __TEST__
+
