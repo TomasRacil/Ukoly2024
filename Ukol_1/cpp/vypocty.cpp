@@ -11,7 +11,7 @@ int soucet(const std::vector<int> &cisla)       //hello
 
 int soucin(const std::vector<int> &cisla)
 {
-    return std::accumulate(cisla.begin(), cisla.end(), 1, std::multiplies<int>());
+    return std::accumulate(cisla.begin(), cisla.end(), 0, std::multiplies<int>());
 }
 
 double prumer(const std::vector<int> &cisla)
