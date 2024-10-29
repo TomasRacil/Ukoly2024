@@ -225,7 +225,7 @@ void sortList(Node** head)
 
 // Funkce pro smazani (dealokaci) seznamu
 void deleteList(Node** head)
-{
+{ // postupné smazání
     Node* rem = *head;
     while (rem != nullptr) {
         deleteAtBeginning(head);
