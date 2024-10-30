@@ -7,7 +7,7 @@ struct Node
     int data;
     Node *next;
 };
-
+// a
 // Funkce pro vytvoření nového uzlu
 Node *createNode(int data)
 {
