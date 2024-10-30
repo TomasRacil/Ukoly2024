@@ -1,3 +1,5 @@
+import statistics
+
 def soucet(cisla: list[int]) -> int:
     """Vypočítá součet čísel v seznamu.
 
@@ -7,8 +9,7 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
-    pass
-
+    return sum(cisla)
 
 def soucin(cisla: list[int]) -> int:
     """Vypočítá součin čísel v seznamu.
@@ -19,8 +20,13 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    if not cisla:  # Kontrola, zda je seznam prázdný
+        return 0
 
+    soucin = 1
+    for číslo in cisla:
+        soucin *= číslo
+    return soucin
 
 def prumer(cisla: list[int]) -> float:
     """Vypočítá průměrnou hodnotu čísel v seznamu.
@@ -31,8 +37,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass
-
+    return round(statistics.mean(cisla), 2)
 
 def median(cisla: list[int]) -> float:
     """Vypočítá medián čísel v seznamu.
@@ -43,8 +48,7 @@ def median(cisla: list[int]) -> float:
     Returns:
       Medián čísel.
     """
-    pass  # TODO: Implementujte funkci
-
+    return statistics.median(cisla)
 
 def main():
     """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
@@ -55,7 +59,6 @@ def main():
     print("Součin:", soucin(cisla))
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
-
 
 if __name__ == "__main__":
     main()
