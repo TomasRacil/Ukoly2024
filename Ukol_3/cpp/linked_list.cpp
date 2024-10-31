@@ -15,6 +15,7 @@ Node *createNode(int data)
     Node* node = new Node();
     node->data = data;
     node->next = nullptr;
+    return node;
 }
 
 // Funkce pro vložení uzlu na začátek seznamu
@@ -49,6 +50,8 @@ void insertAtIndex(Node **head, int data, int index)
     Node* newNode = createNode(data);
     if (*head == nullptr){
         *head = newNode;
+    }else if (index == 0){
+        insertAtBeginning(head, data);
     }else{
         Node* tmp = *head;
     // stejné jako u předešlé funkce, akorát posouvám na pozici indexu
