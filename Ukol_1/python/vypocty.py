@@ -7,7 +7,7 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
-    pass
+    return sum(cisla)
 
 
 def soucin(cisla: list[int]) -> int:
