@@ -29,6 +29,10 @@ void insertAtBeginning(Node** head, int data)
 // Funkce pro vložení uzlu na konec seznamu
 void insertAtEnd(Node** head, const int data)
 {
+    if(*head->next == nullptr){
+        printf("nemuzeme pridavat na konec kdyz nemame prvni prvek");
+        return ;
+    }
     Node* node = new Node();
     node->data = data;
     node->next = NULL;
@@ -43,6 +47,10 @@ void insertAtEnd(Node** head, const int data)
 // Funkce pro vložení na index
 void insertAtIndex(Node** head, int data, int index)
 {
+    if(*head->next == nullptr){
+        printf("nemuzeme pridavat na konec kdyz nemame prvni prvek");
+        return ;
+    }
     if (index < 0) { //ošetření špatného vztupu
         printf("spatne zadany index");
         return;
