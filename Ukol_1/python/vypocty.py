@@ -5,7 +5,7 @@ def soucet(cisla: list[int]) -> int:
       cisla: Seznam čísel.
 
     Returns:
-      Součet čísel.
+      Součet čísel.   Kebaba
     """
     pass
 
