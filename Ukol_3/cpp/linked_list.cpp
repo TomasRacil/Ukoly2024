@@ -180,7 +180,6 @@ std::ostream &operator<<(std::ostream &os, Node *head)
         os << temp->data << " ";
         temp = temp->next;
     }
-    os << "nullptr";
     return os;
 }
 

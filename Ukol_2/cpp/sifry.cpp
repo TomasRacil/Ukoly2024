@@ -12,7 +12,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
   ifstream soubor_vstup(jmeno_souboru);
   if (!soubor_vstup.is_open()) {
     std::cerr << "Failed to open the file!" << std::endl;
-    return;
+    return "";
   }
 
    std::stringstream buffer;
@@ -162,6 +162,7 @@ void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
     if (!outFile) {
         std::cerr << "Chyba při otevírání souboru: " << jmeno_souboru << std::endl;
         return;
+
     }
 
     // Zapisujeme řetězec do souboru
