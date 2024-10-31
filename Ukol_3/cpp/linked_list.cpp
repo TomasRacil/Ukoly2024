@@ -211,14 +211,16 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
 
     Node *temp = head; // Uložíme si ukazatel na první uzel
+    bool first = true;  // Použijeme flag pro kontrolu prvního uzlu
     while (temp != nullptr) // Dokud není první uzel nullptr
     {
-        os << temp->data << " "; // Vytiskne hodnotu uzlu
-        if (temp->next != nullptr) // Pokud není poslední uzel
-        {
-            os << " "; // Vytiskne mezery
+
+        if (!first) {
+            os << " "; // Vytiskne mezery před každým uzlem kromě prvního
         }
-        temp = temp->next;     // Přesune se na další uzel
+        os << temp->data; // Vytiskne hodnotu uzlu
+        first = false;    // Nastaví flag po prvním uzlu
+        temp = temp->next; // Přesune se na další uzel
     }
     return os;
 
