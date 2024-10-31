@@ -12,7 +12,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
   ifstream soubor_vstup(jmeno_souboru);
   if (!soubor_vstup.is_open()) {
     std::cerr << "Failed to open the file!" << std::endl;
-    return "Failed to open the file!";
+    return;
   }
 
    std::stringstream buffer;
