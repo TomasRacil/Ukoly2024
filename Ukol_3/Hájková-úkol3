@@ -1,0 +1,225 @@
+#include <iostream>
+#include <string>
+
+
+struct Node
+{
+    int data;
+    Node* next;
+  
+};
+
+// Funkce pro vytvoření nového uzlu
+Node* createNode(int data)
+{
+    Node* node = new Node();
+    node->data = data;
+    node->next = NULL;
+    return node;
+}
+
+// Funkce pro vložení uzlu na začátek seznamu
+void insertAtBeginning(Node** head, int data)
+{
+    Node* node = new Node(); //konstruktor, vložení dat a ukázání na další prvek v listu
+    node->data = data;
+    node->next = *head;
+    *head = node;
+
+}
+
+// Funkce pro vložení uzlu na konec seznamu
+void insertAtEnd(Node** head, const int data)
+{
+    Node* node = new Node();
+   
+    node->data = data;
+    node->next = NULL;
+
+    Node* prubezna = *head;
+    while (prubezna->next != nullptr) 
+    { 
+        prubezna = prubezna->next;
+    }
+    prubezna->next = node;
+}
+
+// Funkce pro vložení na index
+void insertAtIndex(Node** head, int data, int index)
+{
+    if (index < 0) 
+    { 
+        printf("spatne zadany index");
+        return;
+    }
+    if (index == 0) 
+    {
+        insertAtBeginning(head, data);
+        return;
+    }
+    Node* node = new Node();
+    node->data = data;
+    Node* prubezna = *head;
+    for (int i = 0; i < (index - 1); i++) 
+    { 
+        prubezna = prubezna->next;
+        if (prubezna == nullptr) 
+        {
+            printf("preteceni");
+            return;
+        }
+    }
+    node->next = prubezna->next;
+    prubezna->next = node;
+}
+
+// Funkce pro smazání uzlu ze začátku seznamu
+void deleteAtBeginning(Node** head)
+{
+    Node* prubezna = *head;
+    if (prubezna == nullptr)
+        return;
+    *head = prubezna->next;
+    delete prubezna;
+}
+
+// Funkce pro smazání uzlu z konce seznamu
+void deleteAtEnd(Node** head)
+{
+    if (*head == nullptr) 
+    {
+        return;
+    }
+    Node* prubezna = *head;
+    while (prubezna->next->next) 
+    {
+        prubezna = prubezna->next;
+    }
+    delete prubezna->next;
+    prubezna->next = NULL;
+}
+
+// Funkce pro smazani uzlu na indexu
+void deleteAtIndex(Node* head, int index)
+{
+    if (index < 0) 
+    {
+        printf("spatne zadany index");
+        return;
+    }
+    Node* prubezna = head;
+    if (index == 0) 
+    {
+        deleteAtBeginning(&head);
+    }
+    for (int i = 0; i < index - 1; i++) 
+    {
+        prubezna = prubezna->next;
+    }
+    Node* pomocna = prubezna->next;
+    prubezna->next = prubezna->next->next;
+    delete pomocna;
+
+}
+
+// Funkce pro nalezeni prvniho vyskytu
+int findFirstOccurrence(Node* head, int value)
+{
+    int i = 0;
+    Node* prubezna = head;
+    while (prubezna != nullptr) 
+    {   // procházení do té doky dokud odkazuje na nějaký další prvek
+        if (prubezna->data == value) 
+            return i;
+        i++;
+        prubezna = prubezna->next;
+    }
+
+    return -1;
+}
+
+// funkce pro setřídění seznamu
+void sortList(Node** head)
+{
+    int length = 0;
+    Node* prubezna = *head;
+    while (prubezna != nullptr) 
+    { 
+        length++; // zjištění délky seznamu
+        prubezna = prubezna->next;
+    }
+
+    bool test = false;
+    int i = 0;
+    while (i < length) 
+    {
+        Node* previous = *head; //uzel pro přehození 
+        Node* current = *head; // uzel pro aktualní uzel
+        test = false;
+        while (current->next) // dokud nedojde k poslednímu prvku
+        {
+            prubezna = current->next;
+            if (current->data > prubezna->data) // Pokud je hodnota větší, uzly se prohodí
+            {
+                test = true;
+                if (current == *head) // Prohození na začátku seznamu
+                {
+                    current->next = prubezna->next; 
+                    prubezna->next = current;
+                    previous = prubezna;
+                    *head = previous;
+                }
+                
+                else { // prohození pro ostatní uzly 
+                    current->next = prubezna->next;
+                    prubezna->next = current;
+                    previous->next = prubezna;
+                    previous = prubezna;
+                }
+                continue;  // nastaví nové aktuální a předchozí
+            }
+            previous = current; // Posunutí předvhozího na aktuální
+            current = current->next; // posunutí aktuálního o jeden dál 
+
+        }
+        if (!test) 
+        {
+            break;
+        }
+        i++;
+    }
+}
+
+// Funkce pro smazani seznamu
+void deleteList(Node** head)
+{
+    Node* prubezna = *head;
+    while (prubezna != nullptr) 
+    { // maze se od prvního dokud jsou prvky 
+        deleteAtBeginning(head);
+        prubezna = *head;
+    }
+}
+
+// tisk seznamu
+std::ostream& operator<<(std::ostream& os, Node* head)
+{
+    Node* prubezna = head;
+    while (prubezna) 
+    {
+        os << prubezna->data;
+        prubezna = prubezna->next;
+    }
+    return os;
+}
+
+
+// Vytvoření seznamu
+int main()
+{
+    Node* head = nullptr;
+
+    insertAtBeginning(&head, 1);
+    insertAtBeginning(&head, 2);
+    insertAtEnd(&head, 3);
+}
