@@ -19,7 +19,7 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    return 0
 
 
 def prumer(cisla: list[int]) -> float:
