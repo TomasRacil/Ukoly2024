@@ -34,6 +34,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
+    if not cisla: raise ValueError("Seznam je prázdný.")
     return sum(cisla) / len(cisla)
 
 
