@@ -7,7 +7,7 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
-    pass
+    return sum(cisla)
 
 
 def soucin(cisla: list[int]) -> int:
@@ -19,7 +19,10 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    from functools import reduce
+    if len(cisla) == 0: return 0
+    return reduce(lambda x, y: x * y, cisla, 1)
+
 
 
 def prumer(cisla: list[int]) -> float:
@@ -31,7 +34,8 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass
+    if not cisla: raise ValueError("Seznam je prázdný.")
+    return sum(cisla) / len(cisla)
 
 
 def median(cisla: list[int]) -> float:
@@ -43,7 +47,8 @@ def median(cisla: list[int]) -> float:
     Returns:
       Medián čísel.
     """
-    pass  # TODO: Implementujte funkci
+    from statistics import median
+    return median(cisla)
 
 
 def main():
