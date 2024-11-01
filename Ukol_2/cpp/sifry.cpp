@@ -5,41 +5,51 @@
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
-  std::ifstream ifs (jmeno_souboru);
-  
-  if (ifs.is_open()) // Pokud se soubor podaří otevřít, pokračujeme dál
-    {
-    char t = ifs.get(); // Načteme text ze souboru do proměnné t
-    } 
-  else 
-  {  
-    std::cout << "Chyba v načítání souboru" << std::endl; // Pokud se soubor nepodaří otevřít, vypíšeme chybu
+  string text;
+  char tmp;
+  // otevru soubor
+  ifstream f(jmeno_souboru, ifstream::in);
+
+// kontrola jestli se soubor otevrel
+  if (!f.is_open()){
+    cerr << "Soubor " << jmeno_souboru << " se nepodarilo otevrit." << endl; // kdyz se soubor neotevre, kod ukoncim a vypisu chybovou spravu
+    return"";
   }
-  return "";
+  while(f.get(tmp)){
+    text += tmp;
+  }
+  return text;
 }
 
 // Funkce pro Caesarovu šifru
 std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
-  std::string vysledek = ""; // string do kterého postupně ukládáme zašifrovaný text
-  int shift = sifrovat ? 3 : -3; // Posuneme znaky o 3 pozice dopředu při šifrování, jinak zpět
-
-  for (char c : text) // Projde všechny znaky v textu
-  {
-    if (isalpha(c)) // T9mto zjistíme zda je znak písmeno
-    {
-      char zakl = isupper(c) ? 'A' : 'a'; // Zjistíme zda je písmeno velké a nebo ne
-      c = zakl + (c - zakl + shift + 26) % 26;  // Zjistime zda po přičtení jsme překročili hranici abecedy
-      if (c == 'Z' - 1) // Pokud jsme překročili hranici abecedy, posuneme se na začátek
-      {
-        c = 'a';
+{
+  string upravenytext = text;
+  // sifruju
+  if(sifrovat == true){
+    for(int i = 0; i < text.length(); i++){
+      // pokud bych posunutim vysel z range pismen v ascii, odectu 26, abych v nem zustal
+      if(isalpha(text[i] + posun)){
+        upravenytext[i] = text[i] + posun;
+      }else{
+        upravenytext[i] = text[i] + posun - 26;
       }
     }
-    vysledek += c;
-  }
-  return vysledek;
-}
 
+  // desifruju
+  }else{
+    for(int i = 0; i < text.length(); ++i){
+      // stejne jako u sifrovani, akorat pricitam 26
+      if(isalpha(text[i] - posun)){
+        upravenytext[i] = text[i] - posun;
+      }else{
+        upravenytext[i] = text[i] - posun + 26;
+      }
+    }
+  }
+  return upravenytext;
+}
 // Funkce pro Vigenerovu šifru
 std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
@@ -64,13 +74,13 @@ return vysledek;
 // Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  std::string vysledek = text; // Vytvoříme kopii vstupního textu 
-  
-  for (size_t i = 0; i < text.size(); ++i) // Projdeme všechny znaky v textu
-  {
-    vysledek[i] = text[i] ^ klic[i % klic.size()]; // Provedeme operaci XOR mezi znakem textu a klíčem
+  string upravenytext = text;
+
+  for(int i = 0; i < text.length(); ++i){
+    upravenytext[i] = text[i] ^ klic[i % klic.length()]; // ^ operator pro binarni XOR
   }
-  return "";
+
+  return upravenytext;
 }
 
 // Funkce pro uložení řetězce do souboru
