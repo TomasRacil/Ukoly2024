@@ -13,8 +13,8 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
     Node *current = head;
     while(current != nullptr) {
-        os << current->data << " ";
-        current = current->next;
+        os << current->data;
+        if ((current = current->next) != nullptr) os << " ";
     }
     return os;
 }
@@ -61,6 +61,7 @@ void insertAtEnd(Node **head, const int data)
 {
     if (*head == nullptr) {
         insertAtBeginning(head, data); //list is empty, thus inserting at beginning is the same thing as inserting at the end
+        return;
     }
 
     //end points to last node in list
@@ -126,9 +127,11 @@ void deleteAtBeginning(Node **head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node **head)
 {
-    if ((*head)->next == nullptr)
+    if ((*head)->next == nullptr) {
         deleteAtBeginning(head); //list only has one node
-
+        return;
+    }
+    
     Node *second_last = *head;
 
     //find second last node
@@ -269,7 +272,7 @@ int main()
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
-    deleteAtIndex(head, 0);
+    deleteAtIndex(&head, 0);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
     return 0;
