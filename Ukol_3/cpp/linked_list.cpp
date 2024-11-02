@@ -179,6 +179,7 @@ std::ostream &operator<<(std::ostream &os, Node *head)
     while (temp != nullptr) {
         os << temp->data << " ";
         temp = temp->next;
+        if (temp != nullptr) os << " ";
     }
     return os;
 }
