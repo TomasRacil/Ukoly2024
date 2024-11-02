@@ -177,9 +177,9 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 {
     Node* temp = head;
     while (temp != nullptr) {
-        os << temp->data << " ";
+        os << temp->data;
         temp = temp->next;
-        if (temp != nullptr) os << " ";
+        if (temp != nullptr) os << " "; // Přidá mezeru pouze mezi prvky
     }
     return os;
 }
