@@ -4,42 +4,40 @@
 #include <algorithm>
 #include <limits>
 #include <string>
+#include <sstream>
 
 int soucet(const std::vector<int> &cisla)
 {
-    int n = cisla.size();
     int soucet = 0;
-    for(int i=0;i<n;i++)
+    for(int num : cisla)
     {
-        soucet += cisla[i];
+        soucet += num;
     }
     return soucet;
 }
 
-int soucin(const std::vector<int> &cisla)
+int soucin( std::vector<int> &cisla)
 {
     
-    int n = cisla.size();
     int soucin = 1;
-    for(int i=0;i<n;i++)
+    for(int num : cisla)
     {
-        soucin *= cisla[i];
+        soucin *= num;
     }
     return soucin;
 }
 
-double prumer(const std::vector<int> &cisla)
+double prumer(std::vector<int> &cisla)
 {
     int n = cisla.size();
-    double prumer;
-    prumer = soucet(cisla)/n;
-    return prumer;
+    return (n>0)?static_cast<double>(soucet(cisla)) / n : 0;
 }
 
-double median(const std::vector<int> &cisla)
+double median(std::vector<int> &cisla)
 {
     sort(cisla.begin(), cisla.end());         // seradi cisla podle velikosti
 	int n = cisla.size();
+    if(n == 0) return 0;
 	if (n % 2 != 0)
 	{
 		return cisla[n / 2];
