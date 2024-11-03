@@ -1,29 +1,52 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <limits>
 
 int soucet(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int n = cisla.size();
+    int soucet = 0;
+    for(int i=0;i<n;i++)
+    {
+        soucet += cisla[i];
+    }
+    return soucet;
 }
 
 int soucin(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    
+    int n = cisla.size();
+    int soucin = 1;
+    for(int i=0;i<n;i++)
+    {
+        soucin *= cisla[i];
+    }
+    return soucin;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int n = cisla.size();
+    double prumer;
+    prumer = soucet(cisla)/n;
+    return prumer;
 }
 
 double median(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    sort(cisla.begin(), cisla.end());         // seradi cisla podle velikosti
+	int n = cisla.size();
+	if (n % 2 != 0)
+	{
+		return cisla[n / 2];
+	}
+
+	else
+		return (cisla[n / 2 - 1] + cisla[n / 2]) / 2.0;
+    
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
