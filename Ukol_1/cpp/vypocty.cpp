@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <string>
 
 int soucet(const std::vector<int> &cisla)
 {
