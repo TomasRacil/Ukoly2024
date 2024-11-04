@@ -30,7 +30,7 @@ void insertAtEnd(Node **head, const int data)
     Node* newNode = createNode(data);
     if (*head == nullptr)
     {
-        *head = nullptr;
+        *head = newNode;
         return;
     }
     Node* temp = *head;
@@ -54,10 +54,12 @@ void insertAtIndex(Node **head, int data, int index)
     Node* temp = *head;
     for (int i = 0; temp != nullptr && i < index - 1; i++)
     {
-        if (temp == nullptr) return;
+        temp = temp->next;  
+    }
+
+    if (temp == nullptr) return;
         newNode->next = temp->next;
         temp->next = newNode;
-    }
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
