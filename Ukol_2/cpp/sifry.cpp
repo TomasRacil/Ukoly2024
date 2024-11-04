@@ -6,7 +6,18 @@
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
   // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+  std::ifstream soubor(jmeno_souboru);
+    if (!soubor.is_open())
+    {
+        std::cerr << "Nepodařilo se otevřít soubor: " << jmeno_souboru << std::endl;
+        return "";
+    }
+
+    std::string obsah((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
+    soubor.close();
+    return obsah;
+
+  
 }
 
 // Funkce pro Caesarovu šifru
@@ -14,7 +25,18 @@ std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
   // Implementace Caesarovy šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+   std::string vysledek = text;
+    posun = sifrovat ? posun : -posun;
+
+    for (char &znak : vysledek)
+    {
+        if (isalpha(znak))
+        {
+            char base = islower(znak) ? 'a' : 'A';
+            znak = static_cast<char>((znak - base + posun + 26) % 26 + base);
+        }
+    }
+    return vysledek;
 }
 
 // Funkce pro Vigenerovu šifru
@@ -22,7 +44,21 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
 {
   // Implementace Vigenerovy šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  std::string vysledek = text;
+    int delka_klice = klic.size();
+
+    for (size_t i = 0; i < text.size(); ++i)
+    {
+        char posun = klic[i % delka_klice] - 'A';
+        posun = sifrovat ? posun : -posun;
+
+        if (isalpha(text[i]))
+        {
+            char base = islower(text[i]) ? 'a' : 'A';
+            vysledek[i] = static_cast<char>((text[i] - base + posun + 26) % 26 + base);
+        }
+    }
+    return vysledek;
 }
 
 // Funkce pro XOR šifru
@@ -30,13 +66,29 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
 {
   // Implementace XOR šifry
   // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  std::string vysledek = text;
+    int delka_klice = klic.size();
+
+    for (size_t i = 0; i < text.size(); ++i)
+    {
+        vysledek[i] = text[i] ^ klic[i % delka_klice];
+    }
+    return vysledek;
 }
 
 // Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
   // Implementace funkce pro uložení řetězce do souboru
+  std::ofstream soubor(jmeno_souboru);
+    if (!soubor.is_open())
+    {
+        std::cerr << "Nepodařilo se uložit do souboru: " << jmeno_souboru << std::endl;
+        return;
+    }
+
+    soubor << obsah;
+    soubor.close();
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
