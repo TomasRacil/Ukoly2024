@@ -50,8 +50,9 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
     for (size_t i = 0; i < text.size(); ++i)
     {
         char posun = klic[i % delka_klice] - 'A';
-        posun = sifrovat ? posun : -posun;
-
+        if(!sifrovat)
+        posun = 26 - posun;
+        
         if (isalpha(text[i]))
         {
             char base = islower(text[i]) ? 'a' : 'A';
