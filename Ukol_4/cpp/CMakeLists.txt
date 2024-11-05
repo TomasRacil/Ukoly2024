@@ -23,18 +23,7 @@ target_compile_definitions(mytests PRIVATE __TEST__)
 # Registrace testu
 add_test(NAME mytests COMMAND mytests)
 
-# Kopírování vstupních souborů do build adresáře po sestavení cíle mytests
-add_custom_command(TARGET mytests POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_1.txt"
-        "${CMAKE_CURRENT_BINARY_DIR}/vstup_1.txt")
-
-add_custom_command(TARGET mytests POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_2.txt"
-        "${CMAKE_CURRENT_BINARY_DIR}/vstup_2.txt")
-
-add_custom_command(TARGET mytests POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_3.txt"
-        "${CMAKE_CURRENT_BINARY_DIR}/vstup_3.txt")
+# Kopírování vstupních souborů do adresáře build při konfiguraci projektu
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_1.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_2.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_3.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
