@@ -118,11 +118,11 @@ public:
 #ifndef __TEST__
 int main()
 {
-    // Spustí se dva příklady - jeden bez waypointu a druhý s waypointem
     Lod lod(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost (bez waypointu): " << lod.naviguj("../advent_lod/vstup_1.txt", false) << std::endl; // Upravená cesta
+    std::cout << "Manhattan vzdálenost (bez waypointu): " << lod.naviguj("/workspaces/Ukoly2024/Ukoly2024/Ukol_4/cpp/advent_lod/vstup_1.txt", false) << std::endl;
     Lod lod2(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost (s waypointem): " << lod2.naviguj("../advent_lod/vstup_1.txt", true) << std::endl;  // Upravená cesta
+    std::cout << "Manhattan vzdálenost (s waypointem): " << lod2.naviguj("/workspaces/Ukoly2024/Ukoly2024/Ukol_4/cpp/advent_lod/vstup_1.txt", true) << std::endl;
     return 0;
 }
 #endif // __TEST__
+
