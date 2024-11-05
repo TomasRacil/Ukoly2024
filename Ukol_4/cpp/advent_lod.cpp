@@ -32,15 +32,15 @@ public:
     {
         //try to open the file
         ifstream file (cesta_soubor, ifstream::in);
-        // if (!file.is_open()) {
-        //     //file is not open
-        //     cerr << "Error opening file\n";
-        //     return -1;
-        // }
-        // if (file.bad()) {
-        //     cerr << "Fatal error: badbit is set!\n";
-        //     return -1;
-        // }
+        if (!file.is_open()) {
+            //file is not open
+            cerr << "Error opening file\n";
+            return -1;
+        }
+        if (file.bad()) {
+            cerr << "Fatal error: badbit is set!\n";
+            return -1;
+        }
 
          string instruction;
 
@@ -61,10 +61,10 @@ public:
                     x -= negr;
                     break;
                 case 'L':
-                    direction = (direction + negr) % 360;
+                    direction = (360 + (direction + negr)) % 360;
                     break;
                 case 'R':
-                    direction = (direction - negr) % 360;
+                    direction = (360 + (direction - negr)) % 360;
                     break;
                 case 'F':
                     switch(direction) {
