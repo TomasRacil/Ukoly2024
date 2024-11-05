@@ -6,7 +6,7 @@ using namespace std;
 class Lod
 {
 private:
-    int x,y;
+    int x=0,y=0;
     int direction = 0;
     //char direction = 'E'; //W,E,N,S
 public:
@@ -36,18 +36,16 @@ public:
             //file is not open
             cerr << "Error opening file\n";
             return -1;
+        }
         if (file.bad()) {
             cerr << "Fatal error: badbit is set!\n";
             return -1;
         }
 
          string instruction;
-         int negr = stoi(instruction.substr(1));
 
-         while(42) {
-            getline(file, instruction);
-            if (file.eof())
-                break;
+         while(getline(file, instruction)) {
+            int negr = stoi(instruction.substr(1));
             
             switch(instruction[0]) {
                 case 'N':
@@ -87,8 +85,6 @@ public:
          }
 
          return abs(x) + abs(y);
-  }
-
     }
 };
 
