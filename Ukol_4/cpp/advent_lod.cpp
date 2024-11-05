@@ -85,6 +85,8 @@ public:
                     break;
             }
          }
+
+         return abs(x) + abs(y);
   }
 
     }
