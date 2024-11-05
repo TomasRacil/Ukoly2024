@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(Ukol_4)
 
-
-
 # Add your main executable
 add_executable(advent_lod ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod.cpp)
 
@@ -23,3 +21,19 @@ target_link_libraries(mytests GTest::gtest_main pthread)
 target_compile_definitions(mytests PRIVATE __TEST__)
 
 add_test(NAME mytests COMMAND mytests)
+
+# Kopírování vstupních souborů do build adresáře po sestavení cíle mytests
+add_custom_command(TARGET mytests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/cpp/advent_lod/vstup_1.txt"
+        "${CMAKE_CURRENT_BINARY_DIR}/vstup_1.txt")
+
+add_custom_command(TARGET mytests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/cpp/advent_lod/vstup_2.txt"
+        "${CMAKE_CURRENT_BINARY_DIR}/vstup_2.txt")
+
+add_custom_command(TARGET mytests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/cpp/advent_lod/vstup_3.txt"
+        "${CMAKE_CURRENT_BINARY_DIR}/vstup_3.txt")
