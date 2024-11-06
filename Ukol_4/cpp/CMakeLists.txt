@@ -1,29 +1,25 @@
 cmake_minimum_required(VERSION 3.0)
 project(Ukol_4)
 
-# Přidání hlavního spustitelného souboru
+
+
+# Add your main executable
 add_executable(advent_lod ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod.cpp)
 
-# Nastavení adresáře pro sestavení jako podadresář projektu
+# Set the build directory to be a subdirectory of the project directory
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 
-# Přidání spustitelného souboru pro testy
+# Add your test executable
 add_executable(mytests ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
 
-# Nalezení Google Test frameworku
+# Najdi Google Test framework
 enable_testing()
 find_package(GTest REQUIRED)
-# Připojení Google Testu k testům
+# Propoj test s Google Testem
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(mytests GTest::gtest_main pthread) 
 
-# Definování __TEST__ pro testovací kompilaci
+# Define __TEST__ for the test compilation
 target_compile_definitions(mytests PRIVATE __TEST__)
 
-# Registrace testu
 add_test(NAME mytests COMMAND mytests)
-
-# Kopírování vstupních souborů do adresáře build při konfiguraci projektu
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_1.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_2.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod/vstup_3.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
