@@ -23,6 +23,7 @@ void insertAtBeginning(Node **head, int data)
     Node *newNode = createNode(data);
     newNode->next = *head;
     *head = newNode;
+
 }
 
 // Funkce pro vložení uzlu na konec seznamu
@@ -39,7 +40,6 @@ void insertAtEnd(Node **head, const int data)
         temp = temp->next;
     }
     temp->next = newNode; // Připoj nový uzel na konec
-
 }
 
 // Funkce pro vložení na index
@@ -62,6 +62,7 @@ void insertAtIndex(Node **head, int data, int index)
         newNode->next = temp->next;
         temp->next = newNode;
     }
+
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
@@ -72,6 +73,7 @@ void deleteAtBeginning(Node **head)
     Node *temp = *head; // Dočasně ulož hlavu
     *head = (*head)->next; // Přesuň hlavu na další uzel
     delete temp; // Smaž původní hlavu
+
 }
 
 // Funkce pro smazání uzlu z konce seznamu
@@ -132,17 +134,6 @@ int findFirstOccurrence(Node *head, int value)
         temp = temp->next;
         index++;
     }
-
-}
-
-// Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node *head, int index)
-{
-}
-
-// Funkce pro nalezeni prvniho vyskytu
-int findFirstOccurrence(Node *head, int value)
-{
     return -1;
 }
 
@@ -166,7 +157,6 @@ void sortList(Node **head)
             current = current->next;
         }
     } while (swapped); // Pokračuj, dokud jsou prováděny výměny
-
 
 }
 
@@ -220,14 +210,6 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 }
 */
 
-}
-
-// Operátor pro tisk dat
-std::ostream &operator<<(std::ostream &os, Node *head)
-{
-    return os;
-}
-
 #ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
@@ -248,8 +230,6 @@ int main()
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteAtIndex(head, 1); // myslím že tu byla chyba mělo to být &head
-
-    deleteAtIndex(head, 1);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
 
@@ -267,4 +247,3 @@ cmake ..
 make
 ./mytests
 */
-#endif // __TEST__
