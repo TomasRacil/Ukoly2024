@@ -3,29 +3,19 @@
 #include <cmath>
 #include <string>
 
-class Lod
-{
+class Lod {
 private:
-    int x, y;            // Souřadnice lodi
-    int uhel;            // Směr lodi ve stupních (0 = východ, 90 = jih, 180 = západ, 270 = sever)
-    int wx, wy;          // Waypoint souřadnice (relativní k lodi)
+    int x, y;   // Souřadnice lodi
+    int wx, wy; // Souřadnice waypointu (pro druhé řešení)
+    char smer;  // Směr lodi (N, S, E, W)
 
 public:
-    Lod(int x_start, int y_start, char smer, int wx_start, int wy_start)
-        : x(x_start), y(y_start), wx(wx_start), wy(wy_start)
-    {
-        // Nastavení úhlu podle počátečního směru
-        switch (smer) {
-            case 'N': uhel = 270; break;
-            case 'E': uhel = 0; break;
-            case 'S': uhel = 90; break;
-            case 'W': uhel = 180; break;
-            default: uhel = 0;
-        }
-    }
+    // Konstruktor lodi
+    Lod(int x_start, int y_start, char pocatecni_smer, int wx_start, int wy_start)
+        : x(x_start), y(y_start), wx(wx_start), wy(wy_start), smer(pocatecni_smer) {}
 
-    int naviguj(const std::string& cesta_soubor, bool druhe_reseni)
-    {
+    // Funkce navigace lodi podle vstupu
+    int naviguj(std::string cesta_soubor, bool druhe_reseni) {
         std::ifstream soubor(cesta_soubor);
         if (!soubor.is_open()) {
             std::cerr << "Nepodařilo se otevřít soubor: " << cesta_soubor << std::endl;
@@ -33,70 +23,80 @@ public:
         }
 
         std::string instrukce;
-        while (getline(soubor, instrukce)) {
+        while (soubor >> instrukce) {
             char akce = instrukce[0];
             int hodnota = std::stoi(instrukce.substr(1));
 
-            if (druhe_reseni) {
-                // Řešení s waypointem
-                switch (akce) {
-                    case 'N': wy += hodnota; break;
-                    case 'S': wy -= hodnota; break;
-                    case 'E': wx += hodnota; break;
-                    case 'W': wx -= hodnota; break;
-                    case 'L':
-                    case 'R': {
-                        int rotace = (akce == 'L') ? hodnota : 360 - hodnota;
-                        rotace = (rotace + 360) % 360;
-                        int puvodni_wx = wx, puvodni_wy = wy;
-                        if (rotace == 90) {
-                            wx = -puvodni_wy;
-                            wy = puvodni_wx;
-                        } else if (rotace == 180) {
-                            wx = -puvodni_wx;
-                            wy = -puvodni_wy;
-                        } else if (rotace == 270) {
-                            wx = puvodni_wy;
-                            wy = -puvodni_wx;
-                        }
-                        break;
-                    }
-                    case 'F': {
-                        x += wx * hodnota;
-                        y += wy * hodnota;
-                        break;
-                    }
-                }
+            if (!druhe_reseni) {
+                navigujBezWaypointu(akce, hodnota);
             } else {
-                // Řešení bez waypointu
-                switch (akce) {
-                    case 'N': y += hodnota; break;
-                    case 'S': y -= hodnota; break;
-                    case 'E': x += hodnota; break;
-                    case 'W': x -= hodnota; break;
-                    case 'L': uhel = (uhel - hodnota + 360) % 360; break;
-                    case 'R': uhel = (uhel + hodnota) % 360; break;
-                    case 'F':
-                        if (uhel == 0) x += hodnota;
-                        else if (uhel == 90) y -= hodnota;
-                        else if (uhel == 180) x -= hodnota;
-                        else if (uhel == 270) y += hodnota;
-                        break;
-                }
+                navigujSWaypointem(akce, hodnota);
             }
         }
+        return std::abs(x) + std::abs(y); // Manhattan vzdálenost
+    }
 
-        return std::abs(x) + std::abs(y); // Výpočet Manhattan vzdálenosti
+    // Navigace bez waypointu
+    void navigujBezWaypointu(char akce, int hodnota) {
+        if (akce == 'N') y += hodnota;
+        else if (akce == 'S') y -= hodnota;
+        else if (akce == 'E') x += hodnota;
+        else if (akce == 'W') x -= hodnota;
+        else if (akce == 'L' || akce == 'R') {
+            otocSmer(hodnota, akce == 'R');
+        } else if (akce == 'F') {
+            pohybVpred(hodnota);
+        }
+    }
+
+    // Navigace s waypointem
+    void navigujSWaypointem(char akce, int hodnota) {
+        if (akce == 'N') wy += hodnota;
+        else if (akce == 'S') wy -= hodnota;
+        else if (akce == 'E') wx += hodnota;
+        else if (akce == 'W') wx -= hodnota;
+        else if (akce == 'L' || akce == 'R') {
+            otocWaypoint(hodnota, akce == 'R');
+        } else if (akce == 'F') {
+            x += wx * hodnota;
+            y += wy * hodnota;
+        }
+    }
+
+    // Otáčení směru (bez waypointu)
+    void otocSmer(int stupne, bool doprava) {
+        const std::string smery = "NESW";
+        int index = smery.find(smer);
+        int kroky = (stupne / 90) * (doprava ? 1 : -1);
+        index = (index + kroky + 4) % 4;
+        smer = smery[index];
+    }
+
+    // Pohyb lodi vpřed ve směru
+    void pohybVpred(int hodnota) {
+        if (smer == 'N') y += hodnota;
+        else if (smer == 'S') y -= hodnota;
+        else if (smer == 'E') x += hodnota;
+        else if (smer == 'W') x -= hodnota;
+    }
+
+    // Otáčení waypointu (s waypointem)
+    void otocWaypoint(int stupne, bool doprava) {
+        int kroky = (doprava ? -stupne : stupne) / 90;
+        for (int i = 0; i < std::abs(kroky); ++i) {
+            int temp = wx;
+            wx = kroky > 0 ? -wy : wy;
+            wy = kroky > 0 ? temp : -temp;
+        }
     }
 };
 
 #ifndef __TEST__
-int main()
-{
+int main() {
     Lod lod(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost (bez waypointu): " << lod.naviguj("vstup_1.txt", false) << std::endl;
+    std::cout << "Manhattan vzdálenost bez waypointu: " << lod.naviguj("vstup_1.txt", false) << std::endl;
     Lod lod2(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost (s waypointem): " << lod2.naviguj("vstup_1.txt", true) << std::endl;
+    std::cout << "Manhattan vzdálenost s waypointem: " << lod2.naviguj("vstup_1.txt", true) << std::endl;
     return 0;
 }
 #endif // __TEST__
