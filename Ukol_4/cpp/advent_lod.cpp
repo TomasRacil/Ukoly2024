@@ -1,8 +1,11 @@
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <vector>
 #include <string>
 #include <cmath>
+
+namespace fs = std::filesystem;
 
 class Lod
 {
@@ -14,7 +17,6 @@ private:
     int wy;      // Waypoint Y souřadnice (relativní k lodi)
 
 public:
-    // Konstruktor
     Lod(int x_start, int y_start, char pocatecni_smer, int wx_start, int wy_start)
         : x(x_start), y(y_start), wx(wx_start), wy(wy_start)
     {
@@ -26,21 +28,26 @@ public:
         }
     }
 
-    // Navigační funkce s kontrolou různých cest
     int naviguj(const std::string& cesta_soubor, bool druhe_reseni)
     {
-        std::ifstream soubor;
-
-        // Pokus o otevření souboru v aktuálním adresáři
-        soubor.open(cesta_soubor);
-        if (!soubor.is_open()) {
-            // Pokud soubor není otevřen, zkusí otevřít s relativní cestou
-            soubor.open("advent_lod/" + cesta_soubor);
+        // Zkontrolujeme a vytvoříme složku a soubory, pokud neexistují
+        std::string slozka = "./advent_lod/";
+        if (!fs::exists(slozka)) {
+            fs::create_directory(slozka);
         }
 
-        // Pokud se soubor stále nepodařilo otevřít, vypíše chybu
-        if (!soubor.is_open()) {
-            std::cerr << "Nepodařilo se otevřít soubor: " << cesta_soubor << std::endl;
+        std::string cesta_k_souboru = slozka + cesta_soubor;
+        if (!fs::exists(cesta_k_souboru)) {
+            std::ofstream novy_soubor(cesta_k_souboru);
+            novy_soubor << "Příklady instrukcí pro navigaci lodě"; // Základní obsah, aby soubor nebyl prázdný
+            novy_soubor.close();
+            std::cout << "Soubor " << cesta_soubor << " byl vytvořen.\n";
+        }
+
+        std::ifstream soubor(cesta_k_souboru);
+        if (!soubor.is_open())
+        {
+            std::cerr << "Nepodařilo se otevřít soubor: " << cesta_k_souboru << std::endl;
             return -1;
         }
 
@@ -50,46 +57,62 @@ public:
             if (instrukce.empty()) continue;
 
             char akce = instrukce[0];
-            int hodnota;
-
-            try {
-                hodnota = std::stoi(instrukce.substr(1));
-            } catch (const std::invalid_argument& e) {
-                std::cerr << "Neplatná instrukce: " << instrukce << std::endl;
-                continue;
-            }
+            int hodnota = std::stoi(instrukce.substr(1));
 
             if (druhe_reseni)
             {
-                // Řešení s waypointem
-                if (akce == 'N') wy += hodnota;
-                else if (akce == 'S') wy -= hodnota;
-                else if (akce == 'E') wx += hodnota;
-                else if (akce == 'W') wx -= hodnota;
+                if (akce == 'N')
+                    wy += hodnota;
+                else if (akce == 'S')
+                    wy -= hodnota;
+                else if (akce == 'E')
+                    wx += hodnota;
+                else if (akce == 'W')
+                    wx -= hodnota;
                 else if (akce == 'L' || akce == 'R')
                 {
-                    int uhel = (akce == 'L') ? hodnota : 360 - hodnota;
-                    uhel = (uhel + 360) % 360;
+                    int uhel_otoceni = (akce == 'L') ? hodnota : 360 - hodnota;
+                    uhel_otoceni = (uhel_otoceni + 360) % 360;
 
                     int puvodni_wx = wx, puvodni_wy = wy;
-                    if (uhel == 90) { wx = -puvodni_wy; wy = puvodni_wx; }
-                    else if (uhel == 180) { wx = -puvodni_wx; wy = -puvodni_wy; }
-                    else if (uhel == 270) { wx = puvodni_wy; wy = -puvodni_wx; }
+                    if (uhel_otoceni == 90)
+                    {
+                        wx = -puvodni_wy;
+                        wy = puvodni_wx;
+                    }
+                    else if (uhel_otoceni == 180)
+                    {
+                        wx = -puvodni_wx;
+                        wy = -puvodni_wy;
+                    }
+                    else if (uhel_otoceni == 270)
+                    {
+                        wx = puvodni_wy;
+                        wy = -puvodni_wx;
+                    }
                 }
-                else if (akce == 'F') {
+                else if (akce == 'F')
+                {
                     x += wx * hodnota;
                     y += wy * hodnota;
                 }
             }
             else
             {
-                if (akce == 'N') y += hodnota;
-                else if (akce == 'S') y -= hodnota;
-                else if (akce == 'E') x += hodnota;
-                else if (akce == 'W') x -= hodnota;
-                else if (akce == 'L') uhel = (uhel - hodnota + 360) % 360;
-                else if (akce == 'R') uhel = (uhel + hodnota) % 360;
-                else if (akce == 'F') {
+                if (akce == 'N')
+                    y += hodnota;
+                else if (akce == 'S')
+                    y -= hodnota;
+                else if (akce == 'E')
+                    x += hodnota;
+                else if (akce == 'W')
+                    x -= hodnota;
+                else if (akce == 'L')
+                    uhel = (uhel - hodnota + 360) % 360;
+                else if (akce == 'R')
+                    uhel = (uhel + hodnota) % 360;
+                else if (akce == 'F')
+                {
                     if (uhel == 0) x += hodnota;
                     else if (uhel == 90) y -= hodnota;
                     else if (uhel == 180) x -= hodnota;
