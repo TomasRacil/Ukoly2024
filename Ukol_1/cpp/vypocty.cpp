@@ -28,10 +28,10 @@ double prumer(const std::vector<int> &cisla)
 
 double median(const std::vector<int> &cisla)
 {
-    if (!cisla.size()%2){
+    if (cisla.size()%2){
         return cisla[cisla.size()/2];
     }
-    return (cisla[cisla.size()/2] + cisla[cisla.size()/2-1])/2;
+    return (cisla[cisla.size()/2] + cisla[cisla.size()/2 - 1])/(double)2;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
