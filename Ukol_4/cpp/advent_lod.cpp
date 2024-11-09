@@ -45,7 +45,7 @@ public:
                 case 'L': otocVlevo(krok); break;
                 case 'F': pohybVpred(krok); break;
                 }
-                return abs(x) + abs(y);
+                
             }
             else
             {
@@ -65,12 +65,14 @@ public:
                 }
                 }
 
-                return abs(x) + abs(y);
+                
             }
 
-            file.close();
+            
         }
-
+        
+        return abs(x) + abs(y);
+        file.close();
     }
 
 private:
