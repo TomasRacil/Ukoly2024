@@ -1,29 +1,37 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
 
 int soucet(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = 0;
+    for (auto i : cisla) {
+        sum += cisla[i];
+    }
+    return sum;
 }
 
 int soucin(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = 0;
+    for (auto i : cisla) {
+        sum *= cisla[i];
+    }
+    return sum;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    return soucet(cisla)/cisla.size();
 }
 
 double median(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    if (cisla.size()%2){
+        return cisla[cisla.size()/2];
+    }
+    return (cisla[cisla.size()/2] + cisla[cisla.size()/2-1])/2;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
@@ -34,7 +42,12 @@ int main()
     std::getline(std::cin, vstup);
 
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    std::stringstream ss(vstup);
+    while(ss.good()) {
+        std::string substr;
+        std::getline(ss, substr, ',');
+        cisla.push_back(std::stoi(substr));
+    }
 
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
