@@ -23,7 +23,6 @@ int soucin(const std::vector<int> &cisla)
 
 double prumer(const std::vector<int> &cisla)
 {
-
     return soucet(cisla)/cisla.size();
 }
 
