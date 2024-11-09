@@ -1,13 +1,14 @@
 def soucet(cisla: list[int]) -> int:
-    
-    return sum(cisla)
+    for k in cisla:
+        soucet = int(k) + soucet
+    return soucet
 
 
 def soucin(cisla: list[int]) -> int:
    
     soucin = 1
-    for cislo in cisla:
-        soucin *= cislo
+    for i in cisla:
+        soucin = int(i) * soucin
     return soucin
 
 
@@ -35,7 +36,3 @@ def main():
     print("Součin:", soucin(cisla))
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
-
-
-if __name__ == "__main__":
-    main()
