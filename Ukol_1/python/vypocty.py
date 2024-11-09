@@ -14,9 +14,10 @@ def soucin(cisla: list[int]) -> int:
 
 
 def prumer(cisla: list[int]) -> float:
-    if len(cisla) == 0:
-       return 0
-    return sum(cisla) / len(cisla)
+    try:
+      prumer = sum(cisla) / len(cisla)
+    except ValueError:
+       print("Error, size is 0")
 
 
 def median(cisla: list[int]) -> float:

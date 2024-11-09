@@ -7,7 +7,7 @@ int soucet(const std::vector<int> &cisla)
 {
     int sum = 0;
     for (auto i : cisla) {
-        sum += cisla[i];
+        sum += i;
     }
     return sum;
 }
@@ -16,13 +16,14 @@ int soucin(const std::vector<int> &cisla)
 {
     int sum = 0;
     for (auto i : cisla) {
-        sum *= cisla[i];
+        sum *= i;
     }
     return sum;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
+
     return soucet(cisla)/cisla.size();
 }
 
