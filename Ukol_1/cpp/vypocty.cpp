@@ -28,6 +28,8 @@ double prumer(const std::vector<int> &cisla)
 
 double median(const std::vector<int> &cisla)
 {
+
+    std::sort(cisla.begin(), cisla.end());
     if (cisla.size()%2){
         return cisla[cisla.size()/2];
     }
@@ -48,8 +50,6 @@ int main()
         std::getline(ss, substr, ',');
         cisla.push_back(std::stoi(substr));
     }
-
-    std::sort(cisla.begin(), cisla.end());
 
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
