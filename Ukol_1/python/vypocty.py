@@ -12,6 +12,8 @@ def soucin(cisla: list[int]) -> int:
 
 
 def prumer(cisla: list[int]) -> float:
+    if len(cisla) == 0:
+       return 0
     return sum(cisla) / len(cisla)
 
 
