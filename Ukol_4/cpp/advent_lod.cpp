@@ -50,6 +50,7 @@ public:
 
             while(getline(file, instruction)) {
                 //pro kazdou instrukci v souboru
+
                 int steps = stoi(instruction.substr(1));
                 int new_x; int new_y;
 
@@ -61,10 +62,10 @@ public:
                         waypoint_y -= steps;
                         break;
                     case 'W':
-                        waypoint_x += steps;
+                        waypoint_x -= steps;
                         break;
                     case 'E':
-                        waypoint_x -= steps;
+                        waypoint_x += steps;
                         break;
                     case 'R':
                         //multiplying 2d vector(point) by rotation matrix:
@@ -84,6 +85,9 @@ public:
                         y += waypoint_y * steps;
                         break;
                 }
+
+                           printf("Ship:\t[%d,%d], ", x,y);                    printf("Waypoint: [%d,%d]\n", waypoint_x, waypoint_y); 
+
             }
         }
         else {
@@ -126,6 +130,7 @@ public:
                 }
             }
         }
+
 
         file.close();
         return abs(x) + abs(y);
