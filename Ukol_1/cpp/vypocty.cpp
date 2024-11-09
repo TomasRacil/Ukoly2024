@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
+#include <algorithm>
 
 int soucet(const std::vector<int> &cisla)
 {
