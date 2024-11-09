@@ -5,6 +5,8 @@ def soucet(cisla: list[int]) -> int:
 
 
 def soucin(cisla: list[int]) -> int:
+  if len(cisla) == 0:
+     return 0
   soucin = 1
   for i in cisla:
     soucin *= i
