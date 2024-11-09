@@ -1,6 +1,9 @@
+#include <cmath>
 #include <iostream>
 #include <fstream>
+#include <math.h>
 #include <string>
+#include <cmath>
 
 
 
@@ -11,16 +14,24 @@ class Lod
 {
 private:
     int x, y;
-    char direction = 0;
+    int direction = 0;      //0 = vychod, 90 sever,....
+    int waypoint_x, waypoint_y;     //souradnice pohybujiciho bodu
+
 
 
 public:
+    //nasleduje konstruktor tridy Lod, ktery inicializuje lod
     Lod(int x, int y, char smer, int cilovy_bod_x, int cilovy_bod_y)
     {
-        //konstruktory
-        this->x = x;
+
+        this->x = x;        //this->x odkazuje na promennou, ktera je clenem tridy, a x na prave strane je parametr konstruktoru
         this->y = y;
-        switch (smer) {
+
+        waypoint_x = cilovy_bod_x;
+        waypoint_y = cilovy_bod_y;
+
+
+        switch (smer) {     //prevod svetovych stran na uhly ve stupnich
         case 'E':
             direction = 0;
             break;
@@ -40,27 +51,70 @@ public:
     }
     int naviguj(std::string cesta_soubor, bool druhe_reseni)
     {
-        ifstream file(cesta_soubor, ifstream::in);
-       if (!file.is_open()) {
-            cerr << "Soubor se neotvrel\n";
+        //bool parametr urcuje, zda se ma lod pohybovat podle zakladni navigace, nebo podle nav.s waypointem
+        //input file  stream, slouzi ke cteni souboru,
+        //file je nazev promenne,
+        //cesta_soubor je parametr typu string, obsahuje cestu k souboru, ktery chceme otevrit, obsahuje instrukce
+        ifstream file(cesta_soubor);
+        //, ifstream::in);
+        if (!file.is_open()) {
+            cerr << "Soubor se neotevrel\n";
             return -1;
         }
 
-            if (file.bad()) {
-                cerr << "Soubor je vadny\n";
-                return -1;
+        if (file.bad()) {
+            cerr << "Soubor je vadny\n";
+            return -1;
 
         }
 
-            string instruction;
+        string instruction;     //promenna pro uchovani instrukce
 
+        if (druhe_reseni) {     //navigace s waypointem, pokud je druhe_reseni == true
 
-            while (getline(file, instruction)){
+            while (getline(file, instruction)) {
+                //ulozi kazdy radek do instrukce
+                int steps = stoi(instruction.substr(1));        //podretezec retezce instrukce
+                int  novy_x, novy_y;        //nove souradnice pro otaceni o urcity uhel
+
+                switch (instruction[0]) {       //prvni znak retezce
+                case 'N':
+                    waypoint_y = waypoint_y + steps;
+                    break;
+                case 'S':
+                    waypoint_y = waypoint_y - steps;
+                    break;
+                case 'W':
+                    waypoint_x = waypoint_x - steps;
+                    break;
+                case 'E':
+                    waypoint_x = waypoint_x + steps;
+                    break;
+                case 'R':
+                    steps *= -1;
+                    novy_x = int(cos(steps * (M_PI/180))) * waypoint_x - int(sin(steps * (M_PI/180))) * waypoint_y;
+                    novy_y = int(sin(steps * (M_PI/180))) * waypoint_x + int(cos(steps * (M_PI/180))) * waypoint_y;
+                    waypoint_x = novy_x;
+                    waypoint_y = novy_y;
+                    break;
+                    case 'L':
+                    novy_x = int(cos(steps * (M_PI/180))) * waypoint_x - int(sin(steps * (M_PI/180))) * waypoint_y;
+                    novy_y = int(sin(steps * (M_PI/180))) * waypoint_x + int(cos(steps * (M_PI/180))) * waypoint_y;
+                    waypoint_x = novy_x;
+                    waypoint_y = novy_y;
+                    break;
+                case 'F':
+                    x += waypoint_x * steps;
+                    y += waypoint_y * steps;
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (getline(file, instruction)) {
                 int steps = stoi(instruction.substr(1));
-
-
-
-
 
                 switch (instruction[0]) {
                 case 'N':
@@ -102,16 +156,21 @@ public:
 
 
                 }
-
-                return abs(x) + abs(y);
-
-
-
             }
-
         }
 
-    };
+        file.close();
+
+
+        return abs(x) + abs(y);
+
+
+
+
+
+    }
+
+};
 
 #ifndef __TEST__
 int main()
