@@ -14,7 +14,7 @@ int soucet(const std::vector<int> &cisla)
 
 int soucin(const std::vector<int> &cisla)
 {
-    int sum = 0;
+    int sum = 1;
     for (auto i : cisla) {
         sum *= i;
     }
