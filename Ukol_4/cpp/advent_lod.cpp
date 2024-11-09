@@ -4,15 +4,84 @@
 #include <cmath>
 using namespace std;
 
+//macro that converts degrees to radians
 #define DEG_TO_RAD(deg) (deg * (M_PI / 180))
 
-class Lod
-{
+class Lod {
 private:
     int x=0,y=0;                //position of the ship
-    int direction = 0;          //direction in degrees
+    int direction = 0;          //direction of the ship represented in degrees
 
     int waypoint_x, waypoint_y; //position of the waypoint
+
+    void rotate_waypoint(int angle) {
+        //multiplying 2d vector by rotation matrix:
+        //  (cos(a)*x - sin(a)*y)
+        //  (sin(a)*x + cos(a)*y)
+        //where a is angle of rotation around origin
+        //That's why you need to know math...
+        int new_x = int(cos(DEG_TO_RAD(angle))) * waypoint_x - int(sin(DEG_TO_RAD(angle))) * waypoint_y;
+        int new_y = int(sin(DEG_TO_RAD(angle))) * waypoint_x + int(cos(DEG_TO_RAD(angle))) * waypoint_y;
+        waypoint_x = new_x; waypoint_y = new_y;
+    }
+
+
+    //moves waypoint or ship, depending on druhe_reseni
+    void move(bool druhe_reseni, int steps, char instruction) {
+
+        //difference in x and y coordinates
+        int dx=0,dy=0;
+
+        //set dx, dy
+        switch(instruction) {
+            case 'N':
+                dy = steps;
+                break;
+            case 'S':
+                dy = -steps;
+                break;
+            case 'W':
+                dx = -steps;
+                break;
+            case 'E':
+                dx = steps;
+                break;
+            case 'F':
+                if (druhe_reseni) {
+                    //move ship and return, so the waypoint position isn't changed
+                    x += waypoint_x * steps;
+                    y += waypoint_y * steps;
+                    return;
+                }
+                else {
+                    //set dx and dy according to current direction of the ship
+                    switch(direction) {
+                        case 90:
+                            dy = steps;
+                            break;
+                        case 270:
+                            dy = -steps;
+                            break;
+                        case 0:
+                            dx = steps;
+                            break;
+                        case 180:
+                            dx = -steps;
+                    }
+                }
+        }
+
+        //update coordinates of ship or waypoint
+        if (druhe_reseni) {
+            waypoint_x += dx;
+            waypoint_y += dy;
+        }
+        else {
+            x += dx;
+            y += dy;
+        }
+    }
+
 public:
     Lod(int x, int y, char smer, int cilovy_bod_x, int cilovy_bod_y) : x(x), y(y), waypoint_x(cilovy_bod_x), waypoint_y(cilovy_bod_y)
     {
@@ -32,6 +101,7 @@ public:
     }
     int naviguj(std::string cesta_soubor, bool druhe_reseni)
     {
+        //open the file, return -1 of the opening fails
         ifstream file(cesta_soubor, ifstream::in);
         if (!file.is_open()) {
             cerr << "Error opening file\n";
@@ -42,95 +112,40 @@ public:
             return -1;
         }
         
-        //store instruction read from file
+        //string to store instruction read from file
         string instruction;
 
-        if (druhe_reseni) {
-
-
+            //for each instruction in the file
             while(getline(file, instruction)) {
-                //pro kazdou instrukci v souboru
 
+                //convert the number after instruction letter to integer and assign it to steps variable
                 int steps = stoi(instruction.substr(1));
-                int new_x; int new_y;
 
                 switch(instruction[0]) {
-                    case 'N':
-                        waypoint_y += steps;
-                        break;
-                    case 'S':
-                        waypoint_y -= steps;
-                        break;
-                    case 'W':
-                        waypoint_x -= steps;
-                        break;
-                    case 'E':
-                        waypoint_x += steps;
-                        break;
-                    case 'R':
-                        //multiplying 2d vector(point) by rotation matrix:
-                        //  (cos(a)*x - sin(a)*y)
-                        //  (sin(a)*x + cos(a)*y)
-                        //where a is angle of rotation around origin
-                        
-                        //flip steps sign if rotation is clockwise, then rotate (no break)
+                    case 'R':      
+                        //flip steps (=rotation angle) sign if rotation is clockwise, then rotate
                         steps *= -1;
-                    case 'L':
-                        new_x = int(cos(DEG_TO_RAD(steps))) * waypoint_x - int(sin(DEG_TO_RAD(steps))) * waypoint_y;
-                        new_y = int(sin(DEG_TO_RAD(steps))) * waypoint_x + int(cos(DEG_TO_RAD(steps))) * waypoint_y;
-                        waypoint_x = new_x; waypoint_y = new_y;
-                        break;
-                    case 'F':
-                        x += waypoint_x * steps;
-                        y += waypoint_y * steps;
-                        break;
-                }
 
-            }
-        }
-        else {
-            while(getline(file, instruction)) {
-                int steps = stoi(instruction.substr(1));
-            
-                switch(instruction[0]) {
-                    case 'N':
-                        y += steps;
-                        break;
-                    case 'S':
-                        y -= steps;
-                        break;
-                    case 'E':
-                        x += steps;
-                        break;
-                    case 'W':
-                        x -= steps;
-                        break;
-                    case 'R':
-                        steps *= -1;
+                        //surpress -Wimplicit-fallthrough option
+                        [[fallthrough]];
                     case 'L':
-                        direction = (360 + (direction + steps)) % 360;
-                        break;
-                    case 'F':
-                        switch(direction) {
-                            case 90:
-                                y += steps;
-                                break;
-                            case 270:
-                                y -= steps;
-                                break;
-                            case 0:
-                                x += steps;
-                                break;
-                            case 180:
-                                x -= steps;
+                        //rotate waypoint or ship
+                        if (druhe_reseni) {
+                            rotate_waypoint(steps);
+                        }
+                        else {
+                            //rotate ship, rotation is capped in interval <0,360> degrees
+                            direction = (360 + (direction + steps)) % 360;
                         }
                         break;
+                    default:
+                        //move ship or waypoint
+                        move(druhe_reseni, steps, instruction[0]);
                 }
             }
-        }
-
-
         file.close();
+
+        //return manhattan distance
         return abs(x) + abs(y);
 
     }
