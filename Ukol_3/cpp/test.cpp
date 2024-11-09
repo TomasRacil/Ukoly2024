@@ -68,7 +68,7 @@ TEST(LinkedListTest, DeleteAtIndex)
     insertAtEnd(&head, 1);
     insertAtEnd(&head, 2);
     insertAtEnd(&head, 3);
-    deleteAtIndex(head, 2); // Smazání z indexu 2 (třetí prvek)
+    deleteAtIndex(&head, 2); // Smazání z indexu 2 (třetí prvek)
     ASSERT_EQ(1, head->data);
     ASSERT_EQ(2, head->next->data);
     ASSERT_EQ(nullptr, head->next->next);
@@ -107,4 +107,10 @@ TEST(LinkedListTest, OperatorPrint)
     std::stringstream ss;
     ss << head;
     ASSERT_EQ("1 2 3", ss.str());
+}
+
+int main(int argc, char** argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
