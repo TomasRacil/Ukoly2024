@@ -49,6 +49,8 @@ int main()
         cisla.push_back(std::stoi(substr));
     }
 
+    std::sort(cisla.begin(), cisla.end());
+
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
     std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
