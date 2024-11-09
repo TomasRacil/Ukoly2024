@@ -86,8 +86,6 @@ public:
                         break;
                 }
 
-                           printf("Ship:\t[%d,%d], ", x,y);                    printf("Waypoint: [%d,%d]\n", waypoint_x, waypoint_y); 
-
             }
         }
         else {
