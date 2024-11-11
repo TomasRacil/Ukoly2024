@@ -49,9 +49,24 @@ int main()
     std::vector<int> cisla;
     std::stringstream ss(vstup);
     std::string temp;
+
     while (std::getline(ss, temp, ',')) {
         cisla.push_back(std::stoi(temp));
     }
+
+     if(vstup.find_first_not_of("0123456789,") != std::string::npos){
+        std::cout << "Nezadal jste cislo." << std::endl;
+        return 1;
+    }
+    while (std::getline(ss, temp, ',')) {
+        cisla.push_back(std::stoi(temp));
+    }
+    
+     if(cisla.size() == 0){
+        std::cout << "Nezadal jste zadne cislo." << std::endl;
+        return 1;
+    }
+
 
     std::cout << "Soucet: " << soucet(cisla) << std::endl;
     std::cout << "Soucin: " << soucin(cisla) << std::endl;
@@ -59,4 +74,7 @@ int main()
     std::cout << "Median: " << median(cisla) << std::endl;
 
     return 0;
+
 }
+
+
