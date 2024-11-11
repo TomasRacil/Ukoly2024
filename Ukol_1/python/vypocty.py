@@ -10,8 +10,10 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
+
     if not cisla:
         raise ValueError("Seznam čísel je prázdný.")
+
     return sum(cisla)
 
 
@@ -25,8 +27,10 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
+
     if not cisla:
         raise ValueError("Seznam čísel je prázdný.")
+
     return math.prod(cisla)
 
 
@@ -39,6 +43,7 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
+
     if not cisla:
         raise ValueError("Seznam čísel je prázdný.")
 
@@ -55,8 +60,11 @@ def median(cisla: list[int]) -> float:
       Medián čísel.
     """
     cisla.sort()
+
+
     if not cisla:
         raise ValueError("Seznam čísel je prázdný.")  # Teoreticky by tu stačil jen tento raie VError, ale pokud chápu testy správně tak si volají funkci jako takovou proto je toto v každé funkci
+
     delka = len(cisla)
     if delka % 2 == 0:
         return (cisla[delka // 2 - 1] + cisla[delka // 2]) / 2
