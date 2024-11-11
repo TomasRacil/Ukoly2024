@@ -1,46 +1,71 @@
-// #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <algorithm>  
 
-int soucet(const std::vector<int> &cisla)
+int soucet(const std::vector<int>& cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = 0;
+    for (int num : cisla)
+    {
+        sum += num;
+    }
+    return sum;
 }
 
-int soucin(const std::vector<int> &cisla)
+int soucin(const std::vector<int>& cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int product = 1;
+    for (int num : cisla)
+    {
+        product *= num;
+    }
+    return product;
 }
 
-double prumer(const std::vector<int> &cisla)
+double prumer(const std::vector<int>& cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = soucet(cisla);
+    return static_cast<double>(sum) / cisla.size();
 }
 
-double median(const std::vector<int> &cisla)
+double median(std::vector<int> cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    
+    std::sort(cisla.begin(), cisla.end());
+
+    int n = cisla.size();
+    if (n % 2 == 0)
+    {
+        
+        return (cisla[n / 2 - 1] + cisla[n / 2]) / 2.0;
+    }
+    else
+    {
+        
+        return cisla[n / 2];
+    }
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::cout << "Zadejte seznam cisel oddlenych carkou: ";
     std::string vstup;
-    std::getline(std::cin, vstup);
+    std::getline(std::cin, vstup);  
 
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    std::stringstream ss(vstup);  
+    std::string hodnota;
+   
+    while (std::getline(ss, hodnota, ','))
+    {
+        cisla.push_back(std::stoi(hodnota));  
+    }
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+    std::cout << "Soucet: " << soucet(cisla) << std::endl;
+    std::cout << "Soucin: " << soucin(cisla) << std::endl;
+    std::cout << "Prumerna hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "Median: " << median(cisla) << std::endl;
 
     return 0;
 }
-#endif // __TEST__
