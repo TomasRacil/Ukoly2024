@@ -57,36 +57,29 @@ string caesar_sifra(const string &text, int posun, bool sifrovat)
 string vigener_sifra(const string &text, const string &klic, bool sifrovat)
 {
   string upravenytext = text;
-  int posun = 0;
-
+  char x = 0;
   // sifruju
   if(sifrovat == true){
     for(int i = 0; i < text.length(); i++){
-      if(isupper(klic[i])){
-        posun = klic[i] - 65;
-      }else{  
-        posun = klic[i] - 97;
-      }
-      if(isalpha(text[i] + posun)){
-        upravenytext[i] = text[i] + posun;
+      if(isupper(text[i])){
+        x = 65;
       }else{
-        upravenytext[i] = text[i] + posun - 26;
+        x = 97;
       }
+      int posun = klic[i % klic.size()] - x;
+      upravenytext[i] = (text[i] - x + posun + 26) % 26 + x;
     }
-
+  }
   // desifruju
-  }else{
+  if(sifrovat == false){
     for(int i = 0; i < text.length(); i++){
-      if(isupper(klic[i])){
-        posun = klic[i] - 65;
-      }else{  
-        posun = klic[i] - 97;
-      }
-      if(isalpha(text[i] - posun)){
-        upravenytext[i] = text[i] - posun;
+      if(isupper(text[i])){
+        x = 65;
       }else{
-        upravenytext[i] = text[i] - posun + 26;
+        x = 97;
       }
+      int posun = klic[i % klic.size()] - x;
+      upravenytext[i] = (text[i] - x - posun + 26) % 26 + x;
     }
   }
   return upravenytext;
@@ -126,7 +119,7 @@ int main(){
   cout << sifrovany_text_caesar << endl;
 
   // Šifrování textu pomocí Vigenerovy šifry
-  string sifrovany_text_vigener = vigener_sifra(vstupni_text, "MNOPQRSTUVWZABCDEFGHIJKLabcdefghijklmnoprqrstuwz", true);
+  string sifrovany_text_vigener = vigener_sifra(vstupni_text, "hlgu", true);
   cout << sifrovany_text_vigener << endl;
 
   // Šifrování textu pomocí XOR šifry
@@ -140,7 +133,7 @@ int main(){
 
   // Dešifrování textů
   cout << "Dešifrovany text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << endl;
-  cout << "Dešifrovany text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "MNOPQRSTUVWZABCDEFGHIJKLabcdefghijklmnoprqrstuwz", false) << endl;
+  cout << "Dešifrovany text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "hlgu", false) << endl;
   cout << "Dešifrovany text pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << endl;
 
   return 0;
