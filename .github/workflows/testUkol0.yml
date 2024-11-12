@@ -25,7 +25,9 @@ jobs:
     - name: Run Python tests
       run: cd Ukol_0/python && python -m unittest discover || exit 1
   cpp_test:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
     - name: Install C++ dependencies
