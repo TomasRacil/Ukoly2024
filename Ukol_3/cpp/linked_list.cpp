@@ -125,7 +125,7 @@ void deleteAtBeginning(Node** head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node** head)
 {
-    if (*head) { // ošetření
+    if (!*head) { // ošetření
     return;
 }
 Node* rem = *head;
