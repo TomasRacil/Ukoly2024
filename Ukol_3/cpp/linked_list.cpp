@@ -128,7 +128,7 @@ void deleteAtEnd(Node** head)
     if (*head == nullptr) { // ošetření
         return;
     }
-    if (*head->next == nullptr) {delete *head return;} // poslední prvek je i první prvek - odstranění a ukončení
+    if (*head->next == nullptr) {delete *head; return;} // poslední prvek je i první prvek - odstranění a ukončení
     Node* rem = *head;
     while (rem->next->next != nullptr) { // pokud existuje předposlední prvek
         rem = rem->next; // uložit další dokud existuje navazující instance na souseda procházené instance
