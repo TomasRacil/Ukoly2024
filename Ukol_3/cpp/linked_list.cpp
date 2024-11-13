@@ -240,7 +240,7 @@ std::ostream& operator<<(std::ostream& os, Node* head)
 {
     Node* rem = head;
     while (rem) {
-        os << rem->data;
+        os << rem->data + " ";
         rem = rem->next;
     }
     return os;
