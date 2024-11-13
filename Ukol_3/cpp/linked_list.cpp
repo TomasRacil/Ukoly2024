@@ -175,7 +175,7 @@ std::ostream &operator<<(std::ostream &os, Node *head) {
     while (temp != nullptr) {
 
         if(!first){
-            os <<"";
+            os <<" ";
         }
         os << temp->data;
         first = false;
