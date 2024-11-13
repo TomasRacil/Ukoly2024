@@ -171,8 +171,14 @@ void deleteList(Node **head) {
 // Operator pro tisk dat
 std::ostream &operator<<(std::ostream &os, Node *head) {
     Node *temp = head;
+    bool first = true;
     while (temp != nullptr) {
-        os << temp->data << " ";
+
+        if(!first){
+            os <<"";
+        }
+        os << temp->data;
+        first = false;
         temp = temp->next;
     }
     return os;
