@@ -110,8 +110,9 @@ void deleteAtIndex(Node **head, int index)
     }
     if (index == 0)
     {
-        deleteAtBeginning(head);
-        return;
+        Node *temp = *head;
+        *head = (*head)->next;      // posuneme prvni ze seznamu na dalsi uzel
+        delete temp;
     }
     Node *temp = *head;
     for (int i = 0; i < index - 1 && temp != nullptr; i++)
