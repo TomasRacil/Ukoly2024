@@ -1,61 +1,42 @@
-def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
 
-    Args:
-      cisla: Seznam čísel.
+def soucet(cisla):
+    suma= 0
+    for cislo in cisla:
+        suma += cislo
+    return suma
 
-    Returns:
-      Součet čísel.
-    """
-    pass
+def soucin(cisla):
+    if len(cisla) == 0:
+        return 0
+    soucin= 1
+    for cislo in cisla:
+        soucin *= cislo
+    return soucin
 
+def prumer(cisla):
+    if len(cisla) == 0:
+        return 0
+    suma= soucet(cisla)
+    return suma / len(cisla)
 
-def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
-
-
-def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
-
-
-def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Medián čísel.
-    """
-    pass  # TODO: Implementujte funkci
-
+def median(cisla):
+    if len(cisla) == 0:
+        return 0
+    cisla.sort()
+    n = len(cisla)
+    if n % 2 == 0:
+        return (cisla[n // 2 -1] + cisla[n // 2]) / 2
+    else:
+        return cisla[n // 2]
 
 def main():
-    """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
-    vstup = input("Zadejte seznam čísel oddělených čárkou: ")
+    vstup = input("zadej cisla oddelena carkama: ")
     cisla = [int(cislo) for cislo in vstup.split(",")]
 
-    print("Součet:", soucet(cisla))
-    print("Součin:", soucin(cisla))
-    print("Průměrná hodnota:", prumer(cisla))
-    print("Medián:", median(cisla))
-
+    print("soucet:", soucet(cisla))
+    print("soucin:", soucin(cisla))
+    print("prumerna hodnota :", prumer(cisla))
+    print("median:", median(cisla))
 
 if __name__ == "__main__":
     main()
