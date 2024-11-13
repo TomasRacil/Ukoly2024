@@ -62,8 +62,12 @@ int main()
         cisla.push_back(std::stoi(temp));
     }
     
-     if(cisla.size() == 0){
-        std::cout << "Nezadal jste zadne cislo." << std::endl;
+    try {
+        if (cisla.size() == 0) {
+            throw std::invalid_argument("Seznam cisel je prazdny.");
+        }
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
         return 1;
     }
 
