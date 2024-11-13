@@ -125,12 +125,12 @@ void deleteAtBeginning(Node** head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node** head)
 {
-    if (*head == nullptr) { // ošetření
+    if (*head) { // ošetření
     return;
 }
 Node* rem = *head;
 
-if (rem->next == nullptr) { delete head; return; } // poslední prvek je i první prvek - odstranění a ukončení
+if (rem->next == nullptr) { delete *head; return; } // poslední prvek je i první prvek - odstranění a ukončení
 while (rem->next->next != nullptr) { // pokud existuje předposlední prvek
     rem = rem->next; // uložit další dokud existuje navazující instance na souseda procházené instance
 }
