@@ -15,13 +15,13 @@ def soucin(cisla):
 
 def prumer(cisla):
     if len(cisla) == 0:
-        return 0
+        raise ValueError("Seznam cisel je prazdny.")
     suma= soucet(cisla)
     return suma / len(cisla)
 
 def median(cisla):
     if len(cisla) == 0:
-        return 0
+        raise ValueError("Seznam cisel je prazdny")
     cisla.sort()
     n = len(cisla)
     if n % 2 == 0:
