@@ -92,18 +92,15 @@ void deleteAtEnd(Node **head) {
 }
 
 // Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node **head, int index) {
-    if (*head == nullptr) {
-        std::cout << "Seznam je prazdny.\n";
-        return;
-    }
+void deleteAtIndex(Node *head, int index) {
+
     if (index == 0) {
-        Node *temp = *head;
-        *head = (*head)->next;      // posuneme prvni ze seznamu na dalsi uzel
+        Node *temp = head;
+        head = (head)->next;      // posuneme prvni ze seznamu na dalsi uzel
         delete temp;
         return;
     } else {
-        Node *temp = *head;
+        Node *temp = head;
         for (int i = 0; i < index - 1; i++) {
             if (temp == nullptr) {
                 std::cout << "Index mimo rozsah" << std::endl;
@@ -210,7 +207,7 @@ int main() {
     deleteAtEnd(&head);
     std::cout << "Seznam po smazani prvku: " << head << std::endl;
 
-    deleteAtIndex(&head, 1);
+    deleteAtIndex(head, 1);
     std::cout << "Seznam po smazani prvku: " << head << std::endl;
 
     deleteList(&head);
