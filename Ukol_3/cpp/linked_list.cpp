@@ -126,7 +126,7 @@ void deleteAtBeginning(Node** head)
 void deleteAtEnd(Node** head){
 
 if ((*head)->next == nullptr) {
-deleteAtBeggining(head);
+deleteAtBeginning(head);
     return;
 } // poslední prvek je i první prvek - odstranění a ukončení
 Node* rem = *head;
