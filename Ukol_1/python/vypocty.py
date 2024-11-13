@@ -5,16 +5,22 @@ def soucet(cisla: List[int]) -> int:
     return sum(cisla)
 
 def soucin(cisla: List[int]) -> int:
+    if not cisla:
+        return 0
     soucin = 1
     for cislo in cisla:
         soucin *= cislo
     return soucin
 
 def prumer(cisla: List[int]) -> float:
-    return sum(cisla) / len(cisla) if cisla else 0
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return sum(cisla) / len(cisla)
 
 def median(cisla: List[int]) -> float:
-    return statistics.median(cisla) if cisla else 0
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return statistics.median(cisla)
 
 def main():
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
