@@ -104,6 +104,10 @@ void deleteAtEnd(Node **head)
 // Funkce pro smazani uzlu na indexu
 void deleteAtIndex(Node **head, int index)
 {
+    if (*head == nullptr) {
+        std::cout << "Seznam je prazdny.\n";
+        return;
+    }
     if (index == 0)
     {
         deleteAtBeginning(head);
