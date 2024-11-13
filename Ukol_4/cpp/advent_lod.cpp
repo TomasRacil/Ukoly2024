@@ -9,7 +9,7 @@ class Lod
 private:
     int x;
     int y;
-    char stupne;
+    int stupne;
     int waypoint_x;
     int waypoint_y;
     

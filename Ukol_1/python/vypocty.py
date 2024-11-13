@@ -1,4 +1,6 @@
-def soucet(cisla: list[int]) -> int:
+from typing import List
+
+def soucet(cisla: List[int]) -> int:
     """Vypočítá součet čísel v seznamu.
 
     Args:
@@ -7,10 +9,10 @@ def soucet(cisla: list[int]) -> int:
     Returns:
       Součet čísel.
     """
-    pass
+    return sum(cisla)
 
 
-def soucin(cisla: list[int]) -> int:
+def soucin(cisla: List[int]) -> int:
     """Vypočítá součin čísel v seznamu.
 
     Args:
@@ -19,10 +21,13 @@ def soucin(cisla: list[int]) -> int:
     Returns:
       Součin čísel.
     """
-    pass  # TODO: Implementujte funkci
+    result = 1
+    for num in cisla:
+        result *= num
+    return result
 
 
-def prumer(cisla: list[int]) -> float:
+def prumer(cisla: List[int]) -> float:
     """Vypočítá průměrnou hodnotu čísel v seznamu.
 
     Args:
@@ -31,10 +36,10 @@ def prumer(cisla: list[int]) -> float:
     Returns:
       Průměrná hodnota čísel.
     """
-    pass
+    return sum(cisla) / len(cisla) if cisla else 0.0
 
 
-def median(cisla: list[int]) -> float:
+def median(cisla: List[int]) -> float:
     """Vypočítá medián čísel v seznamu.
 
     Args:
@@ -43,7 +48,15 @@ def median(cisla: list[int]) -> float:
     Returns:
       Medián čísel.
     """
-    pass  # TODO: Implementujte funkci
+    if not cisla:
+        return 0.0
+    sorted_cisla = sorted(cisla)
+    n = len(sorted_cisla)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_cisla[mid - 1] + sorted_cisla[mid]) / 2.0
+    else:
+        return sorted_cisla[mid]
 
 
 def main():

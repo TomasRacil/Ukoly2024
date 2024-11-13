@@ -121,35 +121,29 @@ std::string bytesToHex(const std::string &bytes) {
     return oss.str();
 }
 
-// Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  // Implementace XOR šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
     std::string result;
     size_t keyLength = klic.length();
-  if (sifrovat==true){
-    // Pro každý znak v datech aplikujeme XOR s odpovídajícím znakem klíče
-    for (size_t i = 0; i < text.length(); ++i) {
-        char encryptedChar = text[i] ^ klic[i % keyLength];
 
-        // Převod šifrovaného znaku na hexadecimální formát
-        std::ostringstream oss;
-        oss << std::hex << std::setw(2) << std::setfill('0') << (static_cast<int>(encryptedChar) & 0xFF);
-        result += oss.str();
+    if (sifrovat) {
+        // Šifrování: XOR každého znaku a konverze na hexadecimální řetězec
+        for (size_t i = 0; i < text.length(); ++i) {
+            char encryptedChar = text[i] ^ klic[i % keyLength];
+            std::ostringstream oss;
+            oss << std::hex << std::setw(2) << std::setfill('0') << (static_cast<int>(encryptedChar) & 0xFF);
+            result += oss.str();
+        }
+    } else {
+        // Dešifrování: převede hex na znaky a aplikuje XOR s klíčem
+        std::string bytes = hexToBytes(text);
+        for (size_t i = 0; i < bytes.length(); ++i) {
+            result += bytes[i] ^ klic[i % keyLength];
+        }
     }
-  }
-  else if(sifrovat==false){
-    std::string bytes = hexToBytes(text);
-    std::string result;
-    for (size_t i = 0; i < bytes.length(); ++i) {
-        result += bytes[i] ^ klic[i % klic.length()];
-    }
-    return result;
-  }
 
     return result;
-  }
+}
 
 
 // Funkce pro uložení řetězce do souboru
