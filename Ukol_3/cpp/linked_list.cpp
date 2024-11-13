@@ -238,12 +238,18 @@ void deleteList(Node** head)
 // Operátor pro tisk dat
 std::ostream& operator<<(std::ostream& os, Node* head)
 {
-    Node* rem = head;
-    while (rem) {
-        os << rem->data << " ";
-        rem = rem->next;
-    }
-    return os;
+Node* rem = head;
+while (rem) {
+        if (rem->next) {
+            os << rem->data << " ";
+            rem = rem->next;
+        }
+        else {
+            os << rem->data;
+            rem = rem->next;
+        }
+}
+return os;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
