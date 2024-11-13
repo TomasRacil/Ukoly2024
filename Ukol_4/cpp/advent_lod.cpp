@@ -47,7 +47,7 @@ private:
     }
 
     void navigujBezWaypointu(ifstream& file) {
-        int smer = 0; // 0 = V�chod, 90 = Sever, 180 = Z�pad, 270 = Jih
+        int smer = 0; 
         Instrukce instr;
         while (nactiInstrukci(file, instr)) {
             switch (instr.akce) {
@@ -70,7 +70,7 @@ private:
     }
 
     void navigujSWaypointem(ifstream& file) {
-        int wx = cilovy_bod_x, wy = cilovy_bod_y; // Waypoint za��n� na zadan�ch sou�adnic�ch
+        int wx = cilovy_bod_x, wy = cilovy_bod_y; 
         Instrukce instr;
         while (nactiInstrukci(file, instr)) {
             switch (instr.akce) {
@@ -95,7 +95,7 @@ public:
     int naviguj(const string& cesta_soubor, bool druhe_reseni) {
         ifstream file(cesta_soubor);
         if (!file.is_open()) {
-            cerr << "Nepoda�ilo se otev��t soubor: " << cesta_soubor << endl;
+            cerr << "Nepodarilo se otevrit soubor: " << cesta_soubor << endl;
             return -1;
         }
 
@@ -114,9 +114,9 @@ public:
 #ifndef __TEST__
 int main() {
     Lod lod(0, 0, 'E', 10, 1);
-    cout << "Manhattansk� vzd�lenost bez waypointu: " << lod.naviguj("vstup_1.txt", false) << endl;
+    cout << "Manhattanska vzdalenost bez waypointu: " << lod.naviguj("vstup_1.txt", false) << endl;
     Lod lod2(0, 0, 'E', 10, 1);
-    cout << "Manhattansk� vzd�lenost s waypointem: " << lod2.naviguj("vstup_1.txt", true) << endl;
+    cout << "Manhattanska vzdalenost s waypointem: " << lod2.naviguj("vstup_1.txt", true) << endl;
     return 0;
 }
 #endif // __TEST__
