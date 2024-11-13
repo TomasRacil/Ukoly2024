@@ -14,11 +14,19 @@ def prumer(cisla: List[int]) -> float:
     return sum(cisla) / len(cisla) if cisla else 0
 
 def median(cisla: List[int]) -> float:
-    return statistics.median(cisla)
+    return statistics.median(cisla) if cisla else 0
 
 def main():
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
-    cisla = [int(cislo) for cislo in vstup.split(",")]
+    try:
+        cisla = [int(cislo) for cislo in vstup.split(",")]
+    except ValueError:
+        print("Chyba: Vstup musí obsahovat pouze celá čísla oddělená čárkami.")
+        return
+
+    if not cisla:
+        print("Chyba: Seznam čísel nesmí být prázdný.")
+        return
 
     print("Součet:", soucet(cisla))
     print("Součin:", soucin(cisla))
