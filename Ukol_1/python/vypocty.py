@@ -15,8 +15,8 @@ return soucin
     
 
 def prumer(cisla: list[int]) -> float:
-if len(cisla) == 0:
-    raise ValueError
+   if len(cisla) == 0:
+      raise ValueError
 
 return sum(cisla) / len(cisla)
 
