@@ -182,6 +182,7 @@ std::ostream& operator<<(std::ostream& os, Node* head)
         os << current->data;
         if (current->next != nullptr) {
             os << " ";
+
         }
         current = current->next;
     }
