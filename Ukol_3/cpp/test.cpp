@@ -68,7 +68,7 @@ TEST(LinkedListTest, DeleteAtIndex)
     insertAtEnd(&head, 1);
     insertAtEnd(&head, 2);
     insertAtEnd(&head, 3);
-    deleteAtIndex(&head, 2); // Smazání z indexu 2 (třetí prvek)
+    deleteAtIndex(head, 2); // Smazání z indexu 2 (třetí prvek)
     ASSERT_EQ(1, head->data);
     ASSERT_EQ(2, head->next->data);
     ASSERT_EQ(nullptr, head->next->next);
