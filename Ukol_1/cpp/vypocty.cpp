@@ -1,67 +1,66 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <limits>
 #include <string>
 #include <sstream>
+#include <algorithm>
+using namespace std;
 
-int soucet(const std::vector<int> &cisla)
+int soucet(const vector<int>& cisla)
 {
-    int soucet = 0;
-    for(int num : cisla)
-    {
-        soucet += num;
+    int sum = 0;
+    for (int num : cisla) {
+        sum += num;
     }
-    return soucet;
+    return sum;
 }
 
-int soucin( std::vector<int> &cisla)
+int soucin(const vector<int>& cisla)
 {
-    
-    int soucin = 1;
-    for(int num : cisla)
-    {
-        soucin *= num;
+    int product = 1;
+    for (int num : cisla) {
+        product *= num;
     }
-    return soucin;
+    return product;
 }
 
-double prumer(std::vector<int> &cisla)
+double prumer(const vector<int>& cisla)
 {
-    int n = cisla.size();
-    return (n>0)?static_cast<double>(soucet(cisla)) / n : 0;
+    if (cisla.empty()) return 0;
+    return static_cast<double>(soucet(cisla)) / cisla.size();
 }
 
-double median(std::vector<int> &cisla)
+double median(const vector<int>& cisla)
 {
-    sort(cisla.begin(), cisla.end());         // seradi cisla podle velikosti
-	int n = cisla.size();
-    if(n == 0) return 0;
-	if (n % 2 != 0)
-	{
-		return cisla[n / 2];
-	}
-
-	else
-		return (cisla[n / 2 - 1] + cisla[n / 2]) / 2.0;
-    
+    if (cisla.empty()) return 0;
+    vector<int> sorted = cisla;
+    sort(sorted.begin(), sorted.end());
+    size_t size = sorted.size();
+    if (size % 2 == 0) {
+        return (sorted[size / 2 - 1] + sorted[size / 2]) / 2.0;
+    } else {
+        return sorted[size / 2];
+    }
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
-    std::string vstup;
-    std::getline(std::cin, vstup);
+    cout << "Zadejte seznam čísel oddělených čárkou: ";
+    string vstup;
+    getline(cin, vstup);
 
-    std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    vector<int> cisla;
+    stringstream ss(vstup);
+    string temp;
+    while (getline(ss, temp, ',')) {
+        cisla.push_back(stoi(temp));
+    }
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+    cout << "Součet: " << soucet(cisla) << endl;
+    cout << "Součin: " << soucin(cisla) << endl;
+    cout << "Průměrná hodnota: " << prumer(cisla) << endl;
+    cout << "Medián: " << median(cisla) << endl;
 
     return 0;
 }
