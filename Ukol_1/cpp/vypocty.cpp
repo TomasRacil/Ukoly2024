@@ -8,7 +8,7 @@ using namespace std;
 int soucet(const std::vector<int> &cisla)
 {
     int sum = 0;
-    for (int i = 0; i<cisla.size; i++){
+    for (int i = 0; i<cisla.size(); i++){
         sum+= i;
     }
     return sum;
@@ -17,7 +17,7 @@ int soucet(const std::vector<int> &cisla)
 int soucin(const std::vector<int> &cisla)
 {
     int sum = 1;
-    for (int i = 1; i<cisla.size; i++){
+    for (int i = 1; i<cisla.size(); i++){
         sum*= i;
     }
         return sum;
@@ -52,7 +52,7 @@ int main()
     std::vector<int> cisla;
     // TODO: Načtěte čísla ze vstupu do vektoru cisla
 
-    for(int i = 0; i<vstup.lenght(); i++){
+    for(int i = 0; i<vstup.size(); i++){
         if(isdigit(vstup[i])){
             cisla.push_back(vstup[i] - '0');
         }
