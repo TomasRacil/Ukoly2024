@@ -2,49 +2,44 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
-#include <algorithm>  // Pro std::sort
+#include <algorithm>  
 
-int soucet(const std::vector<int> &cisla)       //hello
+int soucet(const std::vector<int>& cisla)
 {
     return std::accumulate(cisla.begin(), cisla.end(), 0);
 }
 
-int soucin(const std::vector<int> &cisla)
+int soucin(const std::vector<int>& cisla)
 {
-    return std::accumulate(cisla.begin(), cisla.end(), 0, std::multiplies<int>());
+    return std::accumulate(cisla.begin(), cisla.end(), 1, std::multiplies<int>());
 }
 
-double prumer(const std::vector<int> &cisla)
+double prumer(const std::vector<int>& cisla)
 {
     if (cisla.empty()) {
-        return 0; 
+        throw std::invalid_argument("Prázdný seznam");
     }
-
     int soucet = std::accumulate(cisla.begin(), cisla.end(), 0);
-
     return static_cast<double>(soucet) / cisla.size();
 }
 
-double median(const std::vector<int> &cisla)
+double median(const std::vector<int>& cisla)
 {
     if (cisla.empty()) {
-        return 0; 
+        throw std::invalid_argument("Prázdný seznam");
     }
-
-    std::sort(cisla.begin(), cisla.end());
-
-    size_t size = cisla.size();
+    std::vector<int> sorted_cisla = cisla;
+    std::sort(sorted_cisla.begin(), sorted_cisla.end());
+    size_t size = sorted_cisla.size();
 
     if (size % 2 != 0) {
-        return cisla[size / 2];
-    }
-
-    else {
-        return (cisla[size / 2 - 1] + cisla[size / 2]) / 2.0;
+        return sorted_cisla[size / 2];
+    } else {
+        return (sorted_cisla[size / 2 - 1] + sorted_cisla[size / 2]) / 2.0;
     }
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
+#ifndef __TEST__
 int main()
 {
     std::cout << "Zadejte seznam čísel oddělených čárkou: ";
@@ -62,3 +57,4 @@ int main()
     return 0;
 }
 #endif // __TEST__
+
