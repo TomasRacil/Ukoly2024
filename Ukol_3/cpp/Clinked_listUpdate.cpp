@@ -10,7 +10,7 @@ struct Node
 // Funkce pro vytvoření nového uzlu
 Node *createNode(int data)
 {
-    Node *newNode = new Node;  //doufam že se to už nahralo
+    Node *newNode = new Node;
     newNode->data = data;
     newNode->next = nullptr;
     return newNode;
@@ -98,19 +98,19 @@ void deleteAtEnd(Node **head)
     temp->next = nullptr;
 }
 
-// Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node *head, int index)
+// Funkce pro smazání uzlu na specifickém indexu
+void deleteAtIndex(Node **head, int index)
 {
-    if (head == nullptr)
+    if (*head == nullptr)
     {
         return;
     }
     if (index == 0)
     {
-        deleteAtBeginning(&head);
+        deleteAtBeginning(head);
         return;
     }
-    Node *temp = head;
+    Node *temp = *head;
     for (int i = 0; i < index - 1 && temp != nullptr; i++)
     {
         temp = temp->next;
@@ -125,7 +125,7 @@ void deleteAtIndex(Node *head, int index)
     delete nodeToDelete;
 }
 
-// Funkce pro nalezeni prvniho vyskytu
+// Funkce pro nalezení prvního výskytu hodnoty
 int findFirstOccurrence(Node *head, int value)
 {
     int index = 0;
@@ -171,7 +171,7 @@ void sortList(Node **head)
     } while (swapped);
 }
 
-// Funkce pro smazani (dealokaci) seznamu
+// Funkce pro smazání (dealokaci) seznamu
 void deleteList(Node **head)
 {
     Node *current = *head;
@@ -191,17 +191,17 @@ std::ostream &operator<<(std::ostream &os, Node *head)
     Node *temp = head;
     while (temp != nullptr)
     {
-        os << temp->data << " -> ";
+        os << temp->data;
+        if (temp->next != nullptr)
+            os << " ";
         temp = temp->next;
     }
-    os << "nullptr";
     return os;
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
+#ifndef __TEST__
 int main()
 {
-    // Vytvoření seznamu
     Node *head = nullptr;
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
@@ -215,8 +215,6 @@ int main()
     std::cout << "Seznam po třídění: " << head << std::endl;
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
-    std::cout << "Seznam po smazání prvků: " << head << std::endl;
-    deleteAtIndex(head, 1);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
 
