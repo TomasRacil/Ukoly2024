@@ -34,7 +34,7 @@ double prumer(const std::vector<int> &cisla)
 double median(const std::vector<int> &cisla)
 {
     double median;
-   std::sort(cisla.begin(), cisla.end());
+  // std::sort(cisla.begin(), cisla.end());
    if (cisla.size() % 2 == 0) { //podminka pro sude cisla
        median = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2.0;
    }
