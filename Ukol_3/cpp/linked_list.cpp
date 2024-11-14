@@ -28,12 +28,14 @@ void insertAtBeginning(Node **head, int data)
 void insertAtEnd(Node **head, const int data)
 {
     Node *newNode = createNode(data);
-    if (*head == nullptr) {
+    if (*head == nullptr)
+    {
         *head = newNode;
         return;
     }
     Node *temp = *head;
-    while (temp->next != nullptr) {
+    while (temp->next != nullptr)
+    {
         temp = temp->next;
     }
     temp->next = newNode;
@@ -42,7 +44,8 @@ void insertAtEnd(Node **head, const int data)
 // Funkce pro vložení na specifický index
 void insertAtIndex(Node **head, int data, int index)
 {
-    if (index == 0) {
+    if (index == 0)
+    {
         insertAtBeginning(head, data);
         return;
     }
@@ -51,12 +54,14 @@ void insertAtIndex(Node **head, int data, int index)
     Node *temp = *head;
     int i = 0;
 
-    while (temp != nullptr && i < index - 1) {
+    while (temp != nullptr && i < index - 1)
+    {
         temp = temp->next;
         i++;
     }
 
-    if (temp == nullptr) {
+    if (temp == nullptr)
+    {
         std::cerr << "Index out of bounds" << std::endl;
         return;
     }
@@ -68,7 +73,8 @@ void insertAtIndex(Node **head, int data, int index)
 // Funkce pro smazání uzlu ze začátku seznamu
 void deleteAtBeginning(Node **head)
 {
-    if (*head == nullptr) return;
+    if (*head == nullptr)
+        return;
 
     Node *temp = *head;
     *head = (*head)->next;
@@ -78,16 +84,19 @@ void deleteAtBeginning(Node **head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node **head)
 {
-    if (*head == nullptr) return;
+    if (*head == nullptr)
+        return;
 
-    if ((*head)->next == nullptr) {
+    if ((*head)->next == nullptr)
+    {
         delete *head;
         *head = nullptr;
         return;
     }
 
     Node *temp = *head;
-    while (temp->next->next != nullptr) {
+    while (temp->next->next != nullptr)
+    {
         temp = temp->next;
     }
 
@@ -98,11 +107,13 @@ void deleteAtEnd(Node **head)
 // Funkce pro smazání uzlu na specifickém indexu
 void deleteAtIndex(Node **head, int index)
 {
-    if (*head == nullptr) return;
+    if (*head == nullptr)
+        return;
 
     // Pokud je index 0, smažeme první uzel a aktualizujeme head
-    if (index == 0) {
-        Node* temp = *head;
+    if (index == 0)
+    {
+        Node *temp = *head;
         *head = (*head)->next;
         delete temp;
         return;
@@ -112,12 +123,14 @@ void deleteAtIndex(Node **head, int index)
     int i = 0;
 
     // Najdeme uzel před požadovaným indexem
-    while (temp != nullptr && i < index - 1) {
+    while (temp != nullptr && i < index - 1)
+    {
         temp = temp->next;
         i++;
     }
 
-    if (temp == nullptr || temp->next == nullptr) {
+    if (temp == nullptr || temp->next == nullptr)
+    {
         std::cerr << "Index out of bounds" << std::endl;
         return;
     }
@@ -132,8 +145,10 @@ void deleteAtIndex(Node **head, int index)
 int findFirstOccurrence(Node *head, int value)
 {
     int index = 0;
-    while (head != nullptr) {
-        if (head->data == value) return index;
+    while (head != nullptr)
+    {
+        if (head->data == value)
+            return index;
         head = head->next;
         index++;
     }
@@ -143,18 +158,22 @@ int findFirstOccurrence(Node *head, int value)
 // Funkce pro třídění seznamu (bubble sort)
 void sortList(Node **head)
 {
-    if (*head == nullptr) return;
+    if (*head == nullptr)
+        return;
 
     bool swapped;
     Node *ptr1;
     Node *lptr = nullptr;
 
-    do {
+    do
+    {
         swapped = false;
         ptr1 = *head;
 
-        while (ptr1->next != lptr) {
-            if (ptr1->data > ptr1->next->data) {
+        while (ptr1->next != lptr)
+        {
+            if (ptr1->data > ptr1->next->data)
+            {
                 std::swap(ptr1->data, ptr1->next->data);
                 swapped = true;
             }
@@ -170,7 +189,8 @@ void deleteList(Node **head)
     Node *current = *head;
     Node *next = nullptr;
 
-    while (current != nullptr) {
+    while (current != nullptr)
+    {
         next = current->next;
         delete current;
         current = next;
@@ -183,9 +203,11 @@ void deleteList(Node **head)
 std::ostream &operator<<(std::ostream &os, Node *head)
 {
     Node *temp = head;
-    while (temp != nullptr) {
+    while (temp != nullptr)
+    {
         os << temp->data;
-        if (temp->next != nullptr) {
+        if (temp->next != nullptr)
+        {
             os << " ";
         }
         temp = temp->next;
