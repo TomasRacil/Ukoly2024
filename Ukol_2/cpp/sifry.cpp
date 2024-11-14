@@ -29,28 +29,17 @@ string otevri_soubor(const string &jmeno_souboru)
 string caesar_sifra(const string &text, int posun, bool sifrovat)
 {
   string upravenytext = text;
-  // sifruju
-  if(sifrovat == true){
-    for(int i = 0; i < text.length(); i++){
-      // pokud bych posunutim vysel z range pismen v ascii, odectu 26, abych v nem zustal
-      if(isalpha(text[i] + posun)){
-        upravenytext[i] = text[i] + posun;
-      }else{
-        upravenytext[i] = text[i] + posun - 26;
-      }
+  for (int i = 0; i < text.length(); ++i) {
+        char &tmp = upravenytext[i];
+        if (isalpha(tmp)) {
+            char p = isupper(tmp) ? 'A' : 'a';
+            if (sifrovat) {
+                tmp = (char)(((tmp - p + posun) % 26 + 26) % 26 + p);
+            } else {
+                tmp = (char)(((tmp - p - posun + 26) % 26 + 26) % 26 + p);
+            }
+        }
     }
-
-  // desifruju
-  }else{
-    for(int i = 0; i < text.length(); ++i){
-      // stejne jako u sifrovani, akorat pricitam 26
-      if(isalpha(text[i] - posun)){
-        upravenytext[i] = text[i] - posun;
-      }else{
-        upravenytext[i] = text[i] - posun + 26;
-      }
-    }
-  }
   return upravenytext;
 }
 // Vigenerova šifra
@@ -115,7 +104,7 @@ int main(){
   string vstupni_text = otevri_soubor("vstup.txt");
 
   // Šifrování textu pomocí Caesarovy šifry
-  string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
+  string sifrovany_text_caesar = caesar_sifra(vstupni_text, 25, true);
   cout << sifrovany_text_caesar << endl;
 
   // Šifrování textu pomocí Vigenerovy šifry
@@ -132,7 +121,7 @@ int main(){
   uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
 
   // Dešifrování textů
-  cout << "Dešifrovany text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << endl;
+  cout << "Dešifrovany text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 25, false) << endl;
   cout << "Dešifrovany text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "hlgu", false) << endl;
   cout << "Dešifrovany text pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << endl;
 
