@@ -5,7 +5,7 @@
 using namespace std;
 
 // XOR šifra
-string xorSifra(const string& text, const string& klic) {
+string xor_sifra(const string& text, const string& klic) {
     string vysledek;
     size_t delkaKlice = klic.length();
 
@@ -17,7 +17,7 @@ string xorSifra(const string& text, const string& klic) {
 }
 
 // Caesarova šifra (posun je klíč)
-string caesarSifra(const string& text, int posun, bool sifrovat) {
+string caesar_sifra(const string& text, int posun, bool sifrovat) {
     string vysledek;
     int skutecnyPosun = sifrovat ? posun : -posun; // Změna posunu pro dešifrování
 
@@ -33,7 +33,7 @@ string caesarSifra(const string& text, int posun, bool sifrovat) {
 }
 
 // Vigenerova šifra
-string vigenereSifra(const string& text, const string& klic, bool sifrovat) {
+string vigener_sifra(const string& text, const string& klic, bool sifrovat) {
     string vysledek;
     size_t delkaKlice = klic.length();
     int posun;
@@ -55,42 +55,34 @@ string vigenereSifra(const string& text, const string& klic, bool sifrovat) {
     return vysledek;
 }
 
-// Funkce pro práci se souborem
-void pracujSeSouborem(const string& vstupniSoubor, const string& vystupniSoubor, const string& klic, int posun, bool sifrovat, char typSifry) {
-    ifstream souborVstup(vstupniSoubor);
-    if (!souborVstup.is_open()) {
-        cerr << "Vstupni soubor nelze otevrit." << endl;
-        return;
+// Načtení obsahu ze souboru
+string otevri_soubor(const string& nazevSouboru) {
+    ifstream soubor(nazevSouboru);
+    if (!soubor.is_open()) {
+        cerr << "Soubor nelze otevrit: " << nazevSouboru << endl;
+        return "";
     }
 
-    ofstream souborVystup(vystupniSoubor);
-    if (!souborVystup.is_open()) {
-        cerr << "Vystupni soubor nelze otevrit." << endl;
-        return;
-    }
-
+    string obsah;
     string radek;
-    string vyslednyText;  
-
-    // Načtení vstupního souboru a aplikace šifry dle výběru
-    while (getline(souborVstup, radek)) {
-        if (typSifry == 'x') {
-            vyslednyText += xorSifra(radek, klic) + "\n";  // Volání XOR šifry
-        }
-        else if (typSifry == 'c') {
-            vyslednyText += caesarSifra(radek, posun, sifrovat) + "\n";  // Volání Caesarovy šifry
-        }
-        else if (typSifry == 'v') {
-            vyslednyText += vigenereSifra(radek, klic, sifrovat) + "\n";  // Volání Vigenerovy šifry
-        }
-
+    while (getline(soubor, radek)) {
+        obsah += radek + "\n";
     }
 
-    // Zápis výsledku do výstupního souboru
-    souborVystup << vyslednyText;
+    soubor.close();
+    return obsah;
+}
 
-    souborVstup.close();
-    souborVystup.close();
+// Uložení obsahu do souboru
+void uloz_do_souboru(const string& nazevSouboru, const string& obsah) {
+    ofstream soubor(nazevSouboru);
+    if (!soubor.is_open()) {
+        cerr << "Soubor nelze otevrit pro zapis: " << nazevSouboru << endl;
+        return;
+    }
+
+    soubor << obsah;
+    soubor.close();
 }
 
 int main() {
@@ -140,14 +132,28 @@ int main() {
         cin >> klic;
     }
 
-    // Práce se soubory a šifrování/dešifrování podle volby uživatele
-    pracujSeSouborem(vstupniSoubor, vystupniSoubor, klic, posun, sifrovat, volbaSifry);
+ 
+    string obsah = otevri_soubor(vstupniSoubor);
+    if (obsah.empty()) {
+        cerr << "Chyba pri nacitani souboru." << endl;
+        return 1;
+    }
+
+    string vyslednyText;
+    if (volbaSifry == 'x') {
+        vyslednyText = xor_sifra(obsah, klic);
+    } else if (volbaSifry == 'c') {
+        vyslednyText = caesar_sifra(obsah, posun, sifrovat);
+    } else if (volbaSifry == 'v') {
+        vyslednyText = vigener_sifra(obsah, klic, sifrovat);
+    }
+
+    uloz_do_souboru(vystupniSoubor, vyslednyText);
 
     if (sifrovat) {
-        std::cout << "Text byl zasifrovan a ulozen do: " << vystupniSoubor << endl;
-    }
-    else {
-        std::cout << "Text byl desifrovan a ulozen do: " << vystupniSoubor << endl;
+        cout << "Text byl zasifrovan a ulozen do: " << vystupniSoubor << endl;
+    } else {
+        cout << "Text byl desifrovan a ulozen do: " << vystupniSoubor << endl;
     }
 
     return 0;
