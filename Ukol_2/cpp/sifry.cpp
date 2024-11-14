@@ -101,49 +101,57 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
   return result;
 }
 
-// Funkce pro převod hexadecimálního řetězce na binární data
-std::string hexToBytes(const std::string &hex) {
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <string>
+
+// Funkce pro převod osmičkového řetězce na binární data
+std::string octalToBytes(const std::string &octal) {
     std::string bytes;
-    for (size_t i = 0; i < hex.length(); i += 2) {
-        std::string byteString = hex.substr(i, 2);
-        char byte = static_cast<char>(std::stoi(byteString, nullptr, 16));
+    for (size_t i = 0; i < octal.length(); i += 3) {
+        std::string byteString = octal.substr(i, 3);
+        char byte = static_cast<char>(std::stoi(byteString, nullptr, 8));  // Převod z osmičkové soustavy
         bytes.push_back(byte);
     }
     return bytes;
 }
 
-// Funkce pro převod binárních dat na hexadecimální řetězec
-std::string bytesToHex(const std::string &bytes) {
+// Funkce pro převod binárních dat na osmičkový řetězec
+std::string bytesToOctal(const std::string &bytes) {
     std::ostringstream oss;
     for (unsigned char c : bytes) {
-        oss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(c);
+        oss << std::setw(3) << std::setfill('0') << std::oct << static_cast<int>(c);  // Převede na osmičkovou soustavu
     }
     return oss.str();
 }
 
-std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
-{
+// Funkce pro XOR šifrování a dešifrování v osmičkové soustavě
+std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
     std::string result;
     size_t keyLength = klic.length();
 
+    if (keyLength == 0) {
+        throw std::invalid_argument("Klíč nesmí být prázdný.");
+    }
+
     if (sifrovat) {
-        // Šifrování: XOR každého znaku a konverze na hexadecimální řetězec
+        // Šifrování: XOR každého znaku a převod na osmičkový řetězec
         for (size_t i = 0; i < text.length(); ++i) {
             char encryptedChar = text[i] ^ klic[i % keyLength];
-            std::ostringstream oss;
-            oss << std::hex << std::setw(2) << std::setfill('0') << (static_cast<int>(encryptedChar) & 0xFF);
-            result += oss.str();
+            result += bytesToOctal(std::string(1, encryptedChar));  // Převede zašifrovaný znak na osmičkový řetězec
         }
     } else {
-        // Dešifrování: převede hex na znaky a aplikuje XOR s klíčem
-        std::string bytes = hexToBytes(text);
+        // Dešifrování: převede osmičkový řetězec na znaky a aplikuje XOR s klíčem
+        std::string bytes = octalToBytes(text);  // Převede osmičkový řetězec na binární data
         for (size_t i = 0; i < bytes.length(); ++i) {
-            result += bytes[i] ^ klic[i % keyLength];
+            result += bytes[i] ^ klic[i % keyLength];  // Aplikuje XOR s klíčem
         }
     }
 
     return result;
 }
+
 
 
 // Funkce pro uložení řetězce do souboru

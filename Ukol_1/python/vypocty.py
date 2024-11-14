@@ -12,15 +12,23 @@ def soucet(cisla: List[int]) -> int:
     return sum(cisla)
 
 
+from typing import List
+
 def soucin(cisla: List[int]) -> int:
     """Vypočítá součin čísel v seznamu.
 
     Args:
-      cisla: Seznam čísel.
+        cisla: Seznam čísel.
 
     Returns:
-      Součin čísel.
+        Součin čísel.
+
+    Raises:
+        ValueError: Pokud je seznam prázdný.
     """
+    if not cisla:  # Check if the list is empty
+        raise ValueError("Seznam nesmí být prázdný.")
+
     result = 1
     for num in cisla:
         result *= num
@@ -31,25 +39,34 @@ def prumer(cisla: List[int]) -> float:
     """Vypočítá průměrnou hodnotu čísel v seznamu.
 
     Args:
-      cisla: Seznam čísel.
+        cisla: Seznam čísel.
 
     Returns:
-      Průměrná hodnota čísel.
-    """
-    return sum(cisla) / len(cisla) if cisla else 0.0
+        Průměrná hodnota čísel.
 
+    Raises:
+        ValueError: Pokud je seznam prázdný.
+    """
+    if not cisla:  # Check if the list is empty
+        raise ValueError("Seznam nesmí být prázdný.")
+
+    return sum(cisla) / len(cisla)
 
 def median(cisla: List[int]) -> float:
     """Vypočítá medián čísel v seznamu.
 
     Args:
-      cisla: Seznam čísel.
+        cisla: Seznam čísel.
 
     Returns:
-      Medián čísel.
+        Medián čísel.
+
+    Raises:
+        ValueError: Pokud je seznam prázdný.
     """
-    if not cisla:
-        return 0.0
+    if not cisla:  # Check if the list is empty
+        raise ValueError("Seznam nesmí být prázdný.")
+
     sorted_cisla = sorted(cisla)
     n = len(sorted_cisla)
     mid = n // 2
