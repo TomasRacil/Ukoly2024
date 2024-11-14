@@ -6,7 +6,8 @@ def soucet(cisla: List[int]) -> int:
 
 def soucin(cisla: List[int]) -> int:
     if not cisla:
-        return 0
+        return 1  # Pro prázdný seznam vrátí neutrální hodnotu pro násobení
+    soucin = 1
     for cislo in cisla:
         soucin *= cislo
     return soucin
@@ -34,5 +35,5 @@ def main():
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
 
-if name == "main":
+if __name__ == "__main__":
     main()

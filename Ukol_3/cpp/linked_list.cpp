@@ -185,7 +185,7 @@ std::ostream& operator<<(std::ostream& os, Node* head) {
 int main() {
     Node* head = nullptr;
 
-    insertAtBeginning(&head, 1);
+    insertAtBeginning(&head, 1); // Předáváme adresu ukazatele
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 4);
@@ -200,14 +200,14 @@ int main() {
     sortList(&head);
     std::cout << "Seznam po třídění: " << head << std::endl;
 
-    deleteAtBeginning(&head);
-    deleteAtEnd(&head);
+    deleteAtBeginning(&head); // Správné volání s &head
+    deleteAtEnd(&head);       // Správné volání s &head
     std::cout << "Seznam po smazání prvního a posledního prvku: " << head << std::endl;
 
-    deleteAtIndex(&head, 1);
+    deleteAtIndex(&head, 1); // Správné volání s &head
     std::cout << "Seznam po smazání uzlu na indexu 1: " << head << std::endl;
 
-    deleteList(&head);
+    deleteList(&head); // Správné volání s &head
     std::cout << "Seznam po smazání všech prvků: " << head << std::endl;
 
     return 0;
