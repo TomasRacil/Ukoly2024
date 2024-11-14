@@ -5,7 +5,7 @@
 using namespace std;
 
 // XOR šifra
-string xor_sifra(const string& text, const string& klic) {
+string xor_sifra(const string& text, const string& klic, bool sifrovat) {
     string vysledek;
     size_t delkaKlice = klic.length();
 
