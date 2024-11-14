@@ -1,214 +1,231 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
-// Struktura uzlu
-struct Node {
+struct Node
+{
     int data;
     Node* next;
 };
 
 // Funkce pro vytvoření nového uzlu
-Node* createNode(int data) {
-    Node* newNode = new Node();
-    newNode->data = data;
-    newNode->next = nullptr;
-    return newNode;
+Node* createNode(int data)
+{
+    Node* node = new Node();
+    node->data = data;
+    node->next = nullptr;
+    return node;
+
 }
 
 // Funkce pro vložení uzlu na začátek seznamu
-void insertAtBeginning(Node** head, int data) {
-    Node* newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
+void insertAtBeginning(Node** head, int data)
+{
+    Node* node = createNode(data);
+    node->next = *head;
+    *head = node;
 }
 
 // Funkce pro vložení uzlu na konec seznamu
-void insertAtEnd(Node** head, const int data) {
-    Node* newNode = createNode(data);
-    if (*head == nullptr) {
-        *head = newNode;
+void insertAtEnd(Node** head, const int data)
+{
+    Node* node = createNode(data);
+    if (*head == nullptr) // Pokud je seznam prázdný, tak se vloží první prvek
+    {
+        *head = node;
         return;
     }
-    Node* temp = *head;
-    while (temp->next != nullptr) {
-        temp = temp->next;
+    Node* node2 = *head;
+    while (node2->next != nullptr)  // Dokud není další prvek nullptr, tak se posouváme na další prvek
+    {
+        node2 = node2->next;
     }
-    temp->next = newNode;
+    node2->next = node; // Přiřazení nového uzlu na konec seznamu
+
 }
 
-// Funkce pro vložení na specifický index
-void insertAtIndex(Node** head, int data, int index) {
-    if (index < 0) {
-        std::cerr << "Chyba: Index musí být nezáporný." << std::endl;
-        return;
-    }
-    if (index == 0) {
+// Funkce pro vložení na index
+void insertAtIndex(Node** head, int data, int index)
+{
+    if (index == 0)
+    {
         insertAtBeginning(head, data);
         return;
     }
-    Node* newNode = createNode(data);
-    Node* temp = *head;
-    int i = 0;
-    while (temp != nullptr && i < index - 1) {
-        temp = temp->next;
-        i++;
+    Node* node = createNode(data);
+    Node* node2 = *head;
+    for (int i = 0; i < index - 1; i++) // Dokud není index - 1, tak se posouváme na další prvek
+    {
+        if (node2 == nullptr) // Pokud je index větší než délka seznamu, tak se vloží na konec
+        {
+            insertAtEnd(head, data);
+            return;
+        }
+        node2 = node2->next;
     }
-    if (temp == nullptr) {
-        std::cerr << "Chyba: Index mimo rozsah." << std::endl;
-        delete newNode;
-        return;
-    }
-    newNode->next = temp->next;
-    temp->next = newNode;
+    node->next = node2->next;
+    node2->next = node;
+
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
-void deleteAtBeginning(Node** head) {
-    if (*head == nullptr) {
-        std::cerr << "Chyba: Seznam je prázdný." << std::endl;
+void deleteAtBeginning(Node** head)
+{
+    if (*head == nullptr) // Pokud je seznam prázdný, tak se nic nesmaže
+    {
         return;
     }
-    Node* temp = *head;
-    *head = (*head)->next;
-    delete temp;
+    Node* node = *head;
+    *head = node->next;
+    delete node;
 }
 
 // Funkce pro smazání uzlu z konce seznamu
-void deleteAtEnd(Node** head) {
-    if (*head == nullptr) {
-        std::cerr << "Chyba: Seznam je prázdný." << std::endl;
+void deleteAtEnd(Node** head)
+{
+    if (*head == nullptr) // Pokud je seznam prázdný, tak se nic nesmaže
+    {
         return;
     }
-    if ((*head)->next == nullptr) {
-        delete *head;
+    if ((*head)->next == nullptr) // Pokud je seznam s jedním prvkem, tak se smaže
+    {
+        delete* head;
         *head = nullptr;
         return;
     }
-    Node* temp = *head;
-    while (temp->next->next != nullptr) {
-        temp = temp->next;
+    Node* node = *head;
+    while (node->next->next != nullptr) // Dokud není předposlední prvek, tak se posouváme na další prvek
+    {
+        node = node->next;
     }
-    delete temp->next;
-    temp->next = nullptr;
+    delete node->next;
+    node->next = nullptr;
+
 }
 
-// Funkce pro smazání uzlu na specifickém indexu
-void deleteAtIndex(Node** head, int index) {
-    if (*head == nullptr) {
-        std::cerr << "Chyba: Seznam je prázdný." << std::endl;
+// Funkce pro smazani uzlu na indexu
+void deleteAtIndex(Node* head, int index)
+{
+    if (head == nullptr)    // Pokud je seznam prázdný, tak se nic nesmaže
+    {
         return;
     }
-    if (index < 0) {
-        std::cerr << "Chyba: Index musí být nezáporný." << std::endl;
+    Node* node = head;
+    if (index == 0) // Pokud je index 0, tak se smaže první prvek
+    {
+        head = node->next;
+        delete node;
         return;
     }
-    if (index == 0) {
-        deleteAtBeginning(head);
+    for (int i = 0; node != nullptr && i < index - 1; i++) // Dokud není index - 1, tak se posouváme na další prvek
+    {
+        node = node->next;
+    }
+    if (node == nullptr || node->next == nullptr) // Pokud je index větší než délka seznamu, tak se nic nesmaže
+    {
         return;
     }
-    Node* temp = *head;
-    int i = 0;
-    while (temp != nullptr && i < index - 1) {
-        temp = temp->next;
-        i++;
-    }
-    if (temp == nullptr || temp->next == nullptr) {
-        std::cerr << "Chyba: Index mimo rozsah." << std::endl;
-        return;
-    }
-    Node* nodeToDelete = temp->next;
-    temp->next = temp->next->next;
-    delete nodeToDelete;
+    Node* node2 = node->next->next;
+    delete node->next;
+    node->next = node2;
+
 }
 
-// Funkce pro nalezení prvního výskytu hodnoty
-int findFirstOccurrence(Node* head, int value) {
+// Funkce pro nalezeni prvniho vyskytu
+int findFirstOccurrence(Node* head, int value)
+{
     int index = 0;
-    while (head != nullptr) {
-        if (head->data == value) {
+    Node* node = head;
+    while (node != nullptr)
+    {
+        if (node->data == value)
+        {
             return index;
         }
-        head = head->next;
+        node = node->next;
         index++;
     }
     return -1;
 }
 
-// Funkce pro třídění seznamu (bubble sort)
-void sortList(Node** head) {
-    if (*head == nullptr) {
+// Funkce pro třídění seznamu
+void sortList(Node** head)
+{
+    if (*head == nullptr || (*head)->next == nullptr)   // Pokud je seznam prázdný nebo má jen jeden prvek, tak se nic nesetřídí
+    {
         return;
     }
-    bool swapped;
-    Node* ptr1;
-    Node* lptr = nullptr;
-    do {
-        swapped = false;
-        ptr1 = *head;
-        while (ptr1->next != lptr) {
-            if (ptr1->data > ptr1->next->data) {
-                std::swap(ptr1->data, ptr1->next->data);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
+    Node* sorted = nullptr;
+    Node* current = *head;
+    while (current != nullptr) // Dokud není aktuální prvek nullptr, tak se třídí
+    {
+        Node* node = current->next;
+        if (sorted == nullptr || sorted->data >= current->data) // Pokud je seřazený seznam prázdný nebo je první prvek větší než aktuální prvek, tak se vloží na začátek
+        {
+            current->next = sorted;
+            sorted = current;
         }
-        lptr = ptr1;
-    } while (swapped);
+        else // Jinak se vloží na správné místo
+        {
+            Node* node2 = sorted;
+            while (node2->next != nullptr && node2->next->data < current->data) // Dokud není další prvek nullptr a je menší než aktuální prvek, tak se posouváme na další prvek
+            {
+                node2 = node2->next;
+            }
+            current->next = node2->next;
+            node2->next = current;
+        }
+        current = node;
+    }
+    *head = sorted;
 }
 
-// Funkce pro smazání celého seznamu
-void deleteList(Node** head) {
-    Node* current = *head;
-    Node* next = nullptr;
-    while (current != nullptr) {
-        next = current->next;
-        delete current;
-        current = next;
+// Funkce pro smazani (dealokaci) seznamu
+void deleteList(Node** head)
+{
+    Node* node = *head;
+    while (node != nullptr) // Dokud není prvek nullptr, tak se mazou všechny prvky
+    {
+        Node* node2 = node;
+        node = node->next;
+        delete node2;
     }
     *head = nullptr;
 }
 
-// Přetížení operátoru << pro tisk seznamu
-std::ostream& operator<<(std::ostream& os, Node* head) {
-    Node* temp = head;
-    while (temp != nullptr) {
-        os << temp->data;
-        if (temp->next != nullptr) {
-            os << " -> ";
-        }
-        temp = temp->next;
+// Operátor pro tisk dat
+ostream& operator<<(ostream& os, Node* head)
+{
+    Node* node = head;
+    while (node != nullptr)
+    {
+        os << node->data << (node->next ? " " : "");
+        node = node->next;
     }
     return os;
 }
 
-#ifndef __TEST__
-int main() {
+#ifndef __TEST__ // Add this preprocessor guard
+int main()
+{
+    // Vytvoření seznamu
     Node* head = nullptr;
-
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 4);
     insertAtIndex(&head, 5, 2);
-
-    std::cout << "Seznam po vložení prvků: " << head << std::endl;
-
-    std::cout << "První výskyt hodnoty 3 je na indexu: "
-              << findFirstOccurrence(head, 3) << std::endl;
-
-    std::cout << "Seznam před tříděním: " << head << std::endl;
+    cout << "Seznam po vložení prvků: " << head << endl;
+    cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << endl;
+    cout << "Seznam před tříděním: " << head << endl;
     sortList(&head);
-    std::cout << "Seznam po třídění: " << head << std::endl;
-
+    cout << "Seznam po třídění: " << head << endl;
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
-    std::cout << "Seznam po smazání prvního a posledního prvku: " << head << std::endl;
-
-    deleteAtIndex(&head, 1);
-    std::cout << "Seznam po smazání uzlu na indexu 1: " << head << std::endl;
-
+    cout << "Seznam po smazání prvků: " << head << endl;
+    deleteAtIndex(head, 1);
+    cout << "Seznam po smazání prvků: " << head << endl;
     deleteList(&head);
-    std::cout << "Seznam po smazání všech prvků: " << head << std::endl;
 
     return 0;
 }
