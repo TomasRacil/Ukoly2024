@@ -1,29 +1,45 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
+using namespace std;
 
 int soucet(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = 0;
+    for (int i = 0; i<cisla.size; i++){
+        sum+= i;
+    }
+    return sum;
 }
 
 int soucin(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int sum = 1;
+    for (int i = 1; i<cisla.size; i++){
+        sum*= i;
+    }
+        return sum;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    return soucet(cisla)/cisla.size();
 }
 
 double median(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+       double median;
+   sort(cisla.begin(), cisla.end());
+   if (cisla.size() % 2 == 0) { //podminka pro sude cisla
+       median = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2.0;
+   }
+   else {
+       median = cisla[cisla.size() / 2]; //staci pouze prostredni hodnota
+   }
+return median;
+    
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
@@ -35,6 +51,13 @@ int main()
 
     std::vector<int> cisla;
     // TODO: Načtěte čísla ze vstupu do vektoru cisla
+
+    for(int i = 0; i<vstup.lenght(); i++){
+        if(isdigit(vstup[i])){
+            cisla.push_back(vstup[i] - '0');
+        }
+    }
+    
 
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
