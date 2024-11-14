@@ -34,7 +34,7 @@ double prumer(const std::vector<int> &cisla)
 double median(const std::vector<int> &cisla)
 {
     double median;
-   //sort(cisla.begin(), cisla.end());
+   std::sort(cisla.begin(), cisla.end());
    if (cisla.size() % 2 == 0) { //podminka pro sude cisla
        median = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2.0;
    }
@@ -54,10 +54,11 @@ int main()
 
     std::vector<int> cisla;
 
-    for(int i = 0; i < vstup.size(); i++){
-        if(isdigit(vstup[i])){
-            cisla.push_back(int(vstup[i] - '0'));
-        }
+    std::stringstream ss(vstup);
+    while(ss.good()) {
+        string subs;
+        getline(ss, subs, ',');
+        cisla.push_back(stoi(subs));
     }
     
 
