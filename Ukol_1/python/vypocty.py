@@ -6,22 +6,21 @@ def soucet(cisla: list[int]) -> int:
 
 
 def soucin(cisla: list[int]) -> int:
- if len(cisla) == 0:
-     return 0
-soucin = 1
-for i in cisla:
-    soucin *= i
-return soucin
+   if len(cisla) == 0:
+      return 0
+   soucin = 1
+   for i in cisla:
+      soucin *= i
+   return soucin
     
 
 def prumer(cisla: list[int]) -> float:
    if len(cisla) == 0:
       raise ValueError
-
-return sum(cisla) / len(cisla)
+   return sum(cisla) / len(cisla)
 
 def median(cisla: list[int]) -> float:
-return statistics.median(cisla)
+   return statistics.median(cisla)
 
 def main():
     """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
