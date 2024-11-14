@@ -1,18 +1,14 @@
 // #include "vypocty.h"
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <limits>
 #include <bits/stdc++.h>
-
-
-using namespace std;
+#include <algorithm>
 
 int soucet(const std::vector<int> &cisla)
 {
     int sum = 0;
-    for (int i = 0; i<cisla.size(); i++){
-        sum+= i;
+    for (auto i : cisla) {
+        sum += i;
     }
     return sum;
 }
@@ -20,10 +16,10 @@ int soucet(const std::vector<int> &cisla)
 int soucin(const std::vector<int> &cisla)
 {
     int sum = 1;
-    for (int i = 1; i<cisla.size(); i++){
-        sum*= i;
+    for (auto i : cisla) {
+        sum *= i;
     }
-        return sum;
+    return sum;
 }
 
 double prumer(const std::vector<int> &cisla)
@@ -31,18 +27,13 @@ double prumer(const std::vector<int> &cisla)
     return soucet(cisla)/cisla.size();
 }
 
-double median(const std::vector<int> &cisla)
+double median(std::vector<int> &cisla)
 {
-    double median;
-  // std::sort(cisla.begin(), cisla.end());
-   if (cisla.size() % 2 == 0) { //podminka pro sude cisla
-       median = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2.0;
-   }
-   else {
-       median = cisla[cisla.size() / 2]; //staci pouze prostredni hodnota
-   }
-return median;
-    
+    std::sort(cisla.begin(), cisla.end());
+    if (cisla.size()%2){
+        return cisla[cisla.size()/2];
+    }
+    return (cisla[cisla.size()/2] + cisla[cisla.size()/2 - 1])/(double)2;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
@@ -53,14 +44,12 @@ int main()
     std::getline(std::cin, vstup);
 
     std::vector<int> cisla;
-
     std::stringstream ss(vstup);
     while(ss.good()) {
-        string subs;
-        getline(ss, subs, ',');
-        cisla.push_back(stoi(subs));
+        std::string substr;
+        std::getline(ss, substr, ',');
+        cisla.push_back(std::stoi(substr));
     }
-    
 
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
