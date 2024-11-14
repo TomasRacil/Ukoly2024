@@ -8,13 +8,13 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
 {
     std::ifstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
-        throw std::runtime_error("Soubor se nepodařilo otevřít.");
+        return "";
     }
 
     std::string obsah;
     std::string radek;
     while (std::getline(soubor, radek)) {
-        obsah += radek + "\n";
+        obsah += radek;
     }
     soubor.close();
     return obsah;
@@ -76,8 +76,9 @@ void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
     std::ofstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
-        throw std::runtime_error("Soubor se nepodařilo otevřít pro zápis.");
+        return;
     }
+
     soubor << obsah;
     soubor.close();
 }
