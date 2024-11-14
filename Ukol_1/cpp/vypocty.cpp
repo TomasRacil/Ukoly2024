@@ -33,8 +33,8 @@ double prumer(const std::vector<int> &cisla)
 
 double median(const std::vector<int> &cisla)
 {
-       double median;
-   sort(cisla.begin(), cisla.end());
+    double median;
+   //sort(cisla.begin(), cisla.end());
    if (cisla.size() % 2 == 0) { //podminka pro sude cisla
        median = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2.0;
    }
@@ -53,11 +53,10 @@ int main()
     std::getline(std::cin, vstup);
 
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
 
-    for(int i = 0; i<vstup.size(); i++){
+    for(int i = 0; i < vstup.size(); i++){
         if(isdigit(vstup[i])){
-            cisla.push_back(vstup[i] - '0');
+            cisla.push_back(int(vstup[i] - '0'));
         }
     }
     
