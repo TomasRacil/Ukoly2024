@@ -39,5 +39,5 @@ def main():
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
 
-if name == "main":
+if __name__ == "__main__":
     main()
