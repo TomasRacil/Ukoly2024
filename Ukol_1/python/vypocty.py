@@ -1,3 +1,6 @@
+import statistics
+
+
 def soucet(cisla: list[int]) -> int:
    return sum(cisla)
 
