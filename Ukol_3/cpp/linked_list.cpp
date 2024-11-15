@@ -1,208 +1,133 @@
 #include <iostream>
 #include <string>
-
-struct Node
-{
-    int data;
-    Node *next;
+struct Node{
+    int data;        
+    Node* next;      
 };
-
-// Funkce pro vytvoření nového uzlu
-Node *createNode(int data)
-{
-    Node *newNode = new Node;
-    newNode->data = data;
-    newNode->next = nullptr;
-    return newNode;
+Node* createNode(int data){
+    return new Node{ data, nullptr }; 
 }
-
-// Funkce pro vložení uzlu na začátek seznamu
-void insertAtBeginning(Node **head, int data)
-{
-    Node *newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
+void insertAtBeginning(Node** head, int data){
+    Node* novy = createNode(data); 
+    novy->next = *head;            
+    *head = novy;                  
 }
-
-// Funkce pro vložení uzlu na konec seznamu
-void insertAtEnd(Node **head, const int data)
-{
-    Node *newNode = createNode(data);
-    if (*head == nullptr)
-    {
-        *head = newNode;
+void insertAtEnd(Node** head, const int data){
+    Node* novy = createNode(data); 
+    if (*head == nullptr){
+        *head = novy; 
+    }
+    else{
+        Node* temp = *head;
+        while (temp->next != nullptr){
+            temp = temp->next;
+        }
+        temp->next = novy; 
+    }
+}
+void insertAtIndex(Node** head, int data, int index){
+    if (index == 0){
+        insertAtBeginning(head, data); 
         return;
     }
-    Node *temp = *head;
-    while (temp->next != nullptr)
-    {
+    Node* novy = createNode(data);
+    Node* temp = *head;
+    
+    for (int i = 0; i < index - 1 && temp != nullptr; i++){
         temp = temp->next;
     }
-    temp->next = newNode;
+    if (temp == nullptr){
+        delete novy; 
+        std::cerr << "Index mimo rozsah\n";
+        return;
+    }
+    novy->next = temp->next; 
+    temp->next = novy;       
 }
-
-// Funkce pro vložení na index
-void insertAtIndex(Node **head, int data, int index)
-{
-    if (index == 0)
-    {
-        insertAtBeginning(head, data);
-        return;
-    }
-    Node *newNode = createNode(data);
-    Node *temp = *head;
-    for (int i = 0; i < index - 1 && temp != nullptr; i++)
-    {
-        temp = temp->next;
-    }
-    if (temp == nullptr)
-    {
-        std::cout << "Index mimo rozsah" << std::endl;
-        return;
-    }
-    newNode->next = temp->next;
-    temp->next = newNode;
+void deleteAtBeginning(Node** head){
+    if (*head == nullptr) return; 
+    Node* temp = *head;
+    *head = (*head)->next; 
+    delete temp; 
 }
-
-// Funkce pro smazání uzlu ze začátku seznamu
-void deleteAtBeginning(Node **head)
-{
-    if (*head == nullptr)
-    {
-        return;
-    }
-    Node *temp = *head;
-    *head = (*head)->next;
-    delete temp;
-}
-
-// Funkce pro smazání uzlu z konce seznamu
-void deleteAtEnd(Node **head)
-{
-    if (*head == nullptr)
-    {
-        return;
-    }
-    if ((*head)->next == nullptr)
-    {
-        delete *head;
+void deleteAtEnd(Node** head){
+    if (*head == nullptr) return; 
+    if ((*head)->next == nullptr){
+        delete* head; 
         *head = nullptr;
         return;
     }
-    Node *temp = *head;
-    while (temp->next->next != nullptr)
-    {
+    Node* temp = *head;
+    while (temp->next->next != nullptr){
         temp = temp->next;
     }
-    delete temp->next;
+    delete temp->next; 
     temp->next = nullptr;
 }
-
-// Funkce pro smazání uzlu na specifickém indexu
-void deleteAtIndex(Node **head, int index)
-{
-    if (*head == nullptr)
-    {
+void deleteAtIndex(Node* head, int index){
+    if (head == nullptr) return;
+    if (index == 0){
+        Node* temp = head->next;
+        delete head;
+        head = temp;
         return;
     }
-    if (index == 0)
-    {
-        deleteAtBeginning(head);
-        return;
-    }
-    Node *temp = *head;
-    for (int i = 0; i < index - 1 && temp != nullptr; i++)
-    {
+    Node* temp = head;
+    for (int i = 0; i < index - 1 && temp != nullptr; i++){
         temp = temp->next;
     }
-    if (temp == nullptr || temp->next == nullptr)
-    {
-        std::cout << "Index mimo rozsah" << std::endl;
+    if (temp == nullptr || temp->next == nullptr){
+        std::cerr << "Index mimo rozsah\n";
         return;
     }
-    Node *nodeToDelete = temp->next;
-    temp->next = temp->next->next;
-    delete nodeToDelete;
+    Node* uzelNaSmazani = temp->next;
+    temp->next = uzelNaSmazani->next;
+    delete uzelNaSmazani;
 }
-
-// Funkce pro nalezení prvního výskytu hodnoty
-int findFirstOccurrence(Node *head, int value)
-{
+int findFirstOccurrence(Node* head, int value){
     int index = 0;
-    Node *temp = head;
-    while (temp != nullptr)
-    {
-        if (temp->data == value)
-        {
-            return index;
+    while (head != nullptr){
+        if (head->data == value){
+            return index; 
         }
-        temp = temp->next;
+        head = head->next;
         index++;
     }
-    return -1; // Nenalezeno
+    return -1; 
 }
-
-// Funkce pro třídění seznamu (Bubble Sort)
-void sortList(Node **head)
-{
-    if (*head == nullptr || (*head)->next == nullptr)
-    {
-        return;
-    }
-    bool swapped;
-    Node *ptr1;
-    Node *lptr = nullptr;
-
-    do
-    {
-        swapped = false;
-        ptr1 = *head;
-
-        while (ptr1->next != lptr)
-        {
-            if (ptr1->data > ptr1->next->data)
-            {
-                std::swap(ptr1->data, ptr1->next->data);
-                swapped = true;
+void sortList(Node** head){
+    if (*head == nullptr || (*head)->next == nullptr) return; 
+    Node* i = *head;
+    while (i != nullptr){
+        Node* j = i->next;
+        while (j != nullptr){
+            if (i->data > j->data){
+                std::swap(i->data, j->data); 
             }
-            ptr1 = ptr1->next;
+            j = j->next;
         }
-        lptr = ptr1;
-    } while (swapped);
-}
-
-// Funkce pro smazání (dealokaci) seznamu
-void deleteList(Node **head)
-{
-    Node *current = *head;
-    Node *next = nullptr;
-    while (current != nullptr)
-    {
-        next = current->next;
-        delete current;
-        current = next;
+        i = i->next;
     }
-    *head = nullptr;
 }
-
-// Operátor pro tisk dat
-std::ostream &operator<<(std::ostream &os, Node *head)
-{
-    Node *temp = head;
-    while (temp != nullptr)
-    {
-        os << temp->data;
-        if (temp->next != nullptr)
+void deleteList(Node** head){
+    while (*head != nullptr){
+        deleteAtBeginning(head); 
+    }
+}
+std::ostream& operator<<(std::ostream& os, Node* head){
+    while (head != nullptr){
+        os << head->data; 
+        head = head->next;
+        if (head != nullptr){
             os << " ";
-        temp = temp->next;
+        }
     }
     return os;
 }
-
-#ifndef __TEST__
-int main()
-{
-    Node *head = nullptr;
+#ifndef __TEST__ 
+int main(){
+    // Vytvoření seznamu
+    Node* head = nullptr;
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
@@ -216,8 +141,51 @@ int main()
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    deleteAtIndex(head, 1);
+    std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
-
     return 0;
 }
 #endif // __TEST__
+
+//  TESTY   cd Ukol_3/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
+/*
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspaces/Ukoly2024/Ukol_3/cpp/build
+Scanning dependencies of target mytests
+[ 25%] Building CXX object CMakeFiles/mytests.dir/test.cpp.o
+[ 50%] Linking CXX executable mytests
+[ 50%] Built target mytests
+Scanning dependencies of target liked_list
+[ 75%] Building CXX object CMakeFiles/liked_list.dir/linked_list.cpp.o
+[100%] Linking CXX executable liked_list
+[100%] Built target liked_list
+Running main() from /build/googletest-YnT0O3/googletest-1.10.0.20201025/googletest/src/gtest_main.cc
+[==========] Running 9 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 9 tests from LinkedListTest
+[ RUN      ] LinkedListTest.InsertAtBeginning
+[       OK ] LinkedListTest.InsertAtBeginning (0 ms)
+[ RUN      ] LinkedListTest.InsertAtEnd
+[       OK ] LinkedListTest.InsertAtEnd (0 ms)
+[ RUN      ] LinkedListTest.InsertAtIndex
+[       OK ] LinkedListTest.InsertAtIndex (0 ms)
+[ RUN      ] LinkedListTest.DeleteAtBeginning
+[       OK ] LinkedListTest.DeleteAtBeginning (0 ms)
+[ RUN      ] LinkedListTest.DeleteAtEnd
+[       OK ] LinkedListTest.DeleteAtEnd (0 ms)
+[ RUN      ] LinkedListTest.DeleteAtIndex
+[       OK ] LinkedListTest.DeleteAtIndex (0 ms)
+[ RUN      ] LinkedListTest.FindFirstOccurrence
+[       OK ] LinkedListTest.FindFirstOccurrence (0 ms)
+[ RUN      ] LinkedListTest.SortList
+[       OK ] LinkedListTest.SortList (0 ms)
+[ RUN      ] LinkedListTest.OperatorPrint
+[       OK ] LinkedListTest.OperatorPrint (0 ms)
+[----------] 9 tests from LinkedListTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 9 tests.
+*/

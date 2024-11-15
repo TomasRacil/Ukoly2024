@@ -133,3 +133,42 @@ int main()
 	return 0;
 }
 #endif // __TEST__
+
+
+// TESETY	cd Ukol_2/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
+/*
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspaces/Ukoly2024/Ukol_2/cpp/build
+Scanning dependencies of target mytests
+[ 25%] Building CXX object CMakeFiles/mytests.dir/test.cpp.o
+[ 50%] Linking CXX executable mytests
+[ 50%] Built target mytests
+Scanning dependencies of target sifry
+[ 75%] Building CXX object CMakeFiles/sifry.dir/sifry.cpp.o
+[100%] Linking CXX executable sifry
+[100%] Built target sifry
+Running main() from /build/googletest-YnT0O3/googletest-1.10.0.20201025/googletest/src/gtest_main.cc
+[==========] Running 6 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 6 tests from SifrovaciAlgoritmyTest
+[ RUN      ] SifrovaciAlgoritmyTest.OtevriSoubor
+[       OK ] SifrovaciAlgoritmyTest.OtevriSoubor (0 ms)
+[ RUN      ] SifrovaciAlgoritmyTest.OtevriSouborNeexistujici
+Chyba: Soubor neexistujici_soubor.txt nelze otevřít.
+[       OK ] SifrovaciAlgoritmyTest.OtevriSouborNeexistujici (0 ms)
+[ RUN      ] SifrovaciAlgoritmyTest.CaesarSifra
+[       OK ] SifrovaciAlgoritmyTest.CaesarSifra (0 ms)
+[ RUN      ] SifrovaciAlgoritmyTest.VigenerSifra
+[       OK ] SifrovaciAlgoritmyTest.VigenerSifra (0 ms)
+[ RUN      ] SifrovaciAlgoritmyTest.XORSifra
+[       OK ] SifrovaciAlgoritmyTest.XORSifra (0 ms)
+[ RUN      ] SifrovaciAlgoritmyTest.UlozDoSouboru
+Obsah byl úspěšně uložen do souboru: test_ulozeni.txt
+[       OK ] SifrovaciAlgoritmyTest.UlozDoSouboru (0 ms)
+[----------] 6 tests from SifrovaciAlgoritmyTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test suite ran. (1 ms total)
+[  PASSED  ] 6 tests.
+*/
