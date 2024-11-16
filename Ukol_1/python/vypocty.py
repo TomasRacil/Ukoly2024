@@ -1,3 +1,4 @@
+#prostě jenom vypocty snad to uz funguje XD
 def soucet(cisla: list[int]) -> int:
     return sum(cisla)
 
