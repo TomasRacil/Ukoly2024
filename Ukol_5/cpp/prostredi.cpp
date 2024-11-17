@@ -1,4 +1,5 @@
 #include "prostredi.h"
+#include "organismus.h"
 
 
 Prostredi::Prostredi(int vyska, int sirka) : vyska(vyska), sirka(sirka) {}

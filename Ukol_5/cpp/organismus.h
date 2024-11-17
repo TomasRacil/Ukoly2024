@@ -1,7 +1,8 @@
 #ifndef ORGANISMUS_H
 #define ORGANISMUS_H
-#include "prostredi.h"
 using namespace std;
+
+class Prostredi;
 class Organismus
 {
     public:

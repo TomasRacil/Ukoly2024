@@ -1,6 +1,5 @@
 #ifndef PROSTREDI_H
 #define PROSTREDI_H
-#include "organismus.h"
 #include <list>
 #include <vector>
 #include <random>
@@ -8,6 +7,7 @@
 
 using namespace std;
 
+class Organismus;
 class Prostredi
 {
     public:
