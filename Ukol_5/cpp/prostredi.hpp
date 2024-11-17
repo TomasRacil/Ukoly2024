@@ -14,6 +14,7 @@ public:
 
     void krok();
 
+    //templates must be defined in the class:
     template <typename T>
     void pridejOrganismus()
     {
@@ -33,6 +34,7 @@ public:
 
     void odeberOrganismus(Organismus *o);
     void vypisStav();
+    void apokalypsa();
 };
 
 

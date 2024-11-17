@@ -2,6 +2,7 @@
 #define ROSTLINA_H
 
 #include "organismus.hpp"
+
 #include <random>
 
 class Rostlina : public Organismus {

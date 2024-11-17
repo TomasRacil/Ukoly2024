@@ -36,5 +36,8 @@ int main()
        prostredi.vypisStav();
     }
 
+    //delete all dynamically allocated objects - fixes memory leak in version 1.0
+    prostredi.apokalypsa();
+
     return 0;
 }

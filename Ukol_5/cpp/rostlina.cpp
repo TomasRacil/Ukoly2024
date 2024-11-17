@@ -29,5 +29,6 @@ char Rostlina::getTyp() {
 }
 
 void Rostlina::konzumuj(Organismus *other) {
-    (void)other; //silence unused parameter warning
+    //silence unused parameter warning
+    (void)other;
 }
