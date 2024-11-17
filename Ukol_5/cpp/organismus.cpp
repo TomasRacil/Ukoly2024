@@ -30,5 +30,5 @@ bool Organismus::JeZivy()
 
 char Organismus::getType() const
 {
-    
+    return 'o';
 }
