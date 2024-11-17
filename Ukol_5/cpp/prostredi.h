@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include "organismus.h"
 
 using namespace std;
 
