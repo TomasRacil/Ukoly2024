@@ -2,6 +2,7 @@
 #include "rostlina.h"
 #include "bylozravec.h"
 #include "masozravec.h"
+#include "prostredi.h"
 
 int main()
 {

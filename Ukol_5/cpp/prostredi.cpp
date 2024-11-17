@@ -25,24 +25,7 @@ void Prostredi :: krok()
         }
 
         organismy.remove_if([](Organismus *o)
-                            { return !o->JeZivy(); });
-}
-template <typename T>
-void Prostredi ::pridejOrganismus()
-{
-    T *organismus = new T(rand()%sirka, rand()%vyska,this);
-    organismy.push_back(organismus);
-}
-
-template <typename T>
-void Prostredi::pridejOrganismus(int x, int y)
-{
-    int new_position_x = max(0, min(sirka - 1, x));
-    int new_position_y = max(0, min(vyska - 1, y));
-
-    T *organismus = new T(new_position_x, new_position_y, this);
-    organismy.push_back(organismus);
-}
+                            { return !o->JeZivy(); });}
 
 void Prostredi :: odeberOrganismus(Organismus *o)
 {
