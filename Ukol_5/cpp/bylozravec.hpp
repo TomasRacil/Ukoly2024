@@ -5,10 +5,8 @@
 #include <random>
 
 #include "zvire.hpp"
-#include "prostredi.hpp"
 
-class Bylozravec : public Zvire
-{
+class Bylozravec : public Zvire {
 public:
     Bylozravec(int x, int y, Prostredi *prostredi);
     ~Bylozravec() {};

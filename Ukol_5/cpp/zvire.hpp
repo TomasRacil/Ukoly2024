@@ -7,8 +7,7 @@
 #include <algorithm>
 #include <random>
 
-class Zvire : public Organismus
-{
+class Zvire : public Organismus {
 public:
     Zvire(int x, int y, Prostredi *prostredi);
     ~Zvire() {};

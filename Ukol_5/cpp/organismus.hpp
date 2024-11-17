@@ -4,8 +4,7 @@
 //forward declaration to avoid cyclic reference
 class Prostredi;
 
-class Organismus
-{
+class Organismus {
 public:
     int x, y;
     int energie;

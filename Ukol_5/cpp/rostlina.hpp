@@ -13,7 +13,8 @@ public:
 
     void metabolismus() override;
     void rozmnozovani() override;
-    void konzumuj(Organismus *other) override;
+    //silence unused parameter warning, Rostlina class does NOT consume anything
+    void konzumuj(Organismus *other) override {(void)other;};
     void pohyb() override {};
     char getTyp() override;
 };

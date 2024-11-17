@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "organismus.hpp"
 #include "prostredi.hpp"
-#include "zvire.hpp"
 #include "masozravec.hpp"
 #include "bylozravec.hpp"
 #include "rostlina.hpp"
@@ -32,12 +30,9 @@ int main()
 
     for (int i = 0; i < 50; ++i)
     {
-       prostredi.krok();
-       prostredi.vypisStav();
+       prostredi.krok(), prostredi.vypisStav();
     }
 
-    //delete all dynamically allocated objects - fixes memory leak in version 1.0
-    prostredi.apokalypsa();
-
+    //destructor of the prostredi class deletes all members
     return 0;
 }

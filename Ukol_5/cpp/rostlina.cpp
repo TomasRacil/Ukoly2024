@@ -4,19 +4,15 @@ Rostlina::Rostlina(int x, int y, Prostredi *prostredi) : Organismus(x, y, prostr
     energie = 10;
 }
 
-void Rostlina::metabolismus()
-{
-    energie += 1;
+void Rostlina::metabolismus() {
+    ++energie;
 }
 
-void Rostlina::rozmnozovani()
-{
-    if (energie > 30)
-    {
+void Rostlina::rozmnozovani() {
+    if (energie > 30) {
         int pocetPotomku = rand() % 10;
 
-        for (int i = 0; i < pocetPotomku; ++i)
-        {
+        for (int i = 0; i < pocetPotomku; ++i) {
             prostredi->pridejOrganismus<Rostlina>();
             energie /= 2;
         }
@@ -25,9 +21,4 @@ void Rostlina::rozmnozovani()
 
 char Rostlina::getTyp() {
     return 'R';
-}
-
-void Rostlina::konzumuj(Organismus *other) {
-    //silence unused parameter warning
-    (void)other;
 }
