@@ -4,7 +4,10 @@
 
 #include <list>
 #include <iostream>
+
+//forward declaration to avoid cyclic reference
 class Organismus;
+
 class Prostredi
 {
 public:

@@ -2,6 +2,7 @@
 #define ZVIRE_H
 
 #include "organismus.hpp"
+#include "prostredi.hpp"
 
 #include <algorithm>
 #include <random>

@@ -1,5 +1,4 @@
 #include "zvire.hpp"
-#include "prostredi.hpp"
 
 Zvire::Zvire(int x, int y, Prostredi *prostredi) : Organismus(x, y, prostredi) {}
 

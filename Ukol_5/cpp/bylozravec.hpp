@@ -5,7 +5,6 @@
 #include <random>
 
 #include "zvire.hpp"
-#include "rostlina.hpp"
 #include "prostredi.hpp"
 
 class Bylozravec : public Zvire
