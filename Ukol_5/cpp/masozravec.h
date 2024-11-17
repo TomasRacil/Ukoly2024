@@ -4,6 +4,7 @@
 
 class Masozravec : public Zvire
 {
+    public:
     Masozravec(int x, int y, Prostredi *prostredi);
 
     void konzumuj(Organismus *other);

@@ -1,4 +1,5 @@
 #include "zvire.h"
+#include "prostredi.h"
 
 using namespace std;
 
@@ -22,5 +23,5 @@ void Zvire :: rozmnozovani()
 
 void konzumuj(Organismus *other)
 {
-    
+
 }

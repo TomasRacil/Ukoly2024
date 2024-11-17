@@ -1,4 +1,5 @@
 #include "bylozravec.h"
+#include "prostredi.h"
 
 Bylozravec::Bylozravec(int x, int y, Prostredi *prostredi) : Zvire(x,y,prostredi)
 {

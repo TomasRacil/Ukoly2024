@@ -1,4 +1,5 @@
 #include "masozravec.h"
+#include "prostredi.h"
 
 Masozravec::Masozravec(int x, int y, Prostredi *prostredi) : Zvire(x,y,prostredi)
 {

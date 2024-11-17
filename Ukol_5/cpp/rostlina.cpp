@@ -1,4 +1,5 @@
 #include "rostlina.h"
+#include "prostredi.h"
 
 Rostlina::Rostlina(int x, int y, Prostredi *prostredi) : Organismus(x,y,prostredi) 
 {
