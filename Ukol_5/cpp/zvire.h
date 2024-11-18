@@ -6,10 +6,10 @@ class Zvire : public Organismus
 {
     public:
     Zvire(int x, int y, Prostredi *prostredi);
-    void pohyb();
-    void metabolismus();
-    void rozmnozovani();
-    void konzumuj(Organismus *other);
+    void pohyb() override;
+    void metabolismus() override;
+    virtual void rozmnozovani() = 0;
+    virtual void konzumuj(Organismus *other) = 0;
 
 };
 

@@ -7,9 +7,9 @@ class Masozravec : public Zvire
     public:
     Masozravec(int x, int y, Prostredi *prostredi);
 
-    void konzumuj(Organismus *other);
-    void rozmnozovani();
-    char getType() const;
+    void konzumuj(Organismus *other) override;
+    void rozmnozovani() override;
+    char getType() const override;
 };
 
 #endif

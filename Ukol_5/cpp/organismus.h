@@ -7,12 +7,12 @@ class Organismus
 {
     public:
     Organismus(int x, int y, Prostredi *prostredi);
-    char getType() const;
-    void pohyb();
-    void metabolismus();
-    void rozmnozovani();
-    bool JeZivy();
-    void konzumuj(Organismus *other);
+    virtual char getType() const = 0;
+    virtual void pohyb() = 0;
+    virtual void metabolismus() = 0;
+    virtual void rozmnozovani() = 0;
+    virtual bool JeZivy();
+    virtual void konzumuj(Organismus *other) = 0;
 
 
   
