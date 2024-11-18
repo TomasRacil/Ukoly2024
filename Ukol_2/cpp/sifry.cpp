@@ -14,7 +14,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
     while (getline(soubor, radek)) {
         obsah += radek + "\n";
     }
-
+//Vrati obsah
     soubor.close();
     return obsah;
 }
