@@ -40,17 +40,7 @@ public:
             default: direction = 0; break; // Defaultní směr je východ
         }
     }
-    // Funkce pro rotaci waypointu
-    void otoc_waypoint(int uhel, char smer) {
-        double rad = uhel * (PI / 180.0);
-        if (smer == 'R') rad = -rad;  // Negativní pro rotaci doprava
-        
-        int nova_waypoint_x = round(cos(rad) * waypoint_x - sin(rad) * waypoint_y);
-        int nova_waypoint_y = round(sin(rad) * waypoint_x + cos(rad) * waypoint_y);
-        
-        waypoint_x = nova_waypoint_x;
-        waypoint_y = nova_waypoint_y;
-    }
+
 
     // Funkce pro zpracování navigačních instrukcí
     int naviguj(const string& cesta_soubor, bool druhe_reseni) {
