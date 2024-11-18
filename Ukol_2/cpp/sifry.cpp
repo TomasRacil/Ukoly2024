@@ -10,11 +10,8 @@ std::string otevri_soubor(const std::string &jmeno_souboru) {
         return "";
     }
 
-    std::string obsah, radek;
-    while (getline(soubor, radek)) {
-        obsah += radek + "\n";
-    }
-//Vrati obsah
+    std::string obsah = std::string((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
+
     soubor.close();
     return obsah;
 }
