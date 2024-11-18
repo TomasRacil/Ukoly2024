@@ -62,7 +62,7 @@ void insertAtIndex(Node **head, int data, int index)
     } else {
         newNode->next = temp->next;
         temp->next = newNode;
-    }
+    }  
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
@@ -77,7 +77,9 @@ void deleteAtBeginning(Node **head)
 // Funkce pro smazání uzlu z konce seznamu
 void deleteAtEnd(Node **head)
 {
-    if (*head == nullptr) return;
+    if (*head == nullptr){
+        return;
+    }
     if ((*head)->next == nullptr){
         delete *head;
         *head = nullptr;

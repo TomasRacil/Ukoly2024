@@ -1,73 +1,69 @@
-
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
 #include <algorithm>
-using namespace std;
 
-int soucet; 
-int soucin = 1;
-double prumer;
-double vysledek;
-vector<int>cisla;
-int cislo;
-int scitani(vector<int>cisla);
-int nasobeni(vector<int>cisla);
-double prumernaHodnota(vector<int>cisla);
-double median(vector<int>cisla);
-
-int main()
-{
-	cout << "Zadejte libovolny pocet cisel (pro ukonceni stisknete cislo 0)";
-
-	while (true) {
-		cin >> cislo;
-		if (cislo == 0) {
-			break;
-		}
-		cisla.push_back(cislo);
-	}
-	
-	scitani(cisla);
-	cout << "Soucet cisel je: " << soucet << endl;
-	nasobeni(cisla);
-	cout << "Soucin cisel je: " << soucin << endl;
-	prumernaHodnota(cisla);
-	cout << "Prumerna hodnota je: " << prumer << endl;
-	median(cisla);
-	cout << "Median je: " << vysledek << endl;
+// Funkce pro výpočet součtu
+int soucet(const std::vector<int> &cisla) {
+    int suma = 0;
+    for (int cislo : cisla) {
+        suma += cislo;
+    }
+    return suma;
 }
 
-int scitani(vector<int>cisla){
-	for (size_t i = 0; i < cisla.size(); i++) {
-		soucet += cisla[i];
-	}
-	return soucet;
-	
+// Funkce pro výpočet součinu
+int soucin(const std::vector<int> &cisla) {
+    int produkt = 1;
+    for (int cislo : cisla) {
+        produkt *= cislo;
+    }
+    return produkt;
 }
 
-int nasobeni(vector<int>cisla) {
-	for (size_t j = 0 ; j < cisla.size(); j++) {
-		soucin *= cisla[j];
-	}
-	return soucin;
+// Funkce pro výpočet průměrné hodnoty
+double prumer(const std::vector<int> &cisla) {
+    if (cisla.empty()) {
+        return 0.0; // Ochrana proti dělení nulou
+    }
+    return static_cast<double>(soucet(cisla)) / cisla.size();
 }
 
-double prumernaHodnota(vector<int>cisla) {
-		prumer = static_cast<double>(soucet) / cisla.size();
-		return prumer;
+// Funkce pro výpočet mediánu
+double median(std::vector<int> cisla) {
+    if (cisla.empty()) {
+        return 0.0;
+    }
+
+    std::sort(cisla.begin(), cisla.end());
+    size_t velikost = cisla.size();
+
+    if (velikost % 2 == 0) {
+        return (cisla[velikost / 2 - 1] + cisla[velikost / 2]) / 2.0;
+    } else {
+        return cisla[velikost / 2];
+    }
 }
 
-double median(vector<int>cisla) {
-	sort(cisla.begin(), cisla.end());
-	size_t velikost = cisla.size();
-	
-	if (velikost % 2 == 0) {
-		 vysledek = (cisla[velikost / 2 - 1] + cisla[velikost / 2]) / 2.0;
-		 return vysledek;
-	}
-	else {
-		vysledek = cisla[velikost / 2];
-		return vysledek;
-	}
+#ifndef __TEST__ 
+int main() {
+    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::string vstup;
+    std::getline(std::cin, vstup);
+
+    std::vector<int> cisla;
+    std::stringstream ss(vstup);
+    std::string token;
+    while (std::getline(ss, token, ',')) {
+        cisla.push_back(std::stoi(token));
+    }
+
+    std::cout << "Součet: " << soucet(cisla) << std::endl;
+    std::cout << "Součin: " << soucin(cisla) << std::endl;
+    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "Medián: " << median(cisla) << std::endl;
+
+    return 0;
 }
- 
+#endif // __TEST__

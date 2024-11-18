@@ -1,27 +1,41 @@
-import statistics
-cisla = []
-print("Zadejte libovolny pocet cisel(pro ukonceni zadejte 0)")
+def soucet(cisla: list[int]) -> int:
+    return sum(cisla)
 
-while True:
-    cislo = int(input())
-    if cislo == 0:
-        break
+
+def soucin(cisla: list[int]) -> int:
+    produkt = 1
+    for cislo in cisla:
+        produkt *= cislo
+    return produkt
+
+
+def prumer(cisla: list[int]) -> float:
+   
+    return sum(cisla) / len(cisla) if cisla else 0
+
+
+def median(cisla: list[int]) -> float:
     
-    cisla.append(cislo)
-    
-soucet = sum(cisla)
-print("Soucet cisel je: ", soucet)
+    cisla = sorted(cisla)
+    n = len(cisla)
+    if n == 0:
+        return 0  
+    stred = n // 2
+    if n % 2 == 0:
+        return (cisla[stred - 1] + cisla[stred]) / 2
+    return cisla[stred]
 
 
-soucin = 1
-for cislo in cisla:
-    soucin *= cislo
-print("Soucin cisel je: ", soucin)
+def main():
+
+    vstup = input("Zadejte seznam cisel oddelenych carkou: ")
+    cisla = [int(cislo) for cislo in vstup.split(",") if cislo.strip().isdigit()]
+
+    print("Soucet:", soucet(cisla))
+    print("Soucin:", soucin(cisla))
+    print("Prumrrna hodnota:", prumer(cisla))
+    print("Median:", median(cisla))
 
 
-prumer = soucet / len(cisla)
-print("Prumer cisel je: ", prumer)
-
-
-median = statistics.median(cisla)
-print("Median cisel je: ", median)
+if __name__ == "__main__":
+    main()

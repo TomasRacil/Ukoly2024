@@ -12,8 +12,34 @@ private:
     int x = 0, y = 0;              // Pozice lodi
     int waypoint_x = 10, waypoint_y = 1;  // Výchozí pozice waypointu pro část 2
     int direction = 0;              // Směr lodi ve stupních: 0 - východ, 90 - jih, 180 - západ, 270 - sever
+    char smer;                      // Směr lodi(N, S, E, W)
+
+      // Funkce pro rotaci waypointu
+    void otoc_waypoint(int uhel, char rotace) {
+        double rad = uhel * (PI / 180.0);
+        if (rotace == 'R') rad = -rad;  // Negativní pro rotaci doprava
+        
+        int nova_waypoint_x = round(cos(rad) * waypoint_x - sin(rad) * waypoint_y);
+        int nova_waypoint_y = round(sin(rad) * waypoint_x + cos(rad) * waypoint_y);
+        
+        waypoint_x = nova_waypoint_x;
+        waypoint_y = nova_waypoint_y;
+    }
+
 
 public:
+
+       Lod(int x_start, int y_start, char smer_start, int waypoint_x_start, int waypoint_y_start)
+        : x(x_start), y(y_start), waypoint_x(waypoint_x_start), waypoint_y(waypoint_y_start), smer(smer_start) {
+        // Inicializace úhlu podle směru
+        switch (smer) {
+            case 'E': direction = 0; break;
+            case 'S': direction = 90; break;
+            case 'W': direction = 180; break;
+            case 'N': direction = 270; break;
+            default: direction = 0; break; // Defaultní směr je východ
+        }
+    }
     // Funkce pro rotaci waypointu
     void otoc_waypoint(int uhel, char smer) {
         double rad = uhel * (PI / 180.0);
@@ -113,12 +139,12 @@ public:
 #ifndef __TEST__
 int main() {
     // První část: navigace bez waypointu
-    Lod lod;
-    cout << "Manhattan vzdálenost (část 1): " << lod.naviguj("vstup_1.txt", false) << endl;
+    Lod lod(0, 0, 'E', 10, 1);
+    cout << lod.naviguj("vstup_1.txt", false) << endl;
 
     // Druhá část: navigace s waypointem
-    Lod lod2;
-    cout << "Manhattan vzdálenost (část 2): " << lod2.naviguj("vstup_1.txt", true) << endl;
+    Lod lod2(0, 0, 'E', 10, 1);
+    cout << lod2.naviguj("vstup_1.txt", true) << endl;
 
     return 0;
 }
