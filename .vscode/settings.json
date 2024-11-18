@@ -76,5 +76,6 @@
         "xtr1common": "cpp",
         "xutility": "cpp"
     },
-    "cmake.sourceDirectory": "/workspaces/Ukoly2024/Ukol_1/cpp"
+    "cmake.sourceDirectory": "C:/Users/mates/Ukoly2024/Ukol_2/cpp",
+    "C_Cpp.errorSquiggles": "disabled"
 }
