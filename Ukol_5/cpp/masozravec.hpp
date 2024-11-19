@@ -8,7 +8,6 @@
 class Masozravec : public Zvire {
 public:
     Masozravec(int x, int y, Prostredi *prostredi);
-    ~Masozravec() {};
 
     void konzumuj(Organismus *other) override;
     void rozmnozovani() override;

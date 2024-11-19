@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "prostredi.hpp"
 #include "masozravec.hpp"
 #include "bylozravec.hpp"
@@ -33,6 +31,6 @@ int main()
        prostredi.krok(), prostredi.vypisStav();
     }
 
-    //destructor of the prostredi class deletes all members
+    //destructor of the prostredi class deletes all dynamically allocated organisms
     return 0;
 }

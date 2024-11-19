@@ -10,7 +10,6 @@
 class Zvire : public Organismus {
 public:
     Zvire(int x, int y, Prostredi *prostredi);
-    ~Zvire() {};
 
     void pohyb() override;
     void metabolismus() override;
