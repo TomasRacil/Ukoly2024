@@ -23,17 +23,7 @@ void Prostredi::krok() {
     }
 }
 
-template <typename T>
-void Prostredi::pridejOrganismus() {
-    T* organismus = new T(rand() % sirka, rand() % vyska, this);
-    organismy.push_back(organismus);
-}
 
-template <typename T>
-void Prostredi::pridejOrganismus(int x, int y) {
-    T* organismus = new T(x, y, this);
-    organismy.push_back(organismus);
-}
 
 void Prostredi::vypisStav() {
     int pocetRostlin = 0, pocetBylozravcu = 0, pocetMasozravcu = 0;
