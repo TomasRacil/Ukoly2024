@@ -1,0 +1,26 @@
+name: C++ Ukol 6 Tests
+
+on:
+  push:
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!tomasracil/main' # specifically excludes the 'tomasracil/main' branch
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!main'   # excludes master
+
+jobs:
+  cpp_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install C++ dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
+    - name: Build and run C++ tests
+      run: cd Ukol_6/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
