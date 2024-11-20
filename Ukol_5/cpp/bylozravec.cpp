@@ -1,6 +1,6 @@
 
-#include "bylozravec.h"
-#include "prostredi.h"
+#include "Bylozravec.h"
+#include "Prostredi.h"
 #include <random>
 
 Bylozravec::Bylozravec(int x, int y, Prostredi *prostredi) : Zvire(x, y, prostredi)
