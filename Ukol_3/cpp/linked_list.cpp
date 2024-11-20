@@ -4,64 +4,174 @@
 struct Node
 {
     int data;
-    Node *next;
+    Node* next;
 };
 
 // Funkce pro vytvoření nového uzlu
-Node *createNode(int data)
+Node* createNode(int data)
 {
-    return nullptr;
+    Node* newNode = new Node();
+    newNode->data = data;
+    newNode->next = nullptr;
+    return newNode;
 }
 
 // Funkce pro vložení uzlu na začátek seznamu
-void insertAtBeginning(Node **head, int data)
+void insertAtBeginning(Node** head, int data)
 {
+    Node* newNode = createNode(data);
+    newNode->next = *head;
+    *head = newNode;
 }
 
 // Funkce pro vložení uzlu na konec seznamu
-void insertAtEnd(Node **head, const int data)
+void insertAtEnd(Node** head, const int data)
 {
+    Node* newNode = createNode(data);
+    if (*head == nullptr)
+    {
+        *head = newNode;
+        return;
+    }
+    Node* temp = *head;
+    while (temp->next != nullptr)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;
 }
 
 // Funkce pro vložení na index
-void insertAtIndex(Node **head, int data, int index)
+void insertAtIndex(Node** head, int data, int index)
 {
+    if (index < 0)
+        throw std::out_of_range("Index out of range");
+    if (index == 0)
+    {
+        insertAtBeginning(head, data);
+        return;
+    }
+    Node* newNode = createNode(data);
+    Node* temp = *head;
+    for (int i = 0; i < index - 1; ++i)
+    {
+        if (temp == nullptr)
+            throw std::out_of_range("Index out of range");
+        temp = temp->next;
+    }
+    newNode->next = temp->next;
+    temp->next = newNode;
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
-void deleteAtBeginning(Node **head)
+void deleteAtBeginning(Node** head)
 {
+    if (*head == nullptr)
+        return;
+    Node* temp = *head;
+    *head = (*head)->next;
+    delete temp;
 }
 
 // Funkce pro smazání uzlu z konce seznamu
-void deleteAtEnd(Node **head)
+void deleteAtEnd(Node** head)
 {
+    if (*head == nullptr)
+        return;
+    if ((*head)->next == nullptr)
+    {
+        delete* head;
+        *head = nullptr;
+        return;
+    }
+    Node* temp = *head;
+    while (temp->next->next != nullptr)
+    {
+        temp = temp->next;
+    }
+    delete temp->next;
+    temp->next = nullptr;
 }
 
 // Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node *head, int index)
+void deleteAtIndex(Node* head, int index)
 {
+    if (index < 0 || head == nullptr)
+        throw std::out_of_range("Index out of range");
+    if (index == 0)
+    {
+        deleteAtBeginning(&head);
+        return;
+    }
+    Node* temp = head;
+    for (int i = 0; i < index - 1; ++i)
+    {
+        if (temp->next == nullptr)
+            throw std::out_of_range("Index out of range");
+        temp = temp->next;
+    }
+    Node* nodeToDelete = temp->next;
+    if (nodeToDelete == nullptr)
+        throw std::out_of_range("Index out of range");
+    temp->next = nodeToDelete->next;
+    delete nodeToDelete;
 }
 
 // Funkce pro nalezeni prvniho vyskytu
-int findFirstOccurrence(Node *head, int value)
+int findFirstOccurrence(Node* head, int value)
 {
-    return -1;
+    Node* temp = head;
+    int index = 0;
+    while (temp != nullptr)
+    {
+        if (temp->data == value)
+            return index;
+        temp = temp->next;
+        index++;
+    }
+    return -1; // Nenalezeno
 }
 
 // Funkce pro třídění seznamu
-void sortList(Node **head)
+void sortList(Node** head)
 {
+    if (*head == nullptr || (*head)->next == nullptr)
+        return;
+    bool swapped;
+    do
+    {
+        swapped = false;
+        Node* temp = *head;
+        while (temp->next != nullptr)
+        {
+            if (temp->data > temp->next->data)
+            {
+                std::swap(temp->data, temp->next->data);
+                swapped = true;
+            }
+            temp = temp->next;
+        }
+    } while (swapped);
 }
 
 // Funkce pro smazani (dealokaci) seznamu
-void deleteList(Node **head)
+void deleteList(Node** head)
 {
+    while (*head != nullptr)
+    {
+        deleteAtBeginning(head);
+    }
 }
 
 // Operátor pro tisk dat
-std::ostream &operator<<(std::ostream &os, Node *head)
+std::ostream& operator<<(std::ostream& os, Node* head)
 {
+    Node* temp = head;
+    while (temp != nullptr)
+    {
+        os << temp->data << (temp->next ? " " : "");
+        temp = temp->next;
+    }
     return os;
 }
 
@@ -69,7 +179,7 @@ std::ostream &operator<<(std::ostream &os, Node *head)
 int main()
 {
     // Vytvoření seznamu
-    Node *head = nullptr;
+    Node* head = nullptr;
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
