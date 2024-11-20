@@ -1,5 +1,8 @@
 
 #include "Prostredi.h"
+#include "Rostlina.h"
+#include "Bylozravec.h"
+#include "Masozravec.h"
 #include <iostream>
 #include <random>
 
