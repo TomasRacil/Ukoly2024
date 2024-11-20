@@ -5,38 +5,86 @@
 // Funkce pro otevření souboru
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
-  // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
+  
+std::ifstream soubor(jmeno_souboru);
+    if (!soubor) {
+        std::cerr << "Chyba při otevírání souboru!" << std::endl;
+        return "";
+    }
+    std::string obsah;
+    std::string radek;
+    while (std::getline(soubor, radek)) {
+        obsah += radek;
+    }
+    return obsah;
+  
 }
 
 // Funkce pro Caesarovu šifru
 std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 {
-  // Implementace Caesarovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  std::string vysledek = text;
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];  // Získáme znak na pozici i
+        if (isalpha(c)) {  // Pokud je znak písmenem
+            char offset = isupper(c) ? 'A' : 'a';  // Určíme, zda je písmeno velké nebo malé
+            if (sifrovat) {
+                // Šifrování
+                c = (char)(((c - offset + posun) % 26 + 26) % 26 + offset);
+            } else {
+                // Dešifrování
+                c = (char)(((c - offset - posun + 26) % 26 + 26) % 26 + offset);
+            }
+        }
+    }
+    return vysledek;
 }
 
 // Funkce pro Vigenerovu šifru
 std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  // Implementace Vigenerovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+  std::string vysledek = text;
+    int klic_index = 0;
+    int klic_dlouh = klic.length();
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];
+        if (isalpha(c)) {
+            char offset = isupper(c) ? 'A' : 'a';  // Určíme, zda je písmeno velké nebo malé
+            char klic_znak = klic[klic_index % klic_dlouh];  // Cyklíme klíč
+            if (sifrovat) {
+                c = (char)((((c - offset) + (klic_znak - offset)) % 26 + 26) % 26 + offset);  // Šifrování
+            } else {
+                c = (char)((((c - offset) - (klic_znak - offset) + 26) % 26 + 26) % 26 + offset);  // Dešifrování
+            }
+            klic_index++;  // Posuneme index klíče
+        }
+    }
+    return vysledek;
 }
 
 // Funkce pro XOR šifru
 std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
-  // Implementace XOR šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+   std::string vysledek = text;
+    int klic_index = 0;
+    int klic_dlouh = klic.length();
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];
+        c ^= klic[klic_index % klic_dlouh];  // XOR operace s klíčem
+        klic_index++;  // Posuneme index klíče
+    }
+    return vysledek;
 }
 
 // Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
-  // Implementace funkce pro uložení řetězce do souboru
+   std::ofstream soubor(jmeno_souboru);
+    if (!soubor) {
+        std::cerr << "Chyba při otevírání souboru pro zápis!" << std::endl;
+        return;
+    }
+    soubor << obsah;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
