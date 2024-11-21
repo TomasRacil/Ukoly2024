@@ -1,14 +1,16 @@
 #ifndef BYLOZRAVEC_H
 #define BYLOZRAVEC_H
+#include "zvire.h"
 
-#include "organismus.h"
-
-class Bylozravec : public Organismus {
+class Bylozravec : public Zvire
+{
 public:
     Bylozravec(int x, int y, Prostredi *prostredi);
 
-    char getTyp() const override;
-    void krok() override;
+    void konzumuj(Organismus *other) override;
+    void rozmnozovani() override;
+    char getType() const override;
+
 };
 
-#endif // BYLOZRAVEC_H
+#endif

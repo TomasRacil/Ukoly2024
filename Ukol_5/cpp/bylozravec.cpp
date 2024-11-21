@@ -1,12 +1,34 @@
 #include "bylozravec.h"
+#include "prostredi.h"
 
-Bylozravec::Bylozravec(int x, int y, Prostredi *prostredi)
-        : Organismus(x, y, prostredi) {}
-
-char Bylozravec::getTyp() const {
-    return 'B';
+Bylozravec::Bylozravec(int x, int y, Prostredi *prostredi) : Zvire(x,y,prostredi)
+{
+    energie = 100;
 }
 
-void Bylozravec::krok() {
-    // Logika pohybu nebo chování býložravce
+void Bylozravec::konzumuj(Organismus *other)
+{
+    if(other->getType() == 'R' && energie > other->energie)
+    {
+        energie += other->energie;
+        other->energie = 0;
+    }
+}
+
+void Bylozravec::rozmnozovani()
+{
+    if(energie > 300)
+    {
+        int pocetPotomku = rand() % 4;
+        for(int i =0; i < pocetPotomku; i++)
+        {
+            prostredi->pridejOrganismus<Bylozravec>(x,y);
+            energie /= 2;
+        }
+    }
+}
+
+char Bylozravec :: getType() const
+{
+    return 'B';
 }

@@ -1,20 +1,25 @@
 #ifndef ORGANISMUS_H
 #define ORGANISMUS_H
+using namespace std;
 
-class Prostredi; // Forward declaration
 
-class Organismus {
-protected:
-    int x, y;               // Souřadnice organismu
-    Prostredi *prostredi;   // Ukazatel na prostředí, kde se organismus nachází
-    bool zivy;              // Indikátor, zda je organismus živý
-
+// Forward deklarace třídy Prostredi, protože ji potřebujeme v definici Organismus,
+// ale nechceme zatím zahrnout celý její obsah (zabraňuje cyklickým závislostem).
+class Prostredi;
+class Organismus
+{
 public:
     Organismus(int x, int y, Prostredi *prostredi);
-    virtual ~Organismus() = default;
+    virtual char getType() const = 0;
+    virtual void pohyb() = 0;
+    virtual void metabolismus() = 0;
+    virtual void rozmnozovani() = 0;
+    virtual bool JeZivy();
+    virtual void konzumuj(Organismus *other) = 0;
 
-    virtual void krok() = 0; // Virtuální metoda pro akce organismu v jednom kroku
-    bool jeZivy() const;     // Kontrola, zda je organismus živý
+    int x,y;
+    int energie;
+    Prostredi *prostredi;
 };
 
-#endif // ORGANISMUS_H
+#endif
