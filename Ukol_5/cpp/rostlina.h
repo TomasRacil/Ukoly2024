@@ -7,15 +7,8 @@ class Rostlina : public Organismus {
 public:
     Rostlina(int x, int y, Prostredi *prostredi);
 
-    void pohyb() override;
-
-    void metabolismus() override;
-
-    void rozmnozovani() override;
-
-    void konzumuj(Organismus *other) override;
-
-    char getTyp() override;
+    char getTyp() const override;
+    void krok() override;
 };
 
-#endif
+#endif // ROSTLINA_H

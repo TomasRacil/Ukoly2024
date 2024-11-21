@@ -1,17 +1,14 @@
 #ifndef MASOZRAVEC_H
 #define MASOZRAVEC_H
 
-#include "zvire.h"
+#include "organismus.h"
 
-class Masozravec : public Zvire {
+class Masozravec : public Organismus {
 public:
     Masozravec(int x, int y, Prostredi *prostredi);
 
-    void konzumuj(Organismus *other) override;
-
-    void rozmnozovani() override;
-
-    char getTyp() override;
+    char getTyp() const override;
+    void krok() override;
 };
 
-#endif
+#endif // MASOZRAVEC_H
