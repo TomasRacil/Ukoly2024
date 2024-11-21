@@ -2,17 +2,8 @@
 #include <vector>
 #include <iomanip>
 
-/*
-Pro každý disk je potřeba provést určité množství tahů, které se zvyšují exponenciálně:
-Pro 1 disk je potřeba 1 tah.
-Pro 2 disky jsou potřeba 3 tahy.
-Pro 3 disky jsou potřeba 7 tahů.
-Pro 4 disky jsou potřeba 15 tahů.
-Pro 5 disků 31 tahů, a tak dále.
-*/
 using namespace std;
 
-// Struktura pro reprezentaci tahu
 struct Tah {
     int disk;
     char z;
@@ -22,37 +13,29 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah &tah) {
-    // Odebrání disku z věže 'z'
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
-
-    // Přidání disku na věž 'na'
     veze[tah.na - 'A'].push_back(disk);
-
-    // Uložení stavu věží do tahu
     tah.stavVezi = veze;
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n <= 0) return; // Neplatné množství disků
+    if (n <= 0) return;
 
     if (n == 1) {
-        // Základní případ: Přesun jednoho disku
+        Tah tah = {veze[z - 'A'].back(), z, cil};
+        provedTah(veze, tah);
+        tahy.push_back(tah);  // Přidání tahu do seznamu
+    } else {
+        hanoi(n - 1, z, cil, pomocny, veze, tahy);
         Tah tah = {veze[z - 'A'].back(), z, cil};
         provedTah(veze, tah);
         tahy.push_back(tah);
-    } else {
-        // Rekurzivní rozdělení problému
-        hanoi(n - 1, z, cil, pomocny, veze, tahy); // Přesun n-1 disků na pomocnou věž
-        Tah tah = {veze[z - 'A'].back(), z, cil};
-        provedTah(veze, tah); // Přesun největšího disku na cílovou věž
-        tahy.push_back(tah);
-        hanoi(n - 1, pomocny, z, cil, veze, tahy); // Přesun n-1 disků na cílovou věž
+        hanoi(n - 1, pomocny, z, cil, veze, tahy);
     }
 }
 
-// Funkce pro zobrazení věží v konzoli
 void zobrazVeze(const vector<vector<int>> &veze) {
     int maxHeight = 0;
     for (const auto &vez : veze) {
@@ -69,9 +52,7 @@ void zobrazVeze(const vector<vector<int>> &veze) {
         }
         cout << endl;
     }
-
-    cout << "  A    B    C  " << endl;
-    cout << endl;
+    cout << "  A    B    C  " << endl << endl;
 }
 
 #ifndef __TEST__
