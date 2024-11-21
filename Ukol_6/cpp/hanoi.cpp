@@ -4,45 +4,47 @@
 
 using namespace std;
 
+// Struktura pro reprezentaci tahu
 struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; // clen pro uloženi stavu věži po provedeni tahu
 };
 
-// Funkce pro provedení tahu
+// Funkce pro provedeni tahu
 void provedTah(vector<vector<int>> &veze, Tah &tah) {
+    // Odebráni disku z věže 'z'
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
+
+    // Pridáni disku na věž 'na'
     veze[tah.na - 'A'].push_back(disk);
+
+    // Uloženi stavu věži do tahu
     tah.stavVezi = veze;
 }
 
-// Funkce pro řešení Hanoiských věží (bez výpisu)
-// Function to solve the Tower of Hanoi puzzle
+// Funkce pro rešeni Hanoiskych věži (bez vypisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    // If the number of disks is zero or negative, do nothing
-    if (n <= 0) return;
+    if (n <= 0) return; // Neplatné množstvi disku
 
-    // Base case: if there's only one disk to move
     if (n == 1) {
+        // Základni pripad: Presun jednoho disku
         Tah tah = {veze[z - 'A'].back(), z, cil};
         provedTah(veze, tah);
-        tahy.push_back(tah);  // Add the move to the list
+        tahy.push_back(tah);
     } else {
-        // Recursive case: move n-1 disks to the auxiliary pole
-        hanoi(n - 1, z, cil, pomocny, veze, tahy);
-
-        // Move the nth disk to the target pole
+        // Rekurzivni rozděleni problému
+        hanoi(n - 1, z, cil, pomocny, veze, tahy); // Presun n-1 disku na pomocnou věž
         Tah tah = {veze[z - 'A'].back(), z, cil};
-        provedTah(veze, tah);
-        tahy.push_back(tah); // Add the move to the list
-
-        // Move the n-1 disks from the auxiliary pole to the target pole
-        hanoi(n - 1, pomocny, z, cil, veze, tahy);
+        provedTah(veze, tah); // Presun největšiho disku na cilovou věž
+        tahy.push_back(tah);
+        hanoi(n - 1, pomocny, z, cil, veze, tahy); // Presun n-1 disku na cilovou věž
     }
 }
+
+// Funkce pro zobrazeni věži v konzoli
 void zobrazVeze(const vector<vector<int>> &veze) {
     int maxHeight = 0;
     for (const auto &vez : veze) {
@@ -59,7 +61,9 @@ void zobrazVeze(const vector<vector<int>> &veze) {
         }
         cout << endl;
     }
-    cout << "  A    B    C  " << endl << endl;
+
+    cout << "  A    B    C  " << endl;
+    cout << endl;
 }
 
 #ifndef __TEST__
@@ -78,13 +82,13 @@ int main() {
         veze[0].push_back(i);
     }
 
-    vector<Tah> tahy; // Vektor pro uložení tahů
+    vector<Tah> tahy; // Vektor pro uloženi tahu
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
-    // Zobrazení tahů a stavů věží
+    // Zobrazeni tahu a stavu věži
     for (const Tah &tah : tahy) {
         cout << "Presun disk " << tah.disk << " z koliku " << tah.z << " na kolik " << tah.na << endl;
-        zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
+        zobrazVeze(tah.stavVezi); // Zobrazeni stavu věži po tahu
     }
 
     return 0;
