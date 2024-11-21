@@ -36,7 +36,7 @@ void Prostredi::krok() {
         return false;
     });
 }
-
+//kebab
 template <typename T>
 void Prostredi::pridejOrganismus() {
     int x = rand() % sirka;

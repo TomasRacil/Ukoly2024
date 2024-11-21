@@ -3,7 +3,7 @@
 
 #include <list>
 #include "organismus.h"
-
+//kebab
 class Prostredi {
 private:
     int vyska, sirka;
