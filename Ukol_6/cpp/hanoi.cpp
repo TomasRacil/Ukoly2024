@@ -20,22 +20,29 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
+// Function to solve the Tower of Hanoi puzzle
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    // If the number of disks is zero or negative, do nothing
     if (n <= 0) return;
 
+    // Base case: if there's only one disk to move
     if (n == 1) {
         Tah tah = {veze[z - 'A'].back(), z, cil};
         provedTah(veze, tah);
-        tahy.push_back(tah);  // Přidání tahu do seznamu
+        tahy.push_back(tah);  // Add the move to the list
     } else {
+        // Recursive case: move n-1 disks to the auxiliary pole
         hanoi(n - 1, z, cil, pomocny, veze, tahy);
+
+        // Move the nth disk to the target pole
         Tah tah = {veze[z - 'A'].back(), z, cil};
         provedTah(veze, tah);
-        tahy.push_back(tah);
+        tahy.push_back(tah); // Add the move to the list
+
+        // Move the n-1 disks from the auxiliary pole to the target pole
         hanoi(n - 1, pomocny, z, cil, veze, tahy);
     }
 }
-
 void zobrazVeze(const vector<vector<int>> &veze) {
     int maxHeight = 0;
     for (const auto &vez : veze) {
