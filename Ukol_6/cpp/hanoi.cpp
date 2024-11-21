@@ -15,18 +15,56 @@ struct Tah
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah tah)
 {
-    // Doplňte implementaci
+    int start = tah.z - 'A';
+    int cil = tah.na - 'A';
+
+    if(!veze[start].empty())
+    {
+        tah.disk = veze[start].back();
+        veze[start].pop_back();
+        veze[cil].push_back(tah.disk);
+    }
+
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
-    // Doplňte implementaci
+    if(n == 1)
+    {
+        Tah tah = {n,z,cil,veze};
+        provedTah(veze,tah);
+        tah.stavVezi = veze;
+        tahy.push_back(tah);
+        return;
+    }
+
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
+
+    Tah tah = {n,z,cil,veze};
+    provedTah(veze, tah);
+    tah.stavVezi = veze;
+    tahy.push_back(tah);
+
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
+    
+    
+    
 }
 
 void zobrazVeze(vector<vector<int>> &veze)
 {
-    // Doplňte implementaci
+    for(size_t i = 0; i < veze.size(); i++)
+    {
+        cout << "Vez " << char('A' + i) << ": ";
+        for(int disk : veze[i])
+        {
+            cout << disk << " ";
+        }
+        cout << endl;
+    }
+    
+    cout << "------------------" << endl;
 }
 
 #ifndef __TEST__
