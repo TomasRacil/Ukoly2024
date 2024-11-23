@@ -24,7 +24,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah)
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
-    if (n == 0) {
+    if (n <= 0) {
         return;
     }
 
