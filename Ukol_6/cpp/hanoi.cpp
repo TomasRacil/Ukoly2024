@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 // Struktura pro reprezentaci tahu
 struct Tah
 {
@@ -14,12 +15,6 @@ struct Tah
     //constructor
     Tah(int disk, char z, char na, vector<vector<int>> stavVezi) : disk(disk), z(z), na(na), stavVezi(stavVezi) {};
 };
-
-// // Funkce pro provedení tahu (?? pointless)
-// void provedTah(vector<vector<int>> &veze, Tah tah)
-// {
-//     //provede presunuti mensiho disku na vetsi smerem doprava
-// }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
