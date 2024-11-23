@@ -56,8 +56,8 @@ void Prostredi::pridejOrganismus() {
 // Přidání organismu na konkrétní pozici
 template <typename T>
 void Prostredi::pridejOrganismus(int x, int y) {
-    int new_x = std::clamp(x, 0, sirka - 1);
-    int new_y = std::clamp(y, 0, vyska - 1);
+    int new_x = (x < 0) ? 0 : (x >= sirka ? sirka - 1 : x);
+    int new_y = (y < 0) ? 0 : (y >= vyska ? vyska - 1 : y);
     T* organismus = new T(new_x, new_y, this);
     organismy.push_back(organismus);
 }
