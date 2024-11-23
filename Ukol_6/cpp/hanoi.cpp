@@ -28,9 +28,10 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         return;
     }
 
-    //check if towers are non-empty:
+    //init towers when they're empty
     if (veze[0].empty() && veze[1].empty() && veze[2].empty())
-        return;
+        for (int i=n;i>0;--i)
+            veze[0].push_back(i);
 
     //transfer disc from start to auxiliary via end
     hanoi(n-1, z      ,cil  ,pomocny,veze,tahy);
@@ -125,16 +126,10 @@ int main()
     vector<vector<int>> veze(3); // Initialize towers
     vector<Tah> tahy;            // Initialize moves
 
-    // // Test with zero disks
-    // hanoi(0, 'A', 'B', 'C', veze, tahy);
-
-    // // Test with negative disks
-    // hanoi(-1, 'A', 'B', 'C', veze, tahy);
-
 
     // Test with a valid number of disks
-    hanoi(3, 'A', 'B', 'C', veze, tahy);
-
+    hanoi(1, 'A', 'B', 'C', veze, tahy);
+    cout << "pocet tahu: " << tahy.size() << endl;
 
 
 
