@@ -28,6 +28,10 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         return;
     }
 
+    //check if towers are non-empty:
+    if (veze[0].empty() && veze[1].empty() && veze[2].empty())
+        return;
+
     //transfer disc from start to auxiliary via end
     hanoi(n-1, z      ,cil  ,pomocny,veze,tahy);
 
@@ -118,27 +122,44 @@ void zobrazVeze(vector<vector<int>> &veze)
 #ifndef __TEST__
 int main()
 {
-    int n;
-    cout << "Zadejte počet disků: ";
-    cin >> n;
-    cin.ignore();
+    vector<vector<int>> veze(3); // Initialize towers
+    vector<Tah> tahy;            // Initialize moves
+
+    // // Test with zero disks
+    // hanoi(0, 'A', 'B', 'C', veze, tahy);
+
+    // // Test with negative disks
+    // hanoi(-1, 'A', 'B', 'C', veze, tahy);
 
 
-    vector<vector<int>> veze(3);
-    for (int i = n; i > 0; i--)
-    {
-        veze[0].push_back(i);
-    }
+    // Test with a valid number of disks
+    hanoi(3, 'A', 'B', 'C', veze, tahy);
 
-    vector<Tah> tahy; // Vektor pro uložení tahů
-    hanoi(n, 'A', 'B', 'C', veze, tahy);
 
-    // Zobrazení tahů a stavů věží
-    for (Tah tah : tahy)
-    {
-        cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
-        zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
-    }
+
+
+
+    // int n;
+    // cout << "Zadejte počet disků: ";
+    // cin >> n;
+    // cin.ignore();
+
+
+    // vector<vector<int>> veze(3);
+    // for (int i = n; i > 0; i--)
+    // {
+    //     veze[0].push_back(i);
+    // }
+
+    // vector<Tah> tahy; // Vektor pro uložení tahů
+    // hanoi(n, 'A', 'B', 'C', veze, tahy);
+
+    // // Zobrazení tahů a stavů věží
+    // for (Tah tah : tahy)
+    // {
+    //     cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
+    //     zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
+    // }
 
     return 0;
 }
