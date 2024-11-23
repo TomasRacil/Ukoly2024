@@ -12,18 +12,19 @@ struct Tah
     char na;
     vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 
-    //constructor
+    //added constructor
     Tah(int disk, char z, char na, vector<vector<int>> stavVezi) : disk(disk), z(z), na(na), stavVezi(stavVezi) {};
 };
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
+    //break the recursion, take care of invalid n
     if (n <= 0) {
         return;
     }
 
-    //init towers when they're empty
+    //init towers when they're empty, even though n is valid
     if (veze[0].empty() && veze[1].empty() && veze[2].empty())
         for (int i=n;i>0;--i)
             veze[0].push_back(i);
@@ -31,11 +32,14 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     //transfer disc from start to auxiliary via end
     hanoi(n-1, z      ,cil  ,pomocny,veze,tahy);
 
+
     //move disc from z tower to cil tower in veze vector
+    //no need for provedTah, this is just faster
+    //subtracting 'A from char representing the tower A,B,C causes correct indexing of vector without the need of extra variables
     veze[cil - 'A'].push_back(veze[z - 'A'].back());
     veze[z - 'A'].pop_back();
 
-    //push back current state of discs and transitions that were done to tahy
+    //push back current step
     tahy.push_back(Tah(n,z,cil,veze));
 
     //transfer disc from auxiliary to end via start
@@ -44,19 +48,19 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
 void zobrazVeze(vector<vector<int>> &veze)
 {
+    //cannot print towers when there are no towers
     if (veze.empty()) {
-        //cannot print towers when there are no towers
         return;
     }
 
-    //get number of discs on all towers:
+    //get total number of discs
     int discs_cnt = veze[0].size() + veze[1].size() + veze[2].size();
 
     //print towers from top to bottom
     //the widest tower is discs_cnt*2 + 1 wide
     //all towers are discs_cnt + 1 high
 
-    //spaces before and after empty tower piece
+    //spaces before and after empty tower piece calculated according to widest tower
     string spaces;
     for (int i=0;i<discs_cnt+1;++i)
         spaces += ' ';
@@ -69,6 +73,7 @@ void zobrazVeze(vector<vector<int>> &veze)
 
             //print disc if there is any on current row:
             if (veze[j].size() > i) {
+
                 //print spaces before the disc depending on disc width
                 cout << spaces.substr(0,discs_cnt - veze[j][i] + 1);
                 //print disc
