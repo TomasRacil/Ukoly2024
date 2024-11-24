@@ -2,8 +2,6 @@
 #include <vector>
 
 using namespace std;
-
-
 // Struktura pro reprezentaci tahu
 struct Tah
 {
@@ -15,6 +13,33 @@ struct Tah
     //added constructor
     Tah(int disk, char z, char na, vector<vector<int>> stavVezi) : disk(disk), z(z), na(na), stavVezi(stavVezi) {};
 };
+
+
+void provedTah(vector<vector<int>> &veze, Tah tah)
+{
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⠶⠶⠶⠶⠶⠶⠶⠶⣶⣶⣶⣶⣶⠶⠶⠶⠶⠶⠶⠶⢶⣤⣤⣤⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⣠⡿⠋⠀⠀⠀⠀⢀⡠⠔⠒⢉⣉⣀⣠⠠⢄⣠⣀⣀⡀⠀⠀⠀⠀⠀⠀⠉⣉⣛⣛⡛⠷⣦⣄⠀⠀⠀⠀⠀⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⢀⣼⠏⠀⠀⠀⢀⠴⠊⣡⠔⣚⡩⠥⠤⠤⠔⠦⢤⠄⠀⠀⠈⠉⠉⠉⠉⣉⣉⣉⣀⣀⠀⠉⠀⠈⠙⠻⣦⡀⠀⠀⠀⠀
+    // ⠀⠀⠀⠀⠀⢀⣾⠏⠀⠀⠀⠊⢁⡴⢋⠴⠊⠁⠀⠀⠀⠀⠀⠀⠀⢣⠀⠀⠀⠀⠀⠈⢹⠃⠀⠀⠀⠀⠉⠢⡀⠀⠀⠀⠸⣷⠀⠀⠀⠀
+    // ⠀⠀⠀⠀⢀⣾⠏⠀⠀⠀⠀⠀⠉⠐⠁⣀⣤⣴⣶⣶⣶⡶⣶⣤⣀⠈⠀⠀⠀⠀⠀⠀⡎⠀⠀⢀⣀⣀⠀⠀⠑⠀⠀⠀⠀⢿⡄⠀⠀⠀
+    // ⠀⠀⢀⣴⣿⣷⡤⠄⠀⠀⠀⣤⡔⠀⣾⣿⣽⣿⣿⣿⣿⣤⣄⡉⠻⣷⡆⠀⠀⠀⣀⣀⣤⣶⣿⣿⣿⣿⣿⣷⠄⠤⠤⠤⢤⣈⠻⣶⡀⠀
+    // ⠀⣴⢟⡟⠁⢀⣴⡶⠾⠶⣶⣤⣈⡁⠈⠉⠀⣀⣴⡗⠀⠉⠙⠻⢿⠟⠁⠀⠀⠀⠙⢻⣿⠛⠋⠉⠉⠀⠀⠀⠀⢀⣀⣀⠰⢌⠓⢌⢿⡄
+    // ⣸⡏⢸⠀⣰⡿⠁⠀⢠⣷⡀⠉⠙⠛⠻⠿⠟⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⡀⠀⠀⠀⢶⣤⣤⣾⠟⠛⠛⠿⠆⡇⢘⣾⡇
+    // ⣿⡄⢸⠀⣿⡇⣠⣴⣿⡟⠻⢷⣦⣄⡀⠀⠀⠀⣀⣀⣀⡤⢦⣴⡶⠶⠀⠀⠀⠀⠀⠀⠉⠻⣷⣄⠀⠀⠉⠉⠁⢠⣿⡀⠀⢀⠇⢸⣻⡇
+    // ⢹⣧⠘⡆⠸⣧⠀⠀⢹⣷⣄⠀⠈⠙⣿⡷⣶⣤⣄⣀⠀⠀⠘⣷⡄⢶⠷⠶⠦⠀⠀⠀⢀⣴⡿⠿⠛⠢⢄⠀⢀⣼⣿⣧⢀⡡⠔⣻⡟⠀
+    // ⠀⠹⣷⣌⠓⠬⠀⠀⠈⠻⣿⣷⣦⣄⣿⣧⠀⠈⠉⠛⠻⢷⣶⣮⣥⣄⣀⡀⠀⠀⠹⠷⠟⠋⠀⠀⢀⣀⣤⣷⣿⠿⣿⣿⠀⠀⢰⡿⠁⠀
+    // ⠀⠀⠈⠻⣯⡀⠀⠀⠀⠀⠙⣷⡌⠙⣿⣿⣿⣶⣤⣄⡀⣼⡏⠀⠉⠉⠛⢻⣿⠟⠿⠿⣿⡿⠿⠟⠛⣿⡏⠀⣿⡇⣿⣿⠀⠀⣺⡇⠀⠀
+    // ⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀⠀⠈⢻⣦⣾⠇⠈⠙⠛⠿⣿⣿⣷⣶⣤⣤⣤⣤⣿⣤⣤⣤⣼⣧⣤⣤⣤⣼⣷⣴⣿⣿⣿⣿⠀⠀⢾⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠘⣷⡄⠀⠀⠀⠀⠀⠙⠻⣦⣄⠀⠀⠀⣸⡏⠉⠙⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢾⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠈⢿⣦⡀⠀⡀⠀⠀⠀⠈⠛⢷⣦⣠⣿⠁⠀⠀⠀⠀⢈⣿⠀⠉⠉⢉⣿⠛⠛⢻⡿⠋⣹⡟⢹⣿⣾⠇⠀⠀⣺⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⣦⣉⠓⠤⣉⠒⠤⣀⠈⠙⠻⠷⢶⣤⣤⣄⣸⣿⣀⣀⣀⣸⣟⣀⣠⣿⣇⣴⣿⣶⡾⠟⠁⠀⠀⠀⢼⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠿⣦⣌⡉⠲⠤⣉⠒⠦⢄⣀⠀⠈⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠀⠀⠀⡠⠀⠀⡀⠀⢸⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⠷⣦⣄⡉⠑⠒⠬⠭⣖⣒⡤⠤⠤⠤⠤⠤⠤⠤⣀⢄⡠⠤⠤⠒⠉⠀⢀⡰⠃⠀⢸⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠷⣶⣤⣀⠀⠀⠈⠉⠉⠒⠒⠒⠒⠐⠠⠦⠴⠤⠴⠤⠴⠒⠉⠀⠀⠀⣼⡇⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣶⣦⣤⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠏⠀⠀⠀
+    // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠙⠛⠻⠷⠶⢶⣦⣤⣤⣤⣤⣤⡴⠶⠟⠋⠁⠀⠀⠀⠀
+}
+
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
@@ -35,11 +60,11 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
     //move disc from z tower to cil tower in veze vector
     //no need for provedTah, this is just faster
-    //subtracting 'A from char representing the tower A,B,C causes correct indexing of vector without the need of extra variables
+    //subtracting 'A from char representing the tower A,B,C results in correct indexing of vector without the need of extra variables
     veze[cil - 'A'].push_back(veze[z - 'A'].back());
     veze[z - 'A'].pop_back();
 
-    //push back current step
+    //store current step in tahy vector
     tahy.push_back(Tah(n,z,cil,veze));
 
     //transfer disc from auxiliary to end via start
