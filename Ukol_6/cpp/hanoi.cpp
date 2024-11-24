@@ -14,12 +14,27 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah tah) {
-    int disk = tah.disk; // Uložení disku
-    char z = tah.z; // Uložení zdrojové veže
-    char na = tah.na; // Uložení cílové veže
-    veze[z - 'A'].pop_back(); // Odeber disk ze zdrojove veze
-    veze[na - 'A'].push_back(disk); // Přidej disk na cílovou vez
+    int disk = tah.disk;
+    int from_index = tah.z - 'A';
+    int to_index = tah.na - 'A';
+
+    // Zkontroluj, zda jsou indexy ve správném rozsahu
+    if (from_index < 0 || from_index >= (int)veze.size() || to_index < 0 || to_index >= (int)veze.size()) {
+        cerr << "Error: Invalid tower index in move from " << tah.z << " to " << tah.na << endl;
+        exit(1); // Exit the program
+    }
+
+    // Zkontroluj, zda je zdrojová věž neprázdná
+    if (veze[from_index].empty()) {
+        cerr << "Error: Vez je prazdna " << tah.z << endl;
+        exit(1);
+    }
+
+    // Proveď tah
+    veze[from_index].pop_back();
+    veze[to_index].push_back(disk);
 }
+
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
