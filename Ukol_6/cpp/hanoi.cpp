@@ -14,6 +14,11 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah &tah) {
+    if (veze[tah.z - 'A'].empty()) {
+        cerr << "Chyba: Snažíte se odebrat disk z prázdné věže." << endl;
+        return;
+    }
+
     // Odebereme disk z počáteční věže
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
@@ -51,7 +56,6 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         return; // Nic neprovádíme, pokud je počet disků menší nebo roven nule
     }
     if (n == 1) {
-        // Přesuneme jediný disk
         Tah tah = {1, z, cil, {}};
         provedTah(veze, tah);
         tahy.push_back(tah);
@@ -74,10 +78,9 @@ int main() {
     int n;
     cout << "Zadejte počet disků: ";
     cin >> n;
-    cin.ignore();
 
-    if (n <= 0) {
-        cout << "Počet disků musí být větší než 0!" << endl;
+    if (n < 0) {
+        cerr << "Chyba: Počet disků nemůže být záporný." << endl;
         return 1;
     }
 
@@ -98,3 +101,4 @@ int main() {
     return 0;
 }
 #endif // __TEST__
+
