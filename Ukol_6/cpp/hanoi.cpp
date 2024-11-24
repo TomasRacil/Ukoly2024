@@ -38,6 +38,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    if (n < 0) return; // Pokud je neg počet disků, tak skonči
     if (n == 0) return; // Pokud je nulový počet disků, tak skonči
 
     hanoi(n - 1, z, cil, pomocny, veze, tahy); // Přesun n-1 disků z pomocné na cílovou věž
@@ -70,18 +71,15 @@ int main() {
     cout << "Zadejte pocet disku: ";
     cin >> n;
     cin.ignore();
-    if (n < 1) {
-        cout << "Pocet disku musi byt kladne cislo" << endl;
+    if (n > 15) {
+        cerr << "Pocet disku muze byt max 30" << endl;
         return 1;
     }
     if (cin.fail()) {
         cout << "Nespravny vstup." << endl;
         return 1;
     }
-    if (n == 0) {
-        cout << "Prazdny vstup." << endl;
-        return 1;
-    }
+
 
     vector<vector<int>> veze(3); // Vektor pro uložení stavu věží
     for (int i = n; i > 0; i--) {
