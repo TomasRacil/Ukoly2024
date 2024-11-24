@@ -9,11 +9,11 @@ struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; // Stav věží po tahu
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah) {
+void provedTah(vector<vector<int>> &veze, Tah &tah) {
     // Uložíme aktuální stav věží do tahu před provedením změn
     tah.stavVezi = veze;
 
@@ -25,28 +25,8 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     veze[tah.na - 'A'].push_back(disk);
 }
 
-// Funkce pro řešení Hanoiských věží (bez výpisu)
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n <= 0) {
-        return; // Nic neprovádíme, pokud je počet disků menší nebo roven nule
-    }
-    if (n == 1) {
-        Tah tah = {n, z, cil, veze};
-        provedTah(veze, tah);
-        tahy.push_back(tah);
-    } else {
-        hanoi(n - 1, z, cil, pomocny, veze, tahy);
-
-        Tah tah = {n, z, cil, veze};
-        provedTah(veze, tah);
-        tahy.push_back(tah);
-
-        hanoi(n - 1, pomocny, z, cil, veze, tahy);
-    }
-}
-
-// Funkce pro zobrazení aktuálního stavu věží
-void zobrazVeze(vector<vector<int>> &veze) {
+// Funkce pro vizualizaci věží
+void zobrazVeze(const vector<vector<int>> &veze) {
     int maxHeight = 0;
     for (const auto &vez : veze) {
         maxHeight = max(maxHeight, (int)vez.size());
@@ -65,6 +45,29 @@ void zobrazVeze(vector<vector<int>> &veze) {
     cout << "   A           B           C   " << endl << endl;
 }
 
+// Funkce pro řešení Hanoiských věží
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    if (n <= 0) {
+        return; // Nic neprovádíme, pokud je počet disků menší nebo roven nule
+    }
+    if (n == 1) {
+        Tah tah = {1, z, cil, veze};
+        provedTah(veze, tah);
+        tahy.push_back(tah);
+    } else {
+        // Přesun n-1 disků na pomocný kolík
+        hanoi(n - 1, z, cil, pomocny, veze, tahy);
+
+        // Přesun největšího disku na cílový kolík
+        Tah tah = {n, z, cil, veze};
+        provedTah(veze, tah);
+        tahy.push_back(tah);
+
+        // Přesun n-1 disků z pomocného kolíku na cílový kolík
+        hanoi(n - 1, pomocny, z, cil, veze, tahy);
+    }
+}
+
 #ifndef __TEST__
 int main() {
     int n;
@@ -72,16 +75,21 @@ int main() {
     cin >> n;
     cin.ignore();
 
-    vector<vector<int>> veze(3);
+    if (n <= 0) {
+        cout << "Počet disků musí být větší než 0!" << endl;
+        return 1;
+    }
+
+    vector<vector<int>> veze(3); // Inicializace 3 věží
     for (int i = n; i > 0; i--) {
-        veze[0].push_back(i);
+        veze[0].push_back(i); // Všechny disky začínají na první věži
     }
 
     vector<Tah> tahy; // Vektor pro uložení tahů
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
     // Zobrazení tahů a stavů věží
-    for (Tah tah : tahy) {
+    for (const Tah &tah : tahy) {
         cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
@@ -89,5 +97,3 @@ int main() {
     return 0;
 }
 #endif // __TEST__
-
-
