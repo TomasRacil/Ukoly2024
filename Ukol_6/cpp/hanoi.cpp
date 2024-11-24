@@ -6,14 +6,14 @@ using namespace std;
 
 // Struktura pro reprezentaci tahu
 struct Tah {
-    int disk;                     // Číslo disku
-    char z;                       // Zdrojový kolík
-    char na;                      // Cílový kolík
-    vector<vector<int>> stavVezi; // Stav věží po provedení tahu
+    int disk;
+    char z;
+    char na;
+    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah &tah) {
+void provedTah(vector<vector<int>> &veze, Tah tah) {
     // Uložíme aktuální stav věží do tahu před provedením změn
     tah.stavVezi = veze;
 
@@ -25,27 +25,7 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
     veze[tah.na - 'A'].push_back(disk);
 }
 
-// Funkce pro vizualizaci věží
-void zobrazVeze(vector<vector<int>> &veze) {
-    int maxHeight = 0;
-    for (const auto &vez : veze) {
-        maxHeight = max(maxHeight, (int)vez.size());
-    }
-
-    for (int i = maxHeight - 1; i >= 0; --i) {
-        for (int j = 0; j < 3; ++j) {
-            if (i < veze[j].size()) {
-                cout << setw(5) << veze[j][i] << setw(5);
-            } else {
-                cout << setw(5) << "|" << setw(5);
-            }
-        }
-        cout << endl;
-    }
-    cout << "   A           B           C   " << endl << endl;
-}
-
-// Funkce pro řešení Hanoiských věží
+// Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n <= 0) {
         return; // Nic neprovádíme, pokud je počet disků menší nebo roven nule
@@ -65,12 +45,24 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     }
 }
 
-// Testovací funkce
-bool jsouTahyRovny(const Tah &a, const Tah &b) {
-    return a.disk == b.disk &&
-           a.z == b.z &&
-           a.na == b.na &&
-           a.stavVezi == b.stavVezi;
+// Funkce pro zobrazení aktuálního stavu věží
+void zobrazVeze(vector<vector<int>> &veze) {
+    int maxHeight = 0;
+    for (const auto &vez : veze) {
+        maxHeight = max(maxHeight, (int)vez.size());
+    }
+
+    for (int i = maxHeight - 1; i >= 0; --i) {
+        for (int j = 0; j < 3; ++j) {
+            if (i < veze[j].size()) {
+                cout << setw(5) << veze[j][i] << setw(5);
+            } else {
+                cout << setw(5) << "|" << setw(5);
+            }
+        }
+        cout << endl;
+    }
+    cout << "   A           B           C   " << endl << endl;
 }
 
 #ifndef __TEST__
@@ -79,11 +71,6 @@ int main() {
     cout << "Zadejte počet disků: ";
     cin >> n;
     cin.ignore();
-
-    if (n <= 0) {
-        cout << "Počet disků musí být větší než 0!" << endl;
-        return 1;
-    }
 
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
@@ -102,4 +89,5 @@ int main() {
     return 0;
 }
 #endif // __TEST__
+
 
