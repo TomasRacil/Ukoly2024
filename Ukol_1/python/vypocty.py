@@ -21,13 +21,10 @@ def soucin(cisla: List[int]) -> int:
         cisla: Seznam čísel.
 
     Returns:
-        Součin čísel.
-
-    Raises:
-        ValueError: Pokud je seznam prázdný.
+        Součin čísel. Pokud je seznam prázdný, vrátí 0.
     """
-    if not cisla:  # Check if the list is empty
-        raise ValueError("Seznam nesmí být prázdný.")
+    if not cisla:  # Pokud je seznam prázdný, vrať 0
+        return 0
 
     result = 1
     for num in cisla:

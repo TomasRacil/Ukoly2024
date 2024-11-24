@@ -154,6 +154,7 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
 
 
 
+
 // Funkce pro uložení řetězce do souboru
 void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
 {
