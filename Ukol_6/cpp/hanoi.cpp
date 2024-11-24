@@ -14,15 +14,15 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah &tah) {
-    // Uložíme aktuální stav věží do tahu před provedením změn
-    tah.stavVezi = veze;
-
     // Odebereme disk z počáteční věže
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
 
     // Přidáme disk na cílovou věž
     veze[tah.na - 'A'].push_back(disk);
+
+    // Uložíme aktuální stav věží do tahu
+    tah.stavVezi = veze;
 }
 
 // Funkce pro vizualizaci věží
@@ -51,7 +51,8 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         return; // Nic neprovádíme, pokud je počet disků menší nebo roven nule
     }
     if (n == 1) {
-        Tah tah = {1, z, cil, veze};
+        // Přesuneme jediný disk
+        Tah tah = {1, z, cil, {}};
         provedTah(veze, tah);
         tahy.push_back(tah);
     } else {
@@ -59,7 +60,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
         // Přesun největšího disku na cílový kolík
-        Tah tah = {n, z, cil, veze};
+        Tah tah = {n, z, cil, {}};
         provedTah(veze, tah);
         tahy.push_back(tah);
 
