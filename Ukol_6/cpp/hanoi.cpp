@@ -20,7 +20,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
     // Zkontroluj, zda jsou indexy ve správném rozsahu
     if (from_index < 0 || from_index >= (int)veze.size() || to_index < 0 || to_index >= (int)veze.size()) {
-        cerr << "Error: Invalid tower index in move from " << tah.z << " to " << tah.na << endl;
+        cerr << "Error: Neplatny index" << tah.z << " to " << tah.na << endl;
         exit(1); // Exit the program
     }
 
@@ -38,9 +38,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n < 0) return; // Pokud je neg počet disků, tak skonči
-    if (n == 0) return; // Pokud je nulový počet disků, tak skonči
-
+    if (n <= 0) return; // Pokud je neg nebo 0 počet disků, tak skonči
     hanoi(n - 1, z, cil, pomocny, veze, tahy); // Přesun n-1 disků z pomocné na cílovou věž
     int disk = veze[z - 'A'].back(); // Disk ktery se presouva
     provedTah(veze, {disk, z, cil, veze}); // Proveď tah
