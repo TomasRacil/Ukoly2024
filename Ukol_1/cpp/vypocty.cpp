@@ -1,58 +1,60 @@
-
+// #include "vypocty.h"
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <iomanip>
-using namespace std;
+#include <numeric>
+#include <algorithm>  
 
+int soucet(const std::vector<int>& cisla)
+{
+    return std::accumulate(cisla.begin(), cisla.end(), 0);
+}
+
+int soucin(const std::vector<int>& cisla)
+{
+    return std::accumulate(cisla.begin(), cisla.end(), 1, std::multiplies<int>());
+}
+
+double prumer(const std::vector<int>& cisla)
+{
+    if (cisla.empty()) {
+        throw std::invalid_argument("Prázdný seznam");
+    }
+    int soucet = std::accumulate(cisla.begin(), cisla.end(), 0);
+    return static_cast<double>(soucet) / cisla.size();
+}
+
+double median(const std::vector<int>& cisla)
+{
+    if (cisla.empty()) {
+        throw std::invalid_argument("Prázdný seznam");
+    }
+    std::vector<int> sorted_cisla = cisla;
+    std::sort(sorted_cisla.begin(), sorted_cisla.end());
+    size_t size = sorted_cisla.size();
+
+    if (size % 2 != 0) {
+        return sorted_cisla[size / 2];
+    } else {
+        return (sorted_cisla[size / 2 - 1] + sorted_cisla[size / 2]) / 2.0;
+    }
+}
+
+#ifndef __TEST__
 int main()
 {
-    int num;
-    string zero;
-    int soucet = 0;
-    int nasobeni = 1;
-    int pocet = 0;
-    double prumer = 0;
-    double median = 0;
-    cout << "Zadejte čísla: ";
-    vector <int> numbers;
-    
+    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::string vstup;
+    std::getline(std::cin, vstup);
 
-    while (true)
-    {
-        num = fgetc(stdin);
-        if (num == ',' || num == '\n' || num == EOF)
-        {
-            int cislo = atoi(zero.c_str());
-            soucet += cislo;
-            pocet++;
-            nasobeni *= cislo;
-            numbers.push_back(cislo);
-            zero = "";
-            if (num =='\n' || num == EOF)
-            {
-                break;
-            }
-        }
-        else
-            zero += num;
-    }
-        sort(numbers.begin(), numbers.end());
+    std::vector<int> cisla;
+    // TODO: Načtěte čísla ze vstupu do vektoru cisla
 
-        if (pocet % 2 == 0)
-        {
-            median = ((double)numbers[pocet / 2] + numbers[pocet / 2 - 1]) / 2;
-        }
-        else
-        {
-            median = numbers[pocet / 2];
-        }
-        prumer = (double)soucet / pocet;
+    std::cout << "Součet: " << soucet(cisla) << std::endl;
+    std::cout << "Součin: " << soucin(cisla) << std::endl;
+    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "Medián: " << median(cisla) << std::endl;
 
-        cout << setprecision(3) << "  Soucet: " << soucet;
-        cout << "  Nasobek: " << nasobeni;
-        cout << "  Prumer: " << prumer;
-        cout << "  Median: " << median;
-        
-        return 0;
+    return 0;
 }
+#endif // __TEST__
+
