@@ -22,12 +22,13 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
     // Zkontroluj, zda jsou indexy ve správném rozsahu
     if (from_index < 0 || from_index >= (int)veze.size() || to_index < 0 || to_index >= (int)veze.size()) {
-        cerr << "Error: Neplatny index" << tah.z << " to " << tah.na << endl;
-        exit(1); // Exit the program
+        cout << "Error: Neplatny index" << tah.z << " to " << tah.na << endl;
+        return;
     }
 
     // Zkontroluj, zda je zdrojová věž neprázdná
     if (veze[from_index].empty()) {
+        cout << "Vez " << tah.z << " je prazdna" << endl;
         return;
     }
 
@@ -45,8 +46,9 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     }
 
     if (n == 1) {
-        // Base case: Move a single disk
+
         if (veze[z - 'A'].empty()) {
+            cout << "Vez " << z << " je prazdna" << endl;
             return;
         }
         int disk = veze[z - 'A'].back(); // Disk ktery se presouva
