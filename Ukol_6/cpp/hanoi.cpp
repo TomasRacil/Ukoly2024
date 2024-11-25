@@ -28,7 +28,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
     // Zkontroluj, zda je zdrojová věž neprázdná
     if (veze[from_index].empty()) {
-        throw std::runtime_error("Věž je prázdná: " + std::to_string(from_index));
+        return;
     }
 
     // Proveď tah
@@ -42,7 +42,18 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
     if (n <= 0){
         return; // Pokud je neg nebo 0 tak skonči
-    } // Pokud je neg nebo 0 počet disků
+    }
+
+    if (n == 1) {
+        // Base case: Move a single disk
+        if (veze[z - 'A'].empty()) {
+            return;
+        }
+        int disk = veze[z - 'A'].back(); // Disk ktery se presouva
+        provedTah(veze, {disk, z, cil, veze}); // Proveď tah
+        tahy.push_back({disk, z, cil, veze}); // Zaznamenej tah
+        return;
+    }
     hanoi(n - 1, z, cil, pomocny, veze, tahy); // Přesun n-1 disků z pomocné na cílovou věž
     if (veze[z - 'A'].empty()) {
         return;
