@@ -14,6 +14,8 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah tah) {
+
+
     int disk = tah.disk;
     int from_index = tah.z - 'A';
     int to_index = tah.na - 'A';
@@ -26,9 +28,9 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
     // Zkontroluj, zda je zdrojová věž neprázdná
     if (veze[from_index].empty()) {
-        cerr << "Error: Vez je prazdna " << tah.z << endl;
-        exit(1);
+        throw std::runtime_error("Věž je prázdná: " + std::to_string(from_index));
     }
+
 
     // Proveď tah
     veze[from_index].pop_back();
@@ -38,8 +40,12 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+
     if (n <= 0) return; // Pokud je neg nebo 0 počet disků, tak skonči
     hanoi(n - 1, z, cil, pomocny, veze, tahy); // Přesun n-1 disků z pomocné na cílovou věž
+    if (veze[z - 'A'].empty()) {
+        throw std::runtime_error("Zdrojová věž je prázdná!");
+    }
     int disk = veze[z - 'A'].back(); // Disk ktery se presouva
     provedTah(veze, {disk, z, cil, veze}); // Proveď tah
 
@@ -52,8 +58,8 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 void zobrazVeze(vector<vector<int>> &veze) {
     for (int i = 0; i < 3; i++) {
         cout << "Vez " << char('A' + i) << ": ";
-        for (int j = 0; j < veze[i].size(); j++) {
-            cout << veze[i][j] << " ";
+        for (int j : veze[i]) {
+            cout << j << " ";
         }
         cout << endl;
     }
@@ -85,7 +91,12 @@ int main() {
     }
 
     vector<Tah> tahy; // Vektor pro uložení tahů
-    hanoi(n, 'A', 'B', 'C', veze, tahy); // vyres hanoi
+    try {
+        hanoi(n, 'A', 'B', 'C', veze, tahy); // Vyřešení hanoi
+    } catch (const std::exception &e) {
+        cerr << "Chyba pri reseni: " << e.what() << endl;
+        return 1;
+    }
 
     // Zobrazení tahů a stavů věží
     int tahCount = 1; // Pocitadlo tahu
