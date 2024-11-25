@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
 
 // Struktura pro reprezentaci tahu
 struct Tah {
@@ -56,7 +57,7 @@ void zobrazVeze(std::vector<std::vector<int>>& veze) { // vypis s jednoduchou vy
 
 #ifndef __TEST__
 int main() {
-    static int n;
+    int n;
     std::cout << "Zadejte počet disků: ";
     std::cin >> n;
     std::cin.ignore();
