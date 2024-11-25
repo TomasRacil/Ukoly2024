@@ -49,7 +49,6 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
         if (veze[z - 'A'].empty()) {
             cout << "Vez " << z << " je prazdna" << endl;
-            return;
         }
         int disk = veze[z - 'A'].back(); // Disk ktery se presouva
         provedTah(veze, {disk, z, cil, veze}); // Proveď tah
