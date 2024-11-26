@@ -15,8 +15,7 @@ struct Tah {
 // Funkce pro provedeni tahu
 void provedTah(vector<vector<int>> &veze, Tah &tah) {
     if (veze[tah.z - 'A'].empty()) {
-        cout << "Chyba: Vez " << tah.z << " je prazdna, nelze provest tah." << endl;
-        return;
+        throw runtime_error("Chyba: Vez " + string(1, tah.z) + " je prazdna, nelze provest tah.");
     }
 
     // Odebrani disku z veze 'z'
@@ -27,35 +26,40 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
     veze[tah.na - 'A'].push_back(disk);
 
     // Ulozeni stavu vezi do tahu
+    tah.disk = disk;
     tah.stavVezi = veze;
 }
 
 // Funkce pro reseni Hanojskych vezi (bez vypisu)
-void hanoi(int n, char z, char NavicChuj, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) { //navicChuj=pomocny char
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n <= 0) {
-        cout << "Chyba: Pocet disku musi byt kladne cislo." << endl;
-        return;
+        return; // Nic nedelame pro nulovy nebo zaporny pocet disku
+    }
+    if (veze[0].empty() && veze[1].empty() && veze[2].empty()){
+        for (int i = n; i > 0; i--) {
+            veze[0].push_back(i);
+        }
     }
 
     if (n == 1) {
         // Zakladni pripad: Presun jednoho disku
-        Tah tah = {veze[z - 'A'].back(), z, cil};
+        Tah tah = {0, z, cil, {}};
         provedTah(veze, tah);
         tahy.push_back(tah);
     } else {
         // Rekurzivni rozdeleni problemu
-        hanoi(n - 1, z, cil, NavicChuj, veze, tahy); // Presun n-1 disku na pomocnou vez
-        Tah tah = {veze[z - 'A'].back(), z, cil};
+        hanoi(n - 1, z, cil, pomocny, veze, tahy); // Presun n-1 disku na pomocnou vez
+        Tah tah = {0, z, cil, {}};
         provedTah(veze, tah); // Presun nejvetsiho disku na cilovou vez
         tahy.push_back(tah);
-        hanoi(n - 1, NavicChuj, z, cil, veze, tahy); // Presun n-1 disku na cilovou vez
+        hanoi(n - 1, pomocny, z, cil, veze, tahy); // Presun n-1 disku na cilovou vez
     }
 }
 
 // Funkce pro zobrazeni vezi v konzoli
 void zobrazVeze(const vector<vector<int>> &veze) {
     if (veze.empty()) {
-        cout << "zadne veze k zobrazeni." << endl;
+        cout << "Zadne veze k zobrazeni." << endl;
         return;
     }
 
@@ -87,7 +91,6 @@ int main() {
 
     if (n <= 0) {
         cout << "Pocet disku musi byt kladne cislo." << endl;
-        return 1;
     }
 
     vector<vector<int>> veze(3);
