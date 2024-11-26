@@ -9,24 +9,50 @@ struct Tah
     int disk;
     char z;
     char na;
+
     vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah)
+void provedTah(vector<vector<int>>& veze, Tah tah)
 {
-    // Doplňte implementaci
+	int disk = veze[tah.z - 'A'].back(); // Vyjme disk z počátečního kolíku
+	veze[tah.z - 'A'].pop_back(); 
+	veze[tah.na - 'A'].push_back(disk); // Vloží disk na cílový kolík
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vector<Tah>& tahy)
 {
-    // Doplňte implementaci
+    if (n == 1)
+    {
+		Tah tah = { n, z, cil, veze }; // Vytvoření tahu
+		provedTah(veze, tah); 
+		tah.stavVezi = veze; // Uložení stavu věží po provedení tahu
+		tahy.push_back(tah); // Uložení tahu do vektoru tahů
+    }
+    else
+    {
+		hanoi(n - 1, z, cil, pomocny, veze, tahy); // Rekurzivní volání pro přesunutí n-1 disků na pomocný kolík
+		Tah tah = { n, z, cil, veze }; 
+        provedTah(veze, tah);
+		tah.stavVezi = veze;   // Uložení stavu věží po provedení tahu
+        tahy.push_back(tah);
+        hanoi(n - 1, pomocny, z, cil, veze, tahy);
+    }
 }
 
-void zobrazVeze(vector<vector<int>> &veze)
+void zobrazVeze(vector<vector<int>>& veze)
 {
-    // Doplňte implementaci
+	for (int i = 0; i < 3; i++) // Pro každý kolík vypíše jeho obsah 
+    {
+		cout << "Kolík " << char('A' + i) << ": "; // Výpis kolíku
+		for (int disk : veze[i]) // Výpis disků na kolíku
+        {
+            cout << disk << " ";
+        }
+        cout << endl;
+    }
 }
 
 #ifndef __TEST__
