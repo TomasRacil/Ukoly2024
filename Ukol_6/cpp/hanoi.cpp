@@ -25,7 +25,7 @@ void provedTah(std::vector<std::vector<int>>& veze, Tah tah) {
 void hanoi(int n, char z, char pomocny, char cil, std::vector<std::vector<int>>& veze, std::vector<Tah>& tahy) {
     if (n <= 0) {
         std::cout << "Error! Zadej číslo větší jak 0";
-        tahy.push_back({0,z,cil, veze}); // push pro následný výpis
+        tahy.push_back({n,z,cil, veze}); // push pro následný výpis
         return;
     }
     else if (n == 1) { // ošetření pro jeden disk
