@@ -92,9 +92,7 @@ int main()
     while (getline(ss, temp, ',')) {
         cisla.push_back(stoi(temp));
     }
-    
     sort(cisla.begin(), cisla.end());
-
 
     cout << "Soucet: " << soucet(cisla) << endl << "Soucin: " << soucin(cisla) << endl << "Prumer: " << prumer(cisla) << endl << "Median: " << median(cisla) << endl;
 
