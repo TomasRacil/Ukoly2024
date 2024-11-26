@@ -1,7 +1,7 @@
 #pragma once
 #ifndef MASOZRAVEC_H
 #define MASOZRAVEC_H
-#include "zvire.h"
+#include "Zvire.h"
 
 class Masozravec : public Zvire
 {
