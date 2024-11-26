@@ -44,7 +44,7 @@ void zobrazVeze(const vector<vector<int>> &veze) {
 
 // Funkce pro řešení Hanojských věží
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n == 0) return;
+    if (n <= 0) return; // Pokud je počet disků neplatný, ukončete funkci
 
     // Přesun n-1 disků na pomocný kolík
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
