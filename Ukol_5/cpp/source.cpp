@@ -1,7 +1,6 @@
 #include "Prostredi.h"
 #include "Masozravec.h"
 #include <string>
-#include <windows.h>
 
 int main() {
 	Prostredi pros(15, 15);
