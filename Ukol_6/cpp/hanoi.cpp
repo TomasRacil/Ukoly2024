@@ -61,8 +61,7 @@ int main() {
     std::cout << "Zadejte počet disků: ";
     std::cin >> n;
     std::cin.ignore();
-    if (n >= 0)
-    {    std::vector<std::vector<int>> veze(3);
+    std::vector<std::vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
         veze[0].push_back(i);
     }
@@ -75,7 +74,7 @@ int main() {
         std::cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << "\n";
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
-    }
+    
     return 0;
 }
 #endif // __TEST__
