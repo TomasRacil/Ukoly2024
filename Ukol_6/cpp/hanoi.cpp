@@ -13,10 +13,10 @@ struct Tah {
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah) {
-    int disk = veze[tah.z - 'A'].back();
-    veze[tah.z - 'A'].pop_back();
-    veze[tah.na - 'A'].push_back(disk);
+void provedTah(vector<vector<int>> &veze, char z, char na) {
+    int disk = veze[z - 'A'].back();
+    veze[z - 'A'].pop_back();
+    veze[na - 'A'].push_back(disk);
 }
 
 // Funkce pro zobrazení věží v konzoli
@@ -49,19 +49,21 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     // Přesun n-1 disků na pomocný kolík
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
-    // Informace o aktuálním tahu
-    cout << "Presun disk " << n << " z koliku " << z << " na kolik " << cil << endl;
-
-    // Aktualizace stavu věží po tahu
+    // Uložení aktuálního tahu
     Tah tah;
     tah.disk = n;
     tah.z = z;
     tah.na = cil;
-    tah.stavVezi = veze; // Uložit stav věží před aktualizací
-    tahy.push_back(tah); // Uložit tah do vektoru tahů
-    provedTah(veze, tah);
+
+    // Aktualizace stavu věží před uložením
+    provedTah(veze, z, cil);
+
+    // Uložit aktuální stav věží
+    tah.stavVezi = veze;
+    tahy.push_back(tah);
 
     // Vizualizace aktuálního stavu
+    cout << "Presun disk " << n << " z koliku " << z << " na kolik " << cil << endl;
     zobrazVeze(veze);
 
     // Přesun n-1 disků z pomocného kolíku na cílový
