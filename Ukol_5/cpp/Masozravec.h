@@ -9,4 +9,4 @@ public:
 	Masozravec(int xP, int yP, float energyP, Type type);
 };
 
-#endif MASOZRAVEC_H
+#endif 
