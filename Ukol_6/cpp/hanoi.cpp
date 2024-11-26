@@ -9,7 +9,7 @@ struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // clen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 };
 
 // Funkce pro provedení tahu
@@ -19,7 +19,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     veze[tah.na - 'A'].push_back(disk);
 }
 
-// Funkce pro zobrazeni vezi v konzoli
+// Funkce pro zobrazení věží v konzoli
 void zobrazVeze(const vector<vector<int>> &veze, int maxDisks) {
     for (int i = maxDisks - 1; i >= 0; --i) {
         for (int j = 0; j < 3; ++j) {
@@ -38,11 +38,11 @@ void zobrazVeze(const vector<vector<int>> &veze, int maxDisks) {
 }
 
 // Funkce pro řešení Hanojských věží
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, int maxDisks) {
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy, int maxDisks) {
     if (n == 0) return;
 
     // Přesun n-1 disků na pomocný kolík
-    hanoi(n - 1, z, cil, pomocny, veze, maxDisks);
+    hanoi(n - 1, z, cil, pomocny, veze, tahy, maxDisks);
 
     // Informace o aktuálním tahu
     cout << "Presun disk " << n << " z koliku " << z << " na kolik " << cil << endl;
@@ -52,13 +52,15 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, int
     tah.disk = n;
     tah.z = z;
     tah.na = cil;
+    tah.stavVezi = veze;
+    tahy.push_back(tah);
     provedTah(veze, tah);
 
     // Vizualizace aktuálního stavu
     zobrazVeze(veze, maxDisks);
 
     // Přesun n-1 disků z pomocného kolíku na cílový
-    hanoi(n - 1, pomocny, z, cil, veze, maxDisks);
+    hanoi(n - 1, pomocny, z, cil, veze, tahy, maxDisks);
 }
 
 #ifndef __TEST__
@@ -77,11 +79,13 @@ int main() {
         veze[0].push_back(i); // Naplnění kolíku A
     }
 
+    vector<Tah> tahy; // Vektor pro ukládání tahů
+
     // Vizualizace počátečního stavu
     zobrazVeze(veze, n);
 
     // Řešení Hanojských věží
-    hanoi(n, 'A', 'B', 'C', veze, n);
+    hanoi(n, 'A', 'B', 'C', veze, tahy, n);
 
     return 0;
 }
