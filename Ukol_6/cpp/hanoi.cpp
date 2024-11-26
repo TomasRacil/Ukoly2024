@@ -3,33 +3,60 @@
 
 using namespace std;
 
-// Struktura pro reprezentaci tahu
-struct Tah
-{
+
+struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi;
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah)
-{
-    // Doplňte implementaci
+void provedTah(vector<vector<int>> &veze, Tah tah) {
+    int disk = veze[tah.z - 'A'].back();
+    veze[tah.z - 'A'].pop_back();
+    veze[tah.na - 'A'].push_back(disk);
 }
 
-// Funkce pro řešení Hanoiských věží (bez výpisu)
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
-{
-    // Doplňte implementaci
+
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    if (n <= 0) return;
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
+    
+    Tah tah;
+    tah.disk = n;
+    tah.z = z;
+    tah.na = cil;
+    tah.stavVezi = veze; 
+    provedTah(veze, tah);
+    tah.stavVezi = veze; 
+    tahy.push_back(tah);
+
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
-void zobrazVeze(vector<vector<int>> &veze)
-{
-    // Doplňte implementaci
+
+void zobrazVeze(vector<vector<int>> &veze) {
+    int maxHeight = 0;
+    for (const auto &vez : veze) {
+        if (vez.size() > maxHeight) {
+            maxHeight = vez.size();
+        }
+    }
+    for (int i = maxHeight - 1; i >= 0; --i) {
+        for (const auto &vez : veze) {
+            if (i < vez.size()) {
+                cout << vez[i] << "\t";
+            } else {
+                cout << "|\t";
+            }
+        }
+        cout << endl;
+    }
+    cout << "A\tB\tC" << endl << endl;
 }
 
-#ifndef __TEST__
+#ifndef _TEST_
 int main()
 {
     int n;
@@ -55,4 +82,4 @@ int main()
 
     return 0;
 }
-#endif // __TEST__
+#endif // _TEST_
