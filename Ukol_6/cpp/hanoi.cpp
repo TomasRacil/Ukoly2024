@@ -25,7 +25,7 @@ void provedTah(std::vector<std::vector<int>>& veze, Tah tah) {
 void hanoi(int n, char z, char pomocny, char cil, std::vector<std::vector<int>>& veze, std::vector<Tah>& tahy) {
     if (n <= 0) {
         std::cout << "Error! Zadej číslo větší jak 0";
-        return 0;
+        return;
     }
     else if (n == 1) { // ošetření pro jeden disk
         provedTah(veze, { n, z, cil} );
@@ -61,8 +61,8 @@ int main() {
     std::cout << "Zadejte počet disků: ";
     std::cin >> n;
     std::cin.ignore();
-
-    std::vector<std::vector<int>> veze(3);
+    if (n >= 0)
+    {    std::vector<std::vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
         veze[0].push_back(i);
     }
@@ -75,7 +75,7 @@ int main() {
         std::cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << "\n";
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
-
+    }
     return 0;
 }
 #endif // __TEST__
