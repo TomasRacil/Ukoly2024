@@ -2,6 +2,8 @@
 #include <vector>
 #include <sstream>
 
+using namespace std;
+
 int soucet(const vector<int> &cisla)
 {
     int sct = 0;
@@ -73,7 +75,6 @@ double median(const vector<int> &cisla)
     return med;
 }
 
-using namespace std;
 #ifndef __TEST__ 
 int main()
 {
