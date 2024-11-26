@@ -96,5 +96,6 @@ int main()
     cout << "Soucet: " << soucet(cisla) << endl << "Soucin: " << soucin(cisla) << endl << "Prumer: " << prumer(cisla) << endl << "Median: " << median(cisla) << endl;
 
     return 0;
+
 }
 #endif
