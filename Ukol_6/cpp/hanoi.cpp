@@ -20,6 +20,11 @@ void provedTah(vector<vector<int>>& veze, char z, char na) {
 
 // Funkce pro řešení Hanoiských věží (rekurzivně)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vector<Tah>& tahy) {
+
+    if (n <= 0) {
+        return; // Neprovádí žádný tah, pokud je počet disků 0 nebo méně
+    }
+    
     if (n == 1) {
         // Základní případ: přesun jediného disku
         provedTah(veze, z, cil);
