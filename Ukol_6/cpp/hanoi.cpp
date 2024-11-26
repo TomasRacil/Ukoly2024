@@ -109,3 +109,15 @@ make
 ./mytests
 */
 
+/*
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from HanoiTest
+[ RUN      ] HanoiTest.JedenDisk
+[       OK ] HanoiTest.JedenDisk (0 ms)
+[ RUN      ] HanoiTest.DvaDisky
+[       OK ] HanoiTest.DvaDisky (0 ms)
+[ RUN      ] HanoiTest.TriDisky
+[       OK ] HanoiTest.TriDisky (0 ms)
+[ RUN      ] HanoiTest.InvalidNumberOfDisks
+*/
