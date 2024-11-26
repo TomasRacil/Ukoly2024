@@ -6,8 +6,9 @@ on:
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
       - '**'        # matches every branch
-      - '!main'   # excludes master
+      - '!tomasracil/main' # specifically excludes the 'tomasracil/main' branch
   pull_request:
+    types: [opened, synchronize, reopened, edited]
     branches:    
       - '*'         # matches every branch that doesn't contain a '/'
       - '*/*'       # matches every branch containing a single '/'
@@ -24,7 +25,7 @@ jobs:
     - name: Run Python tests
       run: cd Ukol_0/python && python -m unittest discover || exit 1
   cpp_test:
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Install C++ dependencies
