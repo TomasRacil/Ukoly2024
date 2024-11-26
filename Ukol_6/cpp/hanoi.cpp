@@ -59,9 +59,16 @@ void zobrazVeze(vector<vector<int>>& veze)
 int main()
 {
     int n;
-    cout << "Zadejte počet disků: ";
-    cin >> n;
-    cin.ignore();
+    do
+    {
+        cout << "Zadejte počet disku (kladne cislo): ";
+        cin >> n;
+		cin.ignore(); // Ignorování zbytku řádku
+		if (n <= 0) // Kontrola zda je zadané číslo kladné
+        {
+            cout << "Pocet disků musi byt kladne cislo. Zkuste to znovu." << endl;
+        }
+	} while (n <= 0); // Cyklus se opakuje dokud není zadané kladné číslo
 
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--)
