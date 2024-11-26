@@ -1,4 +1,3 @@
-
 #include "organismus.h"
 #include "rostlina.h"
 #include "bylozravec.h"
