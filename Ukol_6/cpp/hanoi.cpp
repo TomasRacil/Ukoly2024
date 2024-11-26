@@ -56,7 +56,7 @@ void zobrazVeze(vector<vector<int>> &veze) {
     cout << "A\tB\tC" << endl << endl;
 }
 
-#ifndef _TEST_
+#ifndef __TEST__
 int main()
 {
     int n;
@@ -82,4 +82,4 @@ int main()
 
     return 0;
 }
-#endif // _TEST_
+#endif // __TEST__
