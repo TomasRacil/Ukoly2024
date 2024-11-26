@@ -20,7 +20,12 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 }
 
 // Funkce pro zobrazení věží v konzoli
-void zobrazVeze(const vector<vector<int>> &veze, int maxDisks) {
+void zobrazVeze(const vector<vector<int>> &veze) {
+    int maxDisks = 0;
+    for (const auto &vezeKolik : veze) {
+        maxDisks = max(maxDisks, (int)vezeKolik.size());
+    }
+
     for (int i = maxDisks - 1; i >= 0; --i) {
         for (int j = 0; j < 3; ++j) {
             if (i < veze[j].size()) {
@@ -38,11 +43,11 @@ void zobrazVeze(const vector<vector<int>> &veze, int maxDisks) {
 }
 
 // Funkce pro řešení Hanojských věží
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy, int maxDisks) {
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n == 0) return;
 
     // Přesun n-1 disků na pomocný kolík
-    hanoi(n - 1, z, cil, pomocny, veze, tahy, maxDisks);
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
     // Informace o aktuálním tahu
     cout << "Presun disk " << n << " z koliku " << z << " na kolik " << cil << endl;
@@ -52,15 +57,15 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     tah.disk = n;
     tah.z = z;
     tah.na = cil;
-    tah.stavVezi = veze;
-    tahy.push_back(tah);
+    tah.stavVezi = veze; // Uložit stav věží před aktualizací
+    tahy.push_back(tah); // Uložit tah do vektoru tahů
     provedTah(veze, tah);
 
     // Vizualizace aktuálního stavu
-    zobrazVeze(veze, maxDisks);
+    zobrazVeze(veze);
 
     // Přesun n-1 disků z pomocného kolíku na cílový
-    hanoi(n - 1, pomocny, z, cil, veze, tahy, maxDisks);
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
 #ifndef __TEST__
@@ -82,10 +87,10 @@ int main() {
     vector<Tah> tahy; // Vektor pro ukládání tahů
 
     // Vizualizace počátečního stavu
-    zobrazVeze(veze, n);
+    zobrazVeze(veze);
 
     // Řešení Hanojských věží
-    hanoi(n, 'A', 'B', 'C', veze, tahy, n);
+    hanoi(n, 'A', 'B', 'C', veze, tahy);
 
     return 0;
 }
