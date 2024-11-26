@@ -9,7 +9,7 @@ struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; // clen pro uložení stavu věží po provedení tahu
 };
 
 // Funkce pro provedení tahu
