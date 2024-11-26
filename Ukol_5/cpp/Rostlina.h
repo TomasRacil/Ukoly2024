@@ -2,7 +2,7 @@
 #ifndef ROSTLINA_H
 #define ROSTLINA_H
 
-#include <random>;
+#include <random>
 #include "Organismus.h"
 
 class Rostlina : public Organismus
