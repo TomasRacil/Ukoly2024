@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <algorithm>
 
 using namespace std;
 
@@ -76,6 +75,20 @@ double median(const vector<int> &cisla)
     return med;
 }
 
+void serad(std::vector<int>& cisla) {
+    // bubble sort
+    for (size_t i = 0; i < cisla.size(); i++) {
+        for (size_t j = 0; j < cisla.size() - 1; j++) {
+            if (cisla[j] > cisla[j + 1]) {
+                // prohození prvku
+                int temp = cisla[j];
+                cisla[j] = cisla[j + 1];
+                cisla[j + 1] = temp;
+            }
+        }
+    }
+}
+
 #ifndef __TEST__ 
 int main()
 {
@@ -92,7 +105,7 @@ int main()
     while (getline(ss, temp, ',')) {
         cisla.push_back(stoi(temp));
     }
-    sort(cisla.begin(), cisla.end());
+    serad(cisla);
 
     cout << "Soucet: " << soucet(cisla) << endl << "Soucin: " << soucin(cisla) << endl << "Prumer: " << prumer(cisla) << endl << "Median: " << median(cisla) << endl;
 
