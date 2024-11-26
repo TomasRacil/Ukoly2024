@@ -14,6 +14,7 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, char z, char na) {
+    if (veze[z - 'A'].empty()) return; // Pokud je kolík prázdný, nic nedělej
     int disk = veze[z - 'A'].back();
     veze[z - 'A'].pop_back();
     veze[na - 'A'].push_back(disk);
@@ -76,8 +77,8 @@ int main() {
     cout << "Zadejte pocet disku: ";
     cin >> n;
 
-    if (n <= 0) {
-        cout << "Pocet disku musi byt vetsi nez nula." << endl;
+    if (n < 0) {
+        cout << "Pocet disku musi byt nezaporny." << endl;
         return 1;
     }
 
