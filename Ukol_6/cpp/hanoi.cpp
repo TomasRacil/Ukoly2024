@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <iomanip>
@@ -75,6 +76,15 @@ int main() {
     cin >> n;
     cin.ignore();
 
+    if (n < 0) {
+        cout << "Nelze zadavat zaporna cisla." << endl;
+        return 1; // Ukončí program s chybovým kódem
+    }
+    else if (n == 0) {
+        cout << "Pocet disku je 0, neni co resit." << endl;
+        return 0; // Ukončí program
+    }
+
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
         veze[0].push_back(i);
@@ -85,10 +95,10 @@ int main() {
 
     // Zobrazení tahů a stavů věží
     for (Tah tah : tahy) {
-        cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
+        cout << "Presun disk " << tah.disk << " z koliku " << tah.z << " na kolik " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
-    cout << "Problém vyřešen v " << tahy.size() << " tazích." << endl;
+    cout << "Problem vyresen v " << tahy.size() << " tazich." << endl;
 
     return 0;
 }
