@@ -155,7 +155,7 @@ void deleteList(Node **head) {
 // Operátor pro tisk dat
 std::ostream &operator<<(std::ostream &os, Node *head) {
     while (head != nullptr) {
-        os << head->data << "";
+        os << head->data << " ";
         head = head->next;
     }
     return os;
