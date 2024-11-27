@@ -22,7 +22,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     if (!veze[zdrojIndex].empty()) {
         int disk = veze[zdrojIndex].back();
         veze[zdrojIndex].pop_back();
-        veze[cilIndex].push_back(disk);} else {
+        veze[cilIndex].push_back(disk); } else {
             throw runtime_error("Nelze presunout disk z prazdneho koliku");
         }
 }
