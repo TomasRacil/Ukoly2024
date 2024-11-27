@@ -27,12 +27,13 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
         }
 }
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n == 1) {
-        // Vytvoření nového tahu
-        Tah tah = {1, z, cil, veze}; // Uložení aktuálního stavu věží
-        provedTah(veze, tah);
+    if (n <= 0) {
+        throw runtime_error("Neplatny pocet disku");
+    }
 
-        // Uložení aktuálního stavu věží
+    if (n == 1) {
+        Tah tah = {1, z, cil, veze};
+        provedTah(veze, tah);
         tah.stavVezi = veze;
         tahy.push_back(tah);
         return;
