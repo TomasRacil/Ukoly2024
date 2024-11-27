@@ -52,8 +52,13 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    if len(matice) > 0:
+    #problem case: [[]], tedy A(1,0)
+    if len(matice) > 0 and len(matice[0]) > 0:
         return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
+    elif len(matice) > 0 and len(matice) == 0:
+        #n rows, 0 columns
+        return [[] for i in range(len(matice))]
+    #0 rows
     return []
 
 if __name__ == "__main__":
