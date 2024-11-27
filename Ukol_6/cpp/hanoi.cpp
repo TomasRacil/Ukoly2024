@@ -1,20 +1,18 @@
 #include <iostream>
 #include <vector>
-#include <stdexcept>
-
-
 
 using namespace std;
 
+// Struktura pro reprezentaci tahu
 struct Tah {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi;
+    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 };
 
+// Funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah tah) {
-    // Najít disk na zdrojovém kolíku
     int zdrojIndex = tah.z - 'A';
     int cilIndex = tah.na - 'A';
 
@@ -27,17 +25,11 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     veze[cilIndex].push_back(disk);
 }
 
-/*    if (!veze[zdrojIndex].empty()) {
-        int disk = veze[zdrojIndex].back();
-        veze[zdrojIndex].pop_back();
-        veze[cilIndex].push_back(disk); } else {
-            throw runtime_error("Nelze presunout disk z prazdneho koliku");
-        }*/
-
+// Funkce pro řešení Hanoiských věží
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n <= 0) {
         cerr << "Varování: Počet disků musí být kladné číslo. Používám hodnotu 1." << endl;
-        n = 1;
+        n = 1; // Pokud je počet disků neplatný (<= 0), použijeme hodnotu 1
     }
 
     if (n == 1) {
@@ -49,23 +41,22 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     }
 
     // Rekurzivní řešení pro n-1 disků
-    hanoi(n-1, z, cil, pomocny, veze, tahy);
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
     // Přesun největšího disku
     Tah tah = {n, z, cil, veze}; // Uložení aktuálního stavu věží
     provedTah(veze, tah);
-
-    // Uložení aktuálního stavu věží
     tah.stavVezi = veze;
     tahy.push_back(tah);
 
     // Přesun zbývajících disků
-    hanoi(n-1, pomocny, z, cil, veze, tahy);
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
+// Funkce pro zobrazení aktuálního stavu věží
 void zobrazVeze(vector<vector<int>> &veze) {
-    // Najít maximální výšku věží
     int maxVyska = 0;
+    // Najít maximální výšku věží
     for (const auto &vez : veze) {
         maxVyska = max(maxVyska, (int)vez.size());
     }
@@ -92,6 +83,13 @@ int main() {
     cin >> n;
     cin.ignore();
 
+    // Pokud je zadán neplatný počet disků, použijeme hodnotu 1
+    if (n <= 0) {
+        cerr << "Varování: Počet disků musí být kladné číslo. Používám hodnotu 1." << endl;
+        n = 1;
+    }
+
+    // Inicializace věží
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
         veze[0].push_back(i);
