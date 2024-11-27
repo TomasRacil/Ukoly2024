@@ -1,32 +1,45 @@
-import random
+from random import randrange
 
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [[ randrange(0,9) for element in range(n)] for row in range(m)]
     return matice
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return ""
+    str_matrix : str = ""
+    for i in range(len(matice)):
+        #for each list
+        for j in range(len(matice[i])):
+            #for each element
+            str_matrix += str(matice[i][j])
+            if j < len(matice[i]) - 1:
+                str_matrix += str(" ")
+        str_matrix += "\n"
+    return str_matrix
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    matice: list[list[int]] = []
+    matice: list[list[int]]
+    if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]):
+        matice = [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
     return matice
 
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    matice: list[list[int]] = []
+    matice: list[list[int]]
+    if len(matice1) == len(matice2[0]):
+        matice = [[matice1[i][j] * matice2[j][i] for j in range(len(matice1[0]))] for i in range(len(matice1))]
     return matice
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
     return matice
 
 
