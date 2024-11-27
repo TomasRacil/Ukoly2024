@@ -10,7 +10,7 @@ int soucet(const std::vector<int> &cisla)
 
 int soucin(const std::vector<int> &cisla)
 {
-    if (cisla.empty()) return 0;
+    if (cisla.empty()) return 1;
     return std::accumulate(cisla.begin(), cisla.end(), 1, std::multiplies<int>());
 }
 
