@@ -24,7 +24,7 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0] and len(matice) > 0):
+    if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]) and len(matice1) > 0:
         return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
     return None
 
@@ -37,12 +37,11 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
         return None
 
     #result of AB = R(nv)
-    R = [[0 for elements in range(len(matice2[0]))] for row in range(len(matice1))]
+    R = [[0 for _ in range(len(matice2[0]))] for _ in range(len(matice1))]
 
     #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj), m=u
     for i in range(len(R)):
         for j in range(len(R[0])):
-
             for k in range(len(matice2)):
                 R[i][j] += matice1[i][k] * matice2[k][j]
     
@@ -54,20 +53,26 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     if len(matice) > 0:
-        return [[matice[j][i] for j in range(len(matice[0]))] for i in range(len(matice))]
+        return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
     return []
 
-
 if __name__ == "__main__":
-    matice1 = [[1, 2], [3, 4]]
-    matice2 = [[5, 6], [7, 8]]
-    expected_product = [[19, 22], [43, 50]]
-    #self.assertEqual(nasobeni_matic(matice1, matice2), expected_product)
+    matice1: list[list[int]] = vytvor_matici(3, 2)
+    matice2: list[list[int]] = vytvor_matici(2, 4)
 
-    matice3 = [[1, 2], [3, 4], [5, 6]]
-    #self.assertIsNone(nasobeni_matic(matice1, matice3))
-    #self.assertIsNone(nasobeni_matic(matice3, matice1))
+    print("Matice 1:")
+    print(reprezentace_matice(matice1))
+    print("Matice 2:")
+    print(reprezentace_matice(matice2))
 
-    #self.assertEqual(nasobeni_matic([], []), [])
-    #self.assertIsNone(nasobeni_matic(matice1, []))
-    #self.assertIsNone(nasobeni_matic([], matice1))
+    soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
+    print("Součet matic:")
+    print(reprezentace_matice(soucet))
+
+    nasobek = nasobeni_matic(matice1, matice2)
+    print("Násobení matic:")
+    print(reprezentace_matice(nasobek))
+
+    transponovana = transpozice_matice(matice1)
+    print("Transponovaná matice:")
+    print(reprezentace_matice(transponovana))
