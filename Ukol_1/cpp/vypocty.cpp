@@ -10,7 +10,7 @@ int soucet(const std::vector<int> &cisla)
 
 int soucin(const std::vector<int> &cisla)
 {
-    if (cisla.empty()) return 0;
+    if (cisla.empty()) return 1;
     return std::accumulate(cisla.begin(), cisla.end(), 1, std::multiplies<int>());
 }
 
@@ -30,6 +30,7 @@ double median(const std::vector<int> &cisla)
         : ((double) tmp[tmp.size() / 2 - 1] + (double) tmp[tmp.size() / 2]) / 2.0;
 }
 
+#ifndef __TEST__
 int main()
 {
     std::cout << "Zadejte seznam čísel oddělených čárkou: ";
@@ -55,3 +56,4 @@ int main()
 
     return 0;
 }
+#endif
