@@ -23,18 +23,16 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    matice: list[list[int]] = []
     if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]):
-        matice = [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
-    return matice
+        return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
+    return None
 
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    matice: list[list[int]] = []
     if len(matice1[0]) == len(matice2):
-        matice = [[matice1[i][j] * matice2[j][i] for j in range(len(matice1[0]))] for i in range(len(matice1))]
-    return matice
+        return [[matice1[i][j] * matice2[j][i] for j in range(len(matice1[0]))] for i in range(len(matice1))]
+    return None
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
