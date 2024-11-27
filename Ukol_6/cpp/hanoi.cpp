@@ -24,7 +24,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n == 1) {
         // Vytvoření nového tahu
-        Tah tah = {1, z, cil, veze};
+        Tah tah = {1, z, cil, veze}; // Uložení aktuálního stavu věží
         provedTah(veze, tah);
 
         // Uložení aktuálního stavu věží
@@ -37,7 +37,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     hanoi(n-1, z, cil, pomocny, veze, tahy);
 
     // Přesun největšího disku
-    Tah tah = {n, z, cil, vector<vector<int>>(3)};
+    Tah tah = {n, z, cil, veze}; // Uložení aktuálního stavu věží
     provedTah(veze, tah);
 
     // Uložení aktuálního stavu věží
@@ -94,7 +94,3 @@ int main() {
     return 0;
 }
 #endif // __TEST__
-
-
-
-
