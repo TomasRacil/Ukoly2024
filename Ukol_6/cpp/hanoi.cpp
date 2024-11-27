@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <stdexcept>
+
+
 
 using namespace std;
 
@@ -16,11 +19,13 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     int cilIndex = tah.na - 'A';
 
     // Přesunout disk
-    int disk = veze[zdrojIndex].back();
-    veze[zdrojIndex].pop_back();
-    veze[cilIndex].push_back(disk);
+    if (!veze[zdrojIndex].empty()) {
+        int disk = veze[zdrojIndex].back();
+        veze[zdrojIndex].pop_back();
+        veze[cilIndex].push_back(disk);} else {
+            throw runtime_error("Nelze presunout disk z prazdneho koliku");
+        }
 }
-
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n == 1) {
         // Vytvoření nového tahu
