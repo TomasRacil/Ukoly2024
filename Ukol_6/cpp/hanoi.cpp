@@ -12,40 +12,28 @@ struct Tah {
 };
 
 // Funkce pro provedení tahu - aktualizuje stav věží
-void provedTah(vector<vector<int>> &veze, Tah tah) {
+void provedTah(vector<vector<int>>& veze, Tah tah) {
     int zdrojIndex = tah.z - 'A';  // Index zdrojového kolíku
     int cilIndex = tah.na - 'A';   // Index cílového kolíku
 
-    // Přesunout disk
-    if (veze[zdrojIndex].empty()) {
-        throw runtime_error("Nelze presunout disk z prazdneho koliku");
-    }
-    int disk = veze[zdrojIndex].back();
+
+    int disk = veze[zdrojIndex].back();  //vrchni disk
     veze[zdrojIndex].pop_back();
     veze[cilIndex].push_back(disk);
 }
 
 // Funkce pro řešení Hanoiských věží pomocí rekurze
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vector<Tah>& tahy) {
     if (n <= 0) {
-        cerr << "Varování: Počet disků musí být kladné číslo. Používám hodnotu 1." << endl;
-        n = 1; // Pokud je počet disků neplatný (<= 0), použijeme hodnotu 1
-    }
-
-    if (n == 1) {
-        // Přesun jednoho disku
-        Tah tah = {1, z, cil, veze};
-        provedTah(veze, tah);
-        tah.stavVezi = veze;
-        tahy.push_back(tah);
         return;
     }
 
-    // Rekurzivní řešení pro n-1 disků
+
+    // Rekurzivní řešení pro n-1
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
     // Přesun největšího disku
-    Tah tah = {n, z, cil, veze};
+    Tah tah = { n, z, cil, veze };
     provedTah(veze, tah);
     tah.stavVezi = veze;
     tahy.push_back(tah);
@@ -55,10 +43,10 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 }
 
 // Funkce pro zobrazení aktuálního stavu věží
-void zobrazVeze(vector<vector<int>> &veze) {
+void zobrazVeze(vector<vector<int>>& veze) {
     int maxVyska = 0;
     // Najít maximální výšku věží
-    for (const auto &vez : veze) {
+    for (const auto& vez : veze) {
         maxVyska = max(maxVyska, (int)vez.size());
     }
 
@@ -67,7 +55,8 @@ void zobrazVeze(vector<vector<int>> &veze) {
         for (int vez = 0; vez < 3; vez++) {
             if (vyska < veze[vez].size()) {
                 cout << " [" << veze[vez][vyska] << "] ";
-            } else {
+            }
+            else {
                 cout << "  |  "; // Pokud není disk, zobrazí se prázdné místo
             }
         }
