@@ -1,105 +1,123 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <cmath>
 
-class Lod {
+class Lod
+{
 private:
-    int x, y;                // Souřadnice lodi
-    int smer;                // Směr lodi ve stupních (0 = východ, 90 = sever, 180 = západ, 270 = jih)
-    int waypoint_x, waypoint_y; // Souřadnice waypointu relativní k lodi
+    int x, y;                
+    char smer;               
+    int cilovy_bod_x, cilovy_bod_y; 
+
+    void otoceni(int uhel, bool doprava)
+    {
+        if (!doprava) uhel = 360 - uhel;
+        uhel %= 360;
+
+        int bod_x = cilovy_bod_x;
+        int bod_y = cilovy_bod_y;
+
+        if (uhel == 90) {
+            bod_x=cilovy_bod_y;
+            bod_y= -cilovy_bod_x;
+        } else if(uhel == 180) {
+            bod_x=-cilovy_bod_x;
+            bod_y=-cilovy_bod_y;
+        } else if(uhel == 270) {
+            bod_x=-cilovy_bod_y;
+            bod_y=cilovy_bod_x;
+        }
+
+        cilovy_bod_x = bod_x;
+        cilovy_bod_y = bod_y;
+    }
+
+    void smerlodi(char smer, int hodnota)
+    {
+        if(smer == 'N') 
+            y+= hodnota;
+        else if(smer == 'S')
+            y-= hodnota;
+        else if(smer == 'E')
+            x+= hodnota;
+        else if(smer == 'W')
+            x-= hodnota;
+    }
+
+    void pohyblodi(int hodnota)
+    {
+        smerlodi(smer, hodnota);
+    }
 
 public:
-    // Konstruktor pro Část 1 (výchozí směr na východ)
-    Lod() : x(0), y(0), smer(0) {}
+    Lod(int x, int y, char smer, int cilovy_bod_x, int cilovy_bod_y)
+        : x(x), y(y), smer(smer), cilovy_bod_x(cilovy_bod_x), cilovy_bod_y(cilovy_bod_y){}
 
-    // Konstruktor pro Část 2 s waypointem
-    Lod(int wp_x, int wp_y) : x(0), y(0), waypoint_x(wp_x), waypoint_y(wp_y) {}
+    int naviguj(const std::string &cesta_soubor, bool druhe_reseni)
+    {
+        std::ifstream soubor(cesta_soubor);
+        if (!soubor.is_open()) return -1;
 
-    // Otočení lodi vlevo nebo vpravo ve stupních
-    void otocLod(char direction, int degrees) {
-        smer = (smer + (direction == 'L' ? degrees : 360 - degrees)) % 360;
-    }
-
-    // Otočení waypointu kolem lodi (Část 2)
-    void otocWaypoint(char direction, int degrees) {
-        int rotations = (direction == 'L' ? degrees : 360 - degrees) / 90;
-        for (int i = 0; i < rotations; ++i) {
-            int temp = waypoint_x;
-            waypoint_x = -waypoint_y;
-            waypoint_y = temp;
-        }
-    }
-
-    // Posun lodi v aktuálním směru (pouze pro Část 1)
-    void posunVpřed(int jednotky) {
-        switch (smer) {
-            case 0: x += jednotky; break;   // Východ
-            case 90: y += jednotky; break;  // Sever
-            case 180: x -= jednotky; break; // Západ
-            case 270: y -= jednotky; break; // Jih
-        }
-    }
-
-    // Pohyb lodi směrem k waypointu (Část 2)
-    void posunKWaypointu(int jednotky) {
-        x += waypoint_x * jednotky;
-        y += waypoint_y * jednotky;
-    }
-
-    // Metoda pro navigaci podle souboru instrukcí
-    int naviguj(const std::string &soubor, bool s_waypointem) {
-        std::ifstream infile(soubor);
-        if (!infile) {
-            std::cerr << "Nepodarilo se otevrit soubor." << std::endl;
-            return -1;
-        }
-
-        std::string instrukce;
-        while (std::getline(infile, instrukce)) {
-            char akce = instrukce[0];
-            int hodnota = std::stoi(instrukce.substr(1));
-
-            if (s_waypointem) { // Část 2: navigace s waypointem
-                switch (akce) {
-                    case 'N': waypoint_y += hodnota; break;
-                    case 'S': waypoint_y -= hodnota; break;
-                    case 'E': waypoint_x += hodnota; break;
-                    case 'W': waypoint_x -= hodnota; break;
-                    case 'L': otocWaypoint('L', hodnota); break;
-                    case 'R': otocWaypoint('R', hodnota); break;
-                    case 'F': posunKWaypointu(hodnota); break;
+        char akce;
+        int hodnota;
+        while (soubor >> akce >> hodnota)
+        {
+            if (!druhe_reseni) 
+            {
+                if(akce == 'N' || akce == 'S' || akce == 'E' || akce == 'W') {
+                    smerlodi(akce, hodnota);
+                } else if (akce == 'L') {
+                    smer = "NESW"[(index_smeru() - hodnota / 90 + 4) % 4];
+                } else if(akce == 'R') {
+                    smer = "NESW"[(index_smeru() + hodnota / 90) % 4];
+                } else if(akce == 'F') {
+                    pohyblodi(hodnota);
                 }
-            } else { // Část 1: klasická navigace
-                switch (akce) {
-                    case 'N': y += hodnota; break;
-                    case 'S': y -= hodnota; break;
-                    case 'E': x += hodnota; break;
-                    case 'W': x -= hodnota; break;
-                    case 'L': otocLod('L', hodnota); break;
-                    case 'R': otocLod('R', hodnota); break;
-                    case 'F': posunVpřed(hodnota); break;
+            } 
+            else 
+            {
+                if (akce== 'N') 
+                    cilovy_bod_y += hodnota;
+                else if (akce == 'S') 
+                    cilovy_bod_y -= hodnota;
+                else if (akce == 'E') 
+                    cilovy_bod_x += hodnota;
+                else if (akce == 'W') 
+                    cilovy_bod_x -= hodnota;
+                else if (akce == 'L') 
+                    otoceni(hodnota, false);
+                else if (akce== 'R') 
+                    otoceni(hodnota, true);
+                else if (akce == 'F') {
+                    x += hodnota * cilovy_bod_x;
+                    y += hodnota * cilovy_bod_y;
                 }
             }
         }
+        soubor.close();
+        return (x<0?-x:x)+(y<0?-y:y);
+    }
 
-        // Vracíme Manhattan vzdálenost
-        return std::abs(x) + std::abs(y);
+    int index_smeru() const
+    {
+        if(smer == 'N')
+            return 0;
+        if(smer == 'E')
+            return 1;
+        if(smer == 'S')
+            return 2;
+        if(smer == 'W')
+            return 3;
+        return 0;
     }
 };
 
 #ifndef __TEST__
-int main() {
-    // Část 1: Navigace bez waypointu
-    Lod lod1;
-    int vzdalenost1 = lod1.naviguj("vstup_1.txt", false);
-    std::cout << "Manhattanska vzdalenost po navigaci (Cast 1): " << vzdalenost1 << std::endl;
-
-    // Část 2: Navigace s waypointem (waypoint na pozici 10 na východ a 1 na sever)
-    Lod lod2(10, 1);
-    int vzdalenost2 = lod2.naviguj("vstup_1.txt", true);
-    std::cout << "Manhattanska vzdalenost po navigaci s waypointem (Cast 2): " << vzdalenost2 << std::endl;
-
+int main()
+{
+    Lod lod(0, 0, 'E', 10, 1);
+    std::cout << lod.naviguj("vstup_1.txt", false) << std::endl;
+    Lod lod2(0, 0, 'E', 10, 1);
+    std::cout << lod2.naviguj("vstup_1.txt", true) << std::endl;
     return 0;
 }
 #endif // __TEST__
