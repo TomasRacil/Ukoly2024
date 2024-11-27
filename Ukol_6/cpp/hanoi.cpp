@@ -29,7 +29,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n <= 0) {
         cerr << "Varování: Počet disků musí být kladné číslo. Používám hodnotu 1." << endl;
-        n = 1;  // Nebo zvolit jiný způsob, jak se s tím vypořádat
+        return;
     }
 
     if (n == 1) {
