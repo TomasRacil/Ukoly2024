@@ -6,15 +6,15 @@ using namespace std;
 // Struktura pro reprezentaci tahu
 struct Tah {
     int disk;
-    char z;
-    char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    char z;  // Kolík, ze kterého se disk přesouvá
+    char na; // Kolík, na který se disk přesouvá
+    vector<vector<int>> stavVezi; // Stav věží po provedení tahu
 };
 
-// Funkce pro provedení tahu
+// Funkce pro provedení tahu - aktualizuje stav věží
 void provedTah(vector<vector<int>> &veze, Tah tah) {
-    int zdrojIndex = tah.z - 'A';
-    int cilIndex = tah.na - 'A';
+    int zdrojIndex = tah.z - 'A';  // Index zdrojového kolíku
+    int cilIndex = tah.na - 'A';   // Index cílového kolíku
 
     // Přesunout disk
     if (veze[zdrojIndex].empty()) {
@@ -25,7 +25,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
     veze[cilIndex].push_back(disk);
 }
 
-// Funkce pro řešení Hanoiských věží
+// Funkce pro řešení Hanoiských věží pomocí rekurze
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n <= 0) {
         cerr << "Varování: Počet disků musí být kladné číslo. Používám hodnotu 1." << endl;
@@ -33,6 +33,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     }
 
     if (n == 1) {
+        // Přesun jednoho disku
         Tah tah = {1, z, cil, veze};
         provedTah(veze, tah);
         tah.stavVezi = veze;
@@ -44,7 +45,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
     // Přesun největšího disku
-    Tah tah = {n, z, cil, veze}; // Uložení aktuálního stavu věží
+    Tah tah = {n, z, cil, veze};
     provedTah(veze, tah);
     tah.stavVezi = veze;
     tahy.push_back(tah);
@@ -67,7 +68,7 @@ void zobrazVeze(vector<vector<int>> &veze) {
             if (vyska < veze[vez].size()) {
                 cout << " [" << veze[vez][vyska] << "] ";
             } else {
-                cout << "  |  ";
+                cout << "  |  "; // Pokud není disk, zobrazí se prázdné místo
             }
         }
         cout << endl;
