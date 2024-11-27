@@ -16,8 +16,10 @@ void provedTah(std::vector<std::vector<int>>& veze, Tah tah) {
     int from, to;
     from = toupper(tah.z) - 'A'; // index veže z charu věže
     to = toupper(tah.na) - 'A';
-    veze[to].push_back(veze[from].back()); // přesun
-    veze[from].pop_back(); // odstranění
+    if (!veze.empty()) {
+        veze[to].push_back(veze[from].back()); // přesun
+        veze[from].pop_back(); // odstranění
+    }
 
 }
 
