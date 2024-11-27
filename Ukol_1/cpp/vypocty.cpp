@@ -30,6 +30,7 @@ double median(const std::vector<int> &cisla)
         : ((double) tmp[tmp.size() / 2 - 1] + (double) tmp[tmp.size() / 2]) / 2.0;
 }
 
+#ifndef __TEST__
 int main()
 {
     std::cout << "Zadejte seznam čísel oddělených čárkou: ";
@@ -55,3 +56,4 @@ int main()
 
     return 0;
 }
+#endif
