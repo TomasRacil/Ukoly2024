@@ -24,7 +24,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
     if (n == 1) {
         // Vytvoření nového tahu
-        Tah tah = {1, z, cil, vector<vector<int>>(3)};
+        Tah tah = {1, z, cil, veze};
         provedTah(veze, tah);
 
         // Uložení aktuálního stavu věží
