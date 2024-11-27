@@ -19,7 +19,7 @@ void provedTah(std::vector<std::vector<int>>& veze, Tah tah) {
     if (!veze.empty()) {
         veze[to].push_back(veze[from].back()); // přesun
         veze[from].pop_back(); // odstranění
-    }
+    } else return;
 
 }
 
