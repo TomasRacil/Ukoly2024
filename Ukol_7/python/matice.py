@@ -29,16 +29,21 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
         return None
+    
+    # Transponování druhé matice pro efektivnější práci s ní
     matice2_transponovana = list(zip(*matice2))
-    matice: list[list[int]] = [[sum(a * b for a, b in zip(radek1, radek2))for radek2 in matice2_transponovana]for radek1 in matice1]       
+    
+    # Vytvoření výsledné matice součinu
+    matice: list[list[int]] = [[sum(a * b for a, b in zip(radek1, radek2))for radek2 in matice2_transponovana]for radek1 in matice1]   
     return matice
+
     
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     if not matice or not matice[0]:
-        return [[]]
+        return []
     else:
         matice: list[list[int]] = [list(radek) for radek in zip(*matice)]
         return matice
