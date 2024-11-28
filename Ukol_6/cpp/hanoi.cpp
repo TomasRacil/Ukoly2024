@@ -20,8 +20,7 @@ void provedTah(vector<vector<int>>& veze, Tah tah)
 
     if (veze[start].empty())
     {
-        cout << "Chyba: Pokus o přesun z prázdného kolíku!" << endl;
-        exit(1); // Ukončení programu při chybě
+        return;
     }
 
     
