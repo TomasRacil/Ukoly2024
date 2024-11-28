@@ -3,30 +3,70 @@
 
 using namespace std;
 
-// Struktura pro reprezentaci tahu
+// Struktura zpbrazení tahu
 struct Tah
 {
     int disk;
     char z;
     char na;
-    vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
+    vector<vector<int>> stavVezi; //pro uložení stavu věží po provedení tahu
 };
 
-// Funkce pro provedení tahu
+//funkce pro provedení tahu
 void provedTah(vector<vector<int>> &veze, Tah tah)
 {
-    // Doplňte implementaci
+    // Přesunutí disku mezi dvěma kolíky
+    veze[tah.na - 'A'].push_back(tah.disk);
+    veze[tah.z - 'A'].pop_back();
+    
+    // Uložení stavu věží po tahu
+    tah.stavVezi = veze;
 }
 
-// Funkce pro řešení Hanoiských věží (bez výpisu)
+//fnkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
 {
-    // Doplňte implementaci
+    if (n == 1)
+    {
+        // Přesunutí disku
+        Tah tah;
+        tah.disk = veze[z - 'A'].back();
+        tah.z = z;
+        tah.na = cil;
+        provedTah(veze, tah);
+        tahy.push_back(tah);
+        return;
+    }
+
+    //volání pro přesunutí n-1 disků na pomocný kolík
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
+
+    //presunutí posledního disku na cílový kolík
+    Tah tah;
+    tah.disk = veze[z - 'A'].back();
+    tah.z = z;
+    tah.na = cil;
+    provedTah(veze, tah);
+    tahy.push_back(tah);
+
+    //volání pro přesunutí n-1 disků na cílový kolík
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
+//funkce pro zobrazení věží
 void zobrazVeze(vector<vector<int>> &veze)
 {
-    // Doplňte implementaci
+    // Zobrazení každé věže
+    for (int i = 0; i < 3; i++)
+    {
+        cout << "Kolik " << char('A' + i) << ": ";
+        for (int disk : veze[i])
+        {
+            cout << disk << " ";
+        }
+        cout << endl;
+    }
+    cout << "---------------------------" << endl;
 }
 
 #ifndef __TEST__
@@ -37,6 +77,7 @@ int main()
     cin >> n;
     cin.ignore();
 
+    //inicializace věží (první věž obsahuje všechny disky)
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--)
     {
@@ -46,7 +87,7 @@ int main()
     vector<Tah> tahy; // Vektor pro uložení tahů
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
-    // Zobrazení tahů a stavů věží
+    //zobrazení tahů a stavů věží
     for (Tah tah : tahy)
     {
         cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
