@@ -1,5 +1,5 @@
 def hello_world() -> str:
-    return 'print("Hello world")'
+    return print("Hello world")
 
 
 def main():
