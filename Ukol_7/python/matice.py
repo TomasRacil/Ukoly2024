@@ -2,11 +2,10 @@ from random import randrange
 
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
+    #n radku, m sloupcu
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
     matice: list[list[int]] = [[ randrange(0,9) for element in range(m)] for row in range(n)]
     return matice
-            
-
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
@@ -31,12 +30,15 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
+    #[[sloupec1],[sloupec2]]
     #A(nm) B(uv) are matrixes with dimensions n*m and u*v
     #m = u
     if len(matice1[0]) != len(matice2):
+        #cannot multiply
         return None
 
     #result of AB = R(nv)
+    #init with 0
     R = [[0 for _ in range(len(matice2[0]))] for _ in range(len(matice1))]
 
     #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj), m=u
