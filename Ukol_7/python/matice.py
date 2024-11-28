@@ -3,12 +3,16 @@ import random
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
+    if n == 0:
+        return []
     matice: list[list[int]] = [[random.randint(0,9) for _ in range(m)] for _ in range(n)]
     return matice
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
+    if not matice:
+        return ""
     return '\n'.join(' '.join(map(str, radek)) for radek in matice) + '\n'
 
 
