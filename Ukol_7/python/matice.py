@@ -1,32 +1,48 @@
-import random
+import random 
 
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [[random.randint(0,9) for _ in range(m)] for _ in range(n)]
     return matice
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return ""
+    return '\n'.join(' '.join(map(str, radek)) for radek in matice)
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    matice: list[list[int]] = []
-    return matice
+    if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]):
+        matice: list[list[int]] = [[prvek + matice2[y][x] for x, prvek in enumerate(radek)] for y,radek in enumerate(matice2)]
+        return matice
+    else:
+        return []
+    
 
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    matice: list[list[int]] = []
-    return matice
+    if len(matice1[0]) == len(matice2):
+
+        matice2_transponovana = list(zip(*matice2))
+
+        matice: list[list[int]] = [
+            [
+                sum(a * b for a,b in zip(radek1, radek2))
+                for radek2 in matice2_transponovana
+            ]
+            for radek1 in matice1
+        ]
+        return matice
+    else:
+        return []
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [list(radek) for radek in zip(*matice)]
     return matice
 
 
