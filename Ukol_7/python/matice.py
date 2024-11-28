@@ -9,16 +9,16 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return '\n'.join(' '.join(map(str, radek)) for radek in matice)
+    return '\n'.join(' '.join(map(str, radek)) for radek in matice) + '\n'
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
     if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]):
-        matice: list[list[int]] = [[prvek + matice2[y][x] for x, prvek in enumerate(radek)] for y,radek in enumerate(matice2)]
+        matice: list[list[int]] = [[a+b for a,b in zip(radek1, radek2)] for radek1, radek2 in zip(matice1,matice2)]
         return matice
     else:
-        return []
+        return None
     
 
 
@@ -37,13 +37,16 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
         ]
         return matice
     else:
-        return []
+        return None
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = [list(radek) for radek in zip(*matice)]
-    return matice
+    if not matice or not matice[0]:
+        return [[]]
+    else:
+        matice: list[list[int]] = [list(radek) for radek in zip(*matice)]
+        return matice
 
 
 if __name__ == "__main__":
