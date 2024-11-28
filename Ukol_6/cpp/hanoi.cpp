@@ -13,27 +13,37 @@ struct Tah
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah)
+void provedTah(vector<vector<int>>& veze, Tah tah)
 {
     int start = tah.z - 'A';
     int cil = tah.na - 'A';
 
-    if(!veze[start].empty())
+    if (veze[start].empty())
     {
-        tah.disk = veze[start].back();
-        veze[start].pop_back();
-        veze[cil].push_back(tah.disk);
+        cout << "Chyba: Pokus o přesun z prázdného kolíku!" << endl;
+        exit(1); // Ukončení programu při chybě
     }
+
+    
+    tah.disk = veze[start].back();
+    veze[start].pop_back();
+    veze[cil].push_back(tah.disk);
+    
 
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy)
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vector<Tah>& tahy)
 {
-    if(n == 1)
+    if (n <= 0)
     {
-        Tah tah = {n,z,cil,veze};
-        provedTah(veze,tah);
+        return;       
+    }
+
+    if (n == 1)
+    {
+        Tah tah = { n,z,cil,veze };
+        provedTah(veze, tah);
         tah.stavVezi = veze;
         tahy.push_back(tah);
         return;
@@ -41,29 +51,29 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
 
     hanoi(n - 1, z, cil, pomocny, veze, tahy);
 
-    Tah tah = {n,z,cil,veze};
+    Tah tah = { n,z,cil,veze };
     provedTah(veze, tah);
     tah.stavVezi = veze;
     tahy.push_back(tah);
 
     hanoi(n - 1, pomocny, z, cil, veze, tahy);
-    
-    
-    
+
+
+
 }
 
-void zobrazVeze(vector<vector<int>> &veze)
+void zobrazVeze(vector<vector<int>>& veze)
 {
-    for(size_t i = 0; i < veze.size(); i++)
+    for (size_t i = 0; i < veze.size(); i++)
     {
-        cout << "Vez " << char('A' + i) << ": ";
-        for(int disk : veze[i])
+        cout << "Kolik " << char('A' + i) << ": ";
+        for (int disk : veze[i])
         {
             cout << disk << " ";
         }
         cout << endl;
     }
-    
+
     cout << "------------------" << endl;
 }
 
@@ -71,7 +81,7 @@ void zobrazVeze(vector<vector<int>> &veze)
 int main()
 {
     int n;
-    cout << "Zadejte počet disků: ";
+    cout << "Zadejte pocet disku: ";
     cin >> n;
     cin.ignore();
 
@@ -87,7 +97,7 @@ int main()
     // Zobrazení tahů a stavů věží
     for (Tah tah : tahy)
     {
-        cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
+        cout << "Presun disk " << tah.disk << " z koliku " << tah.z << " na kolik " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
 
