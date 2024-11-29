@@ -1,9 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <algorithm>
 
 using namespace std;
+
+void sort_nums(vector<int> &cisla) {
+    for (size_t i = 0; i < cisla.size(); i++) {
+        for (size_t j = 0; j < cisla.size() - i - 1; j++) {
+            if (cisla[j] > cisla[j + 1]) {
+                int tmp = cisla[j];
+                cisla[j] = cisla[j + 1];
+                cisla[j + 1] = tmp;
+            }
+        }
+    }
+}
 
 int soucet(const vector<int> &cisla)
 {
@@ -66,12 +77,13 @@ double median(const vector<int> &cisla)
         cout << "Prazdny vstup." << endl;
         return {};
     }
-    sort(cisla.begin(), cisla.end());
     double med = 0;
-    if (cisla.size() % 2 == 0) {
-        med = (cisla[cisla.size() / 2 - 1] + cisla[cisla.size() / 2]) / 2;
+    vector<int> tmp = cisla;
+    sort_nums(tmp);
+    if (tmp.size() % 2 == 0) {
+        med = (tmp[tmp.size() / 2 - 1] + tmp[tmp.size() / 2]) / 2;
     } else {
-        med = cisla[cisla.size() / 2];
+        med = tmp[tmp.size() / 2];
     }
 
     return med;
