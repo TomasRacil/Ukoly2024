@@ -43,7 +43,7 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     if not matice or not matice[0]:
-        return []
+        return None
     else:
         matice: list[list[int]] = [list(radek) for radek in zip(*matice)]
         return matice
