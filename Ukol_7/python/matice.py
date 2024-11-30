@@ -3,7 +3,7 @@ from random import randrange
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     #Matrix A = (aij) of type n*m, where i = 1,2,3,...,n and j = 1,2,3,...,m has n rows and m columns 
-    if n <= 0 or m <= 0:
+    if n < 0 or m < 0:
         return None
     
     matice: list[list[int]] = [[ randrange(0,9) for element in range(m)] for row in range(n)]
