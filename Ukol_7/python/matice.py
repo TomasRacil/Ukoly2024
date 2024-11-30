@@ -2,46 +2,58 @@ from random import randrange
 
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
-    #n radku, m sloupcu
-    """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
+    #Matrix A = (aij) of type n*m, where i = 1,2,3,...,n and j = 1,2,3,...,m has n rows and m columns 
+    if n <= 0 or m <= 0:
+        return None
+    
     matice: list[list[int]] = [[ randrange(0,9) for element in range(m)] for row in range(n)]
     return matice
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    """Vrátí stringovou reprezentaci matice."""
     str_matrix : str = ""
-    for i in range(len(matice)):
-        #for each list
-        for j in range(len(matice[i])):
-            #for each element
-            str_matrix += str(matice[i][j])
-            if j < len(matice[i]) - 1:
-                str_matrix += str(" ")
-        str_matrix += "\n"
+    if matice != None:
+        for i in range(len(matice)):
+            #for each row
+            for j in range(len(matice[i])):
+                #for each element
+                str_matrix += str(matice[i][j])
+                if j < len(matice[i]) - 1:
+                    str_matrix += str(" ")
+            str_matrix += "\n"
     return str_matrix
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
-    """Sečte dvě matice, pokud mají stejné rozměry."""
-    if len(matice1) == len(matice2) and len(matice1[0]) == len(matice2[0]) and len(matice1) > 0:
-        return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
+    #matrixes must have the same dimensions
+    if len(matice1) == len(matice2):
+        if len(matice1) == 0:
+            #both matrixes are empty
+            return []
+        if len(matice1[0]) == len(matice2[0]):
+            return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
     return None
 
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
-    """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    #[[sloupec1],[sloupec2]]
     #A(nm) B(uv) are matrixes with dimensions n*m and u*v
-    #m = u
-    if len(matice1[0]) != len(matice2):
-        #cannot multiply
+
+    if len(matice1) != 0:
+        #check if m = u
+        if len(matice1[0]) != len(matice2):
+            #cannot multiply
+            return None
+    elif len(matice2) == 0:
+        #both matrixes are empty
+        return []
+    else:
+        #only one of the matrixes is empty
         return None
 
     #result of AB = R(nv)
-    #init with 0
+    #init result matrix R with zeroes
     R = [[0 for _ in range(len(matice2[0]))] for _ in range(len(matice1))]
 
-    #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj), m=u
+    #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj)
     for i in range(len(R)):
         for j in range(len(R[0])):
             for k in range(len(matice2)):
@@ -53,8 +65,6 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    """Provede transpozici matice."""
-    #problem case: [[]], tedy A(1,0)
     if len(matice) > 0 and len(matice[0]) > 0:
         return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
     elif len(matice) > 0 and len(matice[0]) == 0:
