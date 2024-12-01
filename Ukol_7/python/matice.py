@@ -36,7 +36,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    if not matice1 or matice2: return []
+    if not matice1 or not matice2: return []
     matice: list[list[int]] = []
     if len(matice1[0]) != len(matice2):
         return None
@@ -62,8 +62,8 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
 
 
 if __name__ == "__main__":
-    matice1: list[list[int]] = vytvor_matici(0, 0)
-    matice2: list[list[int]] = vytvor_matici(2, 4)
+    matice1: list[list[int]] = vytvor_matici(2, 2)
+    matice2: list[list[int]] = vytvor_matici(2, 2)
 
     print("Matice 1:")
     print(reprezentace_matice(matice1))
