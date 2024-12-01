@@ -1,7 +1,7 @@
 #ifndef ROSTLINA_H
 #define ROSTLINA_H
 
-#include "organismus.h"
+#include "Organismus.h"
 class Prostredi;
 
 class Rostlina : public Organismus
