@@ -1,4 +1,4 @@
-#include "organismus.h"
+//#include "organismus.h"
 
 Organismus::Organismus(int x, int y, Prostredi* prostredi)
     : x(x), y(y), prostredi(prostredi) {}
