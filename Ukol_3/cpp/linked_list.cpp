@@ -1,130 +1,196 @@
 #include <iostream>
-#include <fstream>
-#include <cctype>
 #include <string>
 
 using namespace std;
-// funkce pro otevreni souboru
-string otevri_soubor(const string &jmeno_souboru)
-{
-  string text;
-  char tmp;
-  // otevru soubor
-  ifstream f(jmeno_souboru, ifstream::in);
 
-// kontrola jestli se soubor otevrel
-  if (!f.is_open()){
-    cerr << "Soubor " << jmeno_souboru << " se nepodarilo otevrit." << endl; // kdyz se soubor neotevre, kod ukoncim a vypisu chybovou spravu
-    return"";
-  }
-// nacteni souboru do stringu
-  while(f.get(tmp)){
-    text += tmp;
-  }
-  // zavru soubor
-  f.close();
-  return text;
-}
-// Caesarova šifra
-string caesar_sifra(const string &text, int posun, bool sifrovat)
+struct Node
 {
-  string upravenytext = text;
-  for (int i = 0; i < text.length(); ++i) {
-        char &tmp = upravenytext[i];
-        if (isalpha(tmp)) {
-            char p = isupper(tmp) ? 'A' : 'a';
-            if (sifrovat) {
-                tmp = (char)(((tmp - p + posun) % 26 + 26) % 26 + p);
-            } else {
-                tmp = (char)(((tmp - p - posun + 26) % 26 + 26) % 26 + p);
-            }
+    int data;
+    Node *next;
+};
+
+// Funkce pro vytvoření nového uzlu
+Node *createNode(int data)
+{
+    Node* node = new Node();
+    node->data = data;
+    node->next = nullptr;
+    return node;
+}
+
+// Funkce pro vložení uzlu na začátek seznamu
+void insertAtBeginning(Node **head, int data)
+{
+    Node* newNode = createNode(data);
+    //do nově vytvořeného uzlu dám ukazatel na 'head' , vložíme ho na začátek seznamu
+    newNode->next = *head;
+    *head = newNode;
+}
+
+// Funkce pro vložení uzlu na konec seznamu
+void insertAtEnd(Node **head, const int data)
+{
+    Node* newNode = createNode(data);
+    // pokud je seznam prázdný, pouze vložím nově vytvořeny uzel
+    if (*head == nullptr){
+        *head = newNode;
+    }else{
+        Node* tmp = *head; // vytvořim si dočasný uzel, kopii 'head'
+    // dokuď nejsem na konci seznamu, posouvám si pozici 'tmp'
+        while (tmp->next!= nullptr){
+            tmp = tmp->next;
+        }
+        tmp->next = newNode;// 'tmp' ma pozici na konci seznamu, vlozim tam noví uzel
+    }
+}
+
+// Funkce pro vložení na index
+void insertAtIndex(Node **head, int data, int index)
+{
+    Node* newNode = createNode(data);
+    if (*head == nullptr){
+        *head = newNode;
+    }else if (index == 0){
+        insertAtBeginning(head, data);
+    }else{
+        Node* tmp = *head;
+    // stejné jako u předešlé funkce, akorát posouvám na pozici indexu
+        for (int i = 0; i < index-1 && tmp!= nullptr; ++i){
+            tmp = tmp->next;
+        }
+        // musím posunoit i uzel za nově vloženým
+        newNode->next = tmp->next;
+        tmp->next = newNode;
+    }
+}
+
+// Funkce pro smazání uzlu ze začátku seznamu
+void deleteAtBeginning(Node **head)
+{
+    if (*head != nullptr){
+        Node* tmp = *head;
+        *head = (*head)->next; // do 'tmp' si vlozim ukazatel na dalsi uzel v seznamu, abych zachoval ukazatel 'head'
+        delete tmp;
+    }
+}
+
+// Funkce pro smazání uzlu z konce seznamu
+void deleteAtEnd(Node **head)
+{
+    if (*head!= nullptr && (*head)->next!= nullptr){
+        Node* tmp = *head;
+        while (tmp->next->next!= nullptr){
+            tmp = tmp->next;
+        }
+        delete tmp->next;
+        tmp->next = nullptr; // na konec seznamu dávám nullptr -> konc seznamu
+    }else{
+        // pokud seznam obsahuje poze jeden prvek, smazu ten, seznam je prazdny
+        delete *head;
+        *head = nullptr;
+    }
+}
+
+// Funkce pro smazani uzlu na indexu
+void deleteAtIndex(Node *head, int index)
+{
+    // pokud je index mimo rozsha seznamu, nebo je seznam prazdny nic nedelam
+    if (head!= nullptr && index > 0){
+        Node* tmp = head;
+        for (int i = 0; i < index-1 && tmp!= nullptr; ++i){
+            tmp = tmp->next;
+        }
+        if (tmp!= nullptr && tmp->next!= nullptr){
+            Node* toDelete = tmp->next;
+            tmp->next = tmp->next->next;
+            delete toDelete;
         }
     }
-  return upravenytext;
 }
-// Vigenerova šifra
-string vigener_sifra(const string &text, const string &klic, bool sifrovat)
+
+// Funkce pro nalezeni prvniho vyskytu
+int findFirstOccurrence(Node *head, int value)
 {
-  string upravenytext = text;
-  char x = 0;
-  // sifruju
-  if(sifrovat == true){
-    for(int i = 0; i < text.length(); i++){
-      if(isupper(text[i])){
-        x = 65;
-      }else{
-        x = 97;
-      }
-      int posun = klic[i % klic.size()] - x;
-      upravenytext[i] = (text[i] - x + posun + 26) % 26 + x;
+    int index = 0, location = -1;
+    Node *tmp = head;
+    while (tmp!= nullptr){
+        if (tmp->data == value){
+            location = index;
+            break;
+        }
+        tmp = tmp->next;
+        index++;
     }
-  }
-  // desifruju
-  if(sifrovat == false){
-    for(int i = 0; i < text.length(); i++){
-      if(isupper(text[i])){
-        x = 65;
-      }else{
-        x = 97;
-      }
-      int posun = klic[i % klic.size()] - x;
-      upravenytext[i] = (text[i] - x - posun + 26) % 26 + x;
+    return location;
+}
+
+// Funkce pro třídění seznamu
+void sortList(Node **head)
+{
+    Node *tmp = *head, *next_node;
+    while (tmp!= nullptr){
+        next_node = tmp->next;
+        while (next_node!= nullptr){
+            if (tmp->data > next_node->data){
+                // prohodim data -> cisla v uzlech
+                int temp = tmp->data;
+                tmp->data = next_node->data;
+                next_node->data = temp;
+            }
+            next_node = next_node->next;
+        }
+        tmp = tmp->next;
     }
-  }
-  return upravenytext;
-}
-// XOR šifra
-string xor_sifra(const string &text, const string &klic, bool sifrovat)
-{
-  string upravenytext = text;
-
-  for(int i = 0; i < text.length(); ++i){
-    upravenytext[i] = text[i] ^ klic[i % klic.length()]; // ^ operator pro binarni XOR
-  }
-
-  return upravenytext;
 }
 
-// Funkce pro uložení řetězce do souboru
-void uloz_do_souboru(const string &jmeno_souboru, const string &obsah)
+// Funkce pro smazani (dealokaci) seznamu
+void deleteList(Node **head)
 {
-  // otevru soubor pro zapisovani, pokud neexistuje tak ho vytvorim
-  ofstream MyFile(jmeno_souboru);
+    Node *tmp = *head, *next_node;
+    // postupne vymazu vsechny uzly v seznamu
+    while (tmp!= nullptr){
+        next_node = tmp->next;
+        delete tmp;
+        tmp = next_node;
+    }
+    *head = nullptr;
+}
 
-  // zapisu do souboru
-  MyFile << obsah;
-
-  // zavru soubor
-  MyFile.close();
+// Operátor pro tisk dat
+ostream &operator<<(ostream &os, Node *head)
+{
+    Node *tmp = head;
+    while (tmp!= nullptr){
+        os << tmp->data;
+        if((tmp = tmp->next) != nullptr){
+            os << " ";
+        }
+    }
+    return os;
 }
 
 #ifndef __TEST__ // Add this preprocessor guard
-int main(){
-  // Načtení vstupního souboru
-  string vstupni_text = otevri_soubor("vstup.txt");
+int main()
+{
+    // Vytvoření seznamu
+    Node *head = nullptr;
+    insertAtBeginning(&head, 1);
+    insertAtBeginning(&head, 2);
+    insertAtEnd(&head, 3);
+    insertAtEnd(&head, 4);
+    insertAtIndex(&head, 5, 2);
+    cout << "Seznam po vlozeni prvku: " << head << endl;
+    cout << "Prvni vyskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << endl;
+    cout << "Seznam pred tridenim: " << head << endl;
+    sortList(&head);
+    cout << "Seznam po trideni: " << head << endl;
+    deleteAtBeginning(&head);
+    deleteAtEnd(&head);
+    cout << "Seznam po smazani prvku: " << head << endl;
+    deleteAtIndex(head, 1);
+    cout << "Seznam po smazani prvku: " << head << endl;
+    deleteList(&head);
 
-  // Šifrování textu pomocí Caesarovy šifry
-  string sifrovany_text_caesar = caesar_sifra(vstupni_text, 25, true);
-  cout << sifrovany_text_caesar << endl;
-
-  // Šifrování textu pomocí Vigenerovy šifry
-  string sifrovany_text_vigener = vigener_sifra(vstupni_text, "hlgu", true);
-  cout << sifrovany_text_vigener << endl;
-
-  // Šifrování textu pomocí XOR šifry
-  string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
-  cout << sifrovany_text_xor << endl;
-
-  // Uložení šifrovaných textů do souborů
-  uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
-  uloz_do_souboru("sifrovany_vigener.txt", sifrovany_text_vigener);
-  uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
-
-  // Dešifrování textů
-  cout << "Dešifrovany text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 25, false) << endl;
-  cout << "Dešifrovany text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "hlgu", false) << endl;
-  cout << "Dešifrovany text pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << endl;
-
-  return 0;
-} 
+    return 0;
+}
 #endif // __TEST__
