@@ -1,7 +1,7 @@
 #ifndef PROSTREDI_H
 #define PROSTREDI_H
 
-#include "organismus.h"
+#include "Organismus.h"
 #include <list>
 using namespace std;
 
