@@ -1,32 +1,54 @@
 import random
 
+MIN_VALUE = 0
+MAX_VALUE = 9
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [[random.randint(MIN_VALUE, MAX_VALUE) for a in range(m)] for a in range(n)]
     return matice
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return ""
+    return '\n'.join(' '.join(map(str, row)) for row in matice)
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
     matice: list[list[int]] = []
+    if len(matice1) != len(matice2) or any(len(radek1) != len(radek2) for radek1, radek2 in zip(matice1, matice2)):
+        return "Nelze scitat"
+    
+    rows = len(matice1)
+    cols = len(matice1[0])
+    matice = [[0 for i in range(cols)] for i in range(rows)]
+    for row in range(rows):
+        for col in range(cols):
+            matice[row][col] = matice1[row][col] + matice2[row][col]
     return matice
-
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     matice: list[list[int]] = []
+    if len(matice1[0]) != len(matice2):
+        return "Nelze nasobit"
+    pocet_radku = len(matice1)
+    pocet_sloupcu = len(matice2[0])
+    spolecna_dim = len(matice2)
+    # Inicializace vysledne matice nulami
+    matice = [[0 for _ in range(pocet_sloupcu)] for _ in range(pocet_radku)]
+
+    # Vypocet jednotlivych prvku vysledne matice
+    for i in range(pocet_radku):
+        for j in range(pocet_sloupcu):
+            matice[i][j] = sum(matice1[i][k] * matice2[k][j] for k in range(spolecna_dim))
     return matice
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
+    matice: list[list[int]] = [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
     return matice
 
 
@@ -39,7 +61,7 @@ if __name__ == "__main__":
     print("Matice 2:")
     print(reprezentace_matice(matice2))
 
-    soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
+    soucet = soucet_matic(matice1, matice1)
     print("Součet matic:")
     print(reprezentace_matice(soucet))
 
