@@ -8,9 +8,9 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    """Vrátí stringovou reprezentaci matice. Pokud je matice prázdná, vrátí prázdný řetězec."""
+    """Vrátí stringovou reprezentaci matice bez nadbytečného nového řádku na konci."""
     if not matice:
-        return ""
+        return ""  # Return empty string for empty matrix
     return "\n".join(" ".join(map(str, radek)) for radek in matice)
 
 
@@ -31,7 +31,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud je násobení proveditelné. Jinak vrátí None."""
     if len(matice1[0]) != len(matice2):
-        return None
+        return None  # Return None if matrices cannot be multiplied
     return [
         [
             sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2)))
@@ -43,9 +43,9 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    """Provede transpozici matice. Pokud je matice prázdná nebo obsahuje prázdné řádky, vrátí prázdnou matici."""
-    if not matice:
-        return [[]]  # Vrátí prázdnou matici jako seznam s prázdným seznamem.
+    """Provede transpozici matice. Pokud je matice prázdná, vrátí prázdnou matici."""
+    if not matice or not matice[0]:
+        return []  # Return an empty list for empty matrices
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 
