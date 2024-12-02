@@ -44,8 +44,8 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice. Pokud je matice prázdná nebo obsahuje prázdné řádky, vrátí prázdnou matici."""
-    if not matice or not matice[0]:
-        return []
+    if not matice:
+        return [[]]  # Vrátí prázdnou matici jako seznam s prázdným seznamem.
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 
