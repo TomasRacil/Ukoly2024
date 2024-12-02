@@ -20,16 +20,14 @@ void provedTah(vector<vector<int>>& veze, char z, char na) {
 
 // Funkce pro řešení Hanoiských věží (rekurzivně)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vector<Tah>& tahy) {
-
     if (n <= 0) {
         return; // Neprovádí žádný tah, pokud je počet disků 0 nebo méně
     }
-    
+
     if (n == 1) {
         // Základní případ: přesun jediného disku
         provedTah(veze, z, cil);
-        Tah tah = { 1, z, cil, veze };
-        tahy.push_back(tah);
+        tahy.push_back({ 1, z, cil, veze });
         return;
     }
 
@@ -38,16 +36,14 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>>& veze, vec
 
     // Přesunout n-tý disk na cílový kolík
     provedTah(veze, z, cil);
-    Tah tah = { n, z, cil, veze };
-    tahy.push_back(tah);
+    tahy.push_back({ n, z, cil, veze });
 
     // Rekurzivně přesunout n-1 disků na cílový kolík
     hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
-// Funkce pro zobrazení stavu věží
+// Funkce pro zobrazení stavu věží (pro ladění)
 void zobrazVeze(const vector<vector<int>>& veze) {
-    
     for (int i = 0; i < 3; i++) {
         cout << "Kolik " << char('A' + i) << ": ";
         for (int disk : veze[i]) {
@@ -56,7 +52,6 @@ void zobrazVeze(const vector<vector<int>>& veze) {
         cout << endl;
     }
     cout << endl;
-    
 }
 
 #ifndef __TEST__
@@ -64,12 +59,11 @@ int main() {
     int n;
     cout << "Zadejte počet disků: ";
     cin >> n;
-    cin.ignore();
 
     // Vytvoření tří věží
     vector<vector<int>> veze(3);
     for (int i = n; i > 0; i--) {
-        veze[0].push_back(i);  // Všechny disky začínají na kolíku A
+        veze[0].push_back(i); // Všechny disky začínají na kolíku A
     }
 
     vector<Tah> tahy; // Vektor pro uložení tahů
