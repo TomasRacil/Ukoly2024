@@ -8,24 +8,25 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    """Vrátí stringovou reprezentaci matice."""
-    return "\n".join(" ".join(map(str, radek)) for radek in matice)
+    """Vrátí stringovou reprezentaci matice s novým řádkem na konci."""
+    return "\n".join(" ".join(map(str, radek)) for radek in matice) + "\n"
 
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
-    """Sečte dvě matice, pokud mají stejné rozměry."""
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+    """Sečte dvě matice, pokud mají stejné rozměry. Jinak vrátí None."""
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        raise ValueError("Matice musí mít stejné rozměry pro sčítání.")
+        return None
     return [
         [matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))]
         for i in range(len(matice1))
     ]
 
 
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
-    """Vynásobí dvě matice, pokud je násobení proveditelné."""
+
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
+    """Vynásobí dvě matice, pokud je násobení proveditelné. Jinak vrátí None."""
     if len(matice1[0]) != len(matice2):
-        raise ValueError("Počet sloupců první matice se musí rovnat počtu řádků druhé matice.")
+        return None
     return [
         [
             sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2)))
@@ -35,8 +36,11 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
     ]
 
 
+
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    """Provede transpozici matice."""
+    """Provede transpozici matice. Pokud je matice prázdná, vrátí prázdnou matici."""
+    if not matice or not matice[0]:
+        return []
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 
