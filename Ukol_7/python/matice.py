@@ -55,6 +55,9 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
     if len(matice1) == 0:
         return[]
 
+    if len(matice1[0]) != len(matice2[0]):
+        return None
+
     #soucet matic
     #pokud matice maji stejny pocet sloupcu a radku
     #scitame odpovidajici stejne pozice
