@@ -15,7 +15,7 @@ struct Tah {
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah) {
+void provedTah(vector<vector<int>> &veze, Tah &tah) {
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
     veze[tah.na - 'A'].push_back(disk);
