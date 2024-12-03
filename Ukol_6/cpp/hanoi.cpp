@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <locale>
 #include <codecvt>
+#include <numeric> // Include for accumulate
 
 using namespace std;
 
@@ -14,8 +15,11 @@ struct Tah {
     vector<vector<int>> stavVezi; // Člen pro uložení stavu věží po provedení tahu
 };
 
+// Typ pro reprezentaci věže
+using Vez = vector<int>;
+
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah &tah) {
+void provedTah(vector<Vez>& veze, Tah& tah) {
     int disk = veze[tah.z - 'A'].back();
     veze[tah.z - 'A'].pop_back();
     veze[tah.na - 'A'].push_back(disk);
@@ -23,39 +27,60 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
 }
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n < 0) {
-        throw invalid_argument("Počet disků musí být kladné číslo.");
+void hanoi(int n, char z, char pomocny, char cil, vector<Vez>& veze, vector<Tah>& tahy) {
+    if (n <= 0) return;
+    if (veze.empty()) {
+        cerr << "vector veze je prazdny." << endl;
+        return;
     }
-    if (n == 0) {
-        return; // Přidáno pro případ, kdy je počet disků 0
+
+    int pocet_vsech_disku = accumulate(veze.begin(), veze.end(), 0, [](auto a, const Vez& b) -> int {
+        return a + b.size();
+    });
+    if (pocet_vsech_disku < n) {
+        cerr << "Nelze provest tah: na vezi neni dostatek disku." << endl;
+        tahy.push_back({});
+        return;
     }
+
     if (n == 1) {
-        Tah tah = {n, z, cil, veze};
-        provedTah(veze, tah);
-        tahy.push_back(tah);
-    } else {
-        hanoi(n - 1, z, cil, pomocny, veze, tahy);
-        Tah tah = {n, z, cil, veze};
-        provedTah(veze, tah);
-        tahy.push_back(tah);
-        hanoi(n - 1, pomocny, z, cil, veze, tahy);
+        try {
+            Tah t = { veze[z - 'A'].back(), z, cil, {} };
+            provedTah(veze, t);
+            tahy.push_back(t);
+        }
+        catch (invalid_argument& e) {
+            cerr << "Nelze provest tah: " << e.what() << endl;
+        }
+        return;
     }
+    hanoi(n - 1, z, cil, pomocny, veze, tahy);
+
+    try {
+        Tah t = { veze[z - 'A'].back(), z, cil, {} };
+        provedTah(veze, t);
+        tahy.push_back(t);
+    }
+    catch (invalid_argument& e) {
+        cerr << "Nelze provest tah: " << e.what() << endl;
+    }
+
+    hanoi(n - 1, pomocny, z, cil, veze, tahy);
 }
 
-
 // Funkce pro zobrazení věží
-void zobrazVeze(const vector<vector<int>> &veze) {
+void zobrazVeze(const vector<Vez>& veze) {
     int max_height = 0;
-    for (const auto &veze : veze) {
-        max_height = max(max_height, (int)veze.size());
+    for (const auto& vez : veze) {
+        max_height = max(max_height, (int)vez.size());
     }
 
     for (int i = max_height - 1; i >= 0; --i) {
-        for (const auto &veze : veze) {
-            if (i < veze.size()) {
-                cout << string(max_height - veze[i], ' ') << string(veze[i], '=') << string(max_height - veze[i], ' ') << " ";
-            } else {
+        for (const auto& vez : veze) {
+            if (i < vez.size()) {
+                cout << string(max_height - vez[i], ' ') << string(vez[i], '=') << string(max_height - vez[i], ' ') << " ";
+            }
+            else {
                 cout << string(max_height, ' ') << "|" << string(max_height, ' ') << " ";
             }
         }
@@ -80,7 +105,7 @@ int main() {
         return 1;
     }
 
-    vector<vector<int>> veze(3);
+    vector<Vez> veze(3);
     for (int i = n; i > 0; i--) {
         veze[0].push_back(i);
     }
@@ -89,7 +114,7 @@ int main() {
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
     // Zobrazení tahů a stavů věží
-    for (const Tah &tah : tahy) {
+    for (const Tah& tah : tahy) {
         wcout << L"Přesuň disk " << tah.disk << L" z kolíku " << tah.z << L" na kolík " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
