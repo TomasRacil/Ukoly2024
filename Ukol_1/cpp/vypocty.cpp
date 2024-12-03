@@ -1,46 +1,77 @@
-// #include "vypocty.h"
+
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <algorithm>
 
-int soucet(const std::vector<int> &cisla)
+int soucet(std::vector<int> cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int suma= 0;
+    for (int i =0; i < cisla.size(); i++) {
+        suma += cisla[i];
+    }
+    return suma;
 }
 
-int soucin(const std::vector<int> &cisla)
+int soucin(std::vector<int> cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    int soucin= 1;
+    for (int i = 0; i < cisla.size(); i++) {
+        soucin *= cisla[i];
+    }
+    return soucin;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    if (cisla.empty()) return 0;
+    double suma =soucet(cisla);
+    return suma / cisla.size();
 }
 
-double median(const std::vector<int> &cisla)
+double median (const std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    if (cisla.empty()) return 0;
+    std::vector<int> kopie= cisla;
+    std::sort(kopie.begin(), kopie.end());
+
+    int n= kopie.size();
+    if (n % 2==0) {
+        return (kopie[n /2-1]+ kopie [n / 2]) / 2.0;
+    } else {
+        return kopie[n/2];
+    }
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
-    std::cout << "Zadejte seznam čísel oddělených čárkou: ";
+    std::cout << "zadej cisla oddelena carkama: ";
     std::string vstup;
     std::getline(std::cin, vstup);
 
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    std::string cislo;
 
-    std::cout << "Součet: " << soucet(cisla) << std::endl;
-    std::cout << "Součin: " << soucin(cisla) << std::endl;
-    std::cout << "Průměrná hodnota: " << prumer(cisla) << std::endl;
-    std::cout << "Medián: " << median(cisla) << std::endl;
+    for (int i = 0; i < vstup.length(); i++) {
+        if (vstup[i] != ',') {
+            cislo += vstup[i];
+        } else {
+            if (cislo != "") {
+                cisla.push_back(std::stoi(cislo));
+                cislo = "";
+            }
+        }
+    }
+
+    if (cislo != "") {
+        cisla.push_back(std::stoi(cislo));
+    }
+
+
+    std::cout << "soucet : " << soucet(cisla) << std::endl;
+    std::cout << "soucin: " << soucin(cisla) << std::endl;
+    std::cout << "prumerna hodnota: " << prumer(cisla) << std::endl;
+    std::cout << "median: " << median(cisla) << std::endl;
 
     return 0;
 }
-#endif // __TEST__
