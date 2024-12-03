@@ -145,6 +145,7 @@ string playfairCipher(string text, string key, bool encrypt)
     return result;
 }
 
+#ifndef __TEST__ // Add this preprocessor guard
 //hlavní funkce
 int main() 
 {
@@ -222,3 +223,4 @@ int main()
     cout << "Text byl " << ((action == 1) ? "zašifrován" : "dešifrován") << " a uložen do souboru " << outputPath << endl;
     return 0;
 }
+#endif // __TEST__
