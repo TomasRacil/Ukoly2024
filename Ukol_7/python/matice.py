@@ -4,30 +4,65 @@ import random
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
     matice: list[list[int]] = []
+    for i in range(n):
+        radek: list[int] = []
+        for j in range(m):
+            radek.append(random.randint(0, 9))
+        matice.append(radek)
     return matice
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return ""
+    if matice:
+        reprezentace = ""
+        for radek in matice:
+            reprezentace += str(radek) + "\n"
+        return reprezentace
+    else:
+        return ""
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    matice: list[list[int]] = []
-    return matice
+    if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
+        print("Matice nemají stejné rozměry.")
+    if len(matice1) == len(matice2):
+        matice: list[list[int]] = []
+        for i in range(len(matice1)):
+            radek: list[int] = []
+            for j in range(len(matice1[0])):
+                radek.append(matice1[i][j] + matice2[i][j])
+            matice.append(radek)
+        return matice
 
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     matice: list[list[int]] = []
+    if len(matice1[0]) != len(matice2):
+        print("Nelze provést násobení matic.")
+    else:
+        for i in range(len(matice1)):
+            radek: list[int] = []
+            for j in range(len(matice2[0])):
+                soucet: int = 0
+                for k in range(len(matice1[0])):
+                    soucet += matice1[i][k] * matice2[k][j]
+                radek.append(soucet)
+            matice.append(radek)
     return matice
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
-    return matice
+    transponovana = []
+    for i in range(len(matice[0])):
+        radek = []
+        for j in range(len(matice)):
+            radek.append(matice[j][i])
+        transponovana.append(radek)
+    return transponovana
 
 
 if __name__ == "__main__":
