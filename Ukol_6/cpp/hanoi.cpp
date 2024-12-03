@@ -24,6 +24,9 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    if (n <= 0) {
+        throw invalid_argument("Počet disků musí být kladné číslo.");
+    }
     if (n == 1) {
         Tah tah = {n, z, cil, veze};
         provedTah(veze, tah);
@@ -61,32 +64,3 @@ void zobrazVeze(const vector<vector<int>> &veze) {
 int main() {
     // Set locale to UTF-8
     locale::global(locale(locale(), new codecvt_utf8<wchar_t>));
-    wcout.imbue(locale());
-
-    int n;
-    wcout << L"Zadejte počet disků: ";
-    cin >> n;
-    cin.ignore();
-
-    if (n <= 0) {
-        wcout << L"Neplatný počet disků." << endl;
-        return 1;
-    }
-
-    vector<vector<int>> veze(3);
-    for (int i = n; i > 0; i--) {
-        veze[0].push_back(i);
-    }
-
-    vector<Tah> tahy; // Vektor pro uložení tahů
-    hanoi(n, 'A', 'B', 'C', veze, tahy);
-
-    // Zobrazení tahů a stavů věží
-    for (const Tah &tah : tahy) {
-        wcout << L"Přesuň disk " << tah.disk << L" z kolíku " << tah.z << L" na kolík " << tah.na << endl;
-        zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
-    }
-
-    return 0;
-}
-#endif // __TEST__
