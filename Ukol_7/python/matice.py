@@ -8,10 +8,11 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    """Vrátí stringovou reprezentaci matice bez nadbytečného nového řádku na konci."""
+    """Vrátí stringovou reprezentaci matice s novým řádkem na konci."""
     if not matice:
         return ""  # Return empty string for empty matrix
-    return "\n".join(" ".join(map(str, radek)) for radek in matice)
+    return "\n".join(" ".join(map(str, radek)) for radek in matice) + "\n"
+
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
@@ -41,11 +42,12 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
     ]
 
 
-
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    """Provede transpozici matice. Pokud je matice prázdná, vrátí prázdnou matici."""
-    if not matice or not matice[0]:
-        return []  # Return an empty list for empty matrices
+    """Provede transpozici matice. Pokud je matice prázdná nebo obsahuje prázdné řádky, zachová jejich strukturu."""
+    if not matice:
+        return []  # Pokud je matice prázdná
+    if not matice[0]:
+        return [[]]  # Pokud má matice prázdné řádky
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 
