@@ -24,8 +24,11 @@ void provedTah(vector<vector<int>> &veze, Tah &tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    if (n <= 0) {
+    if (n < 0) {
         throw invalid_argument("Počet disků musí být kladné číslo.");
+    }
+    if (n == 0) {
+        return; // Přidáno pro případ, kdy je počet disků 0
     }
     if (n == 1) {
         Tah tah = {n, z, cil, veze};
@@ -39,6 +42,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
         hanoi(n - 1, pomocny, z, cil, veze, tahy);
     }
 }
+
 
 // Funkce pro zobrazení věží
 void zobrazVeze(const vector<vector<int>> &veze) {
