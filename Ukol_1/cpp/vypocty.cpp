@@ -1,32 +1,69 @@
+
 // #include "vypocty.h"
 #include <iostream>
+#include <string>
 #include <vector>
+#include <sstream>
+#include <cctype>
+#include <algorithm>
+
+using namespace std;
+
+
 
 int soucet(const std::vector<int> &cisla)
 {
     // TODO: Implementujte funkci
-    return 0;
+    int soucet = 0;
+    for (int i = 0; i < cisla.size(); i++)
+    {
+        soucet = soucet + cisla[i];
+    }
+    return soucet;
 }
 
 int soucin(const std::vector<int> &cisla)
 {
     // TODO: Implementujte funkci
-    return 0;
+    int soucin = 1;
+    for (int i = 0; i < cisla.size(); i++)
+    {
+        soucin = soucin * cisla[i];
+    }
+    return soucin;
 }
 
 double prumer(const std::vector<int> &cisla)
 {
     // TODO: Implementujte funkci
-    return 0;
+    int prumerr = 0;
+    int pocet = 0;
+    for (int i = 0; i < cisla.size(); i++)
+    {
+        pocet += 1;
+        prumerr = prumerr + cisla[i];
+    }
+    prumerr = prumerr / pocet;
+    return prumerr;
 }
 
-double median(const std::vector<int> &cisla)
+double median(std::vector<int> &cisla)
 {
-    // TODO: Implementujte funkci
-    return 0;
+    sort(cisla.begin(), cisla.end());
+    int pocet = cisla.size();
+    double median = 0.0;
+    if (pocet % 2 != 0)
+    {
+        median = cisla[pocet / 2];
+    }
+    else
+    {
+        median = (cisla[pocet / 2] + cisla[pocet / 2 - 1]) / 2.0;
+    }
+    return median;
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
+//#ifndef __TEST__ // Add this preprocessor guard
 int main()
 {
     std::cout << "Zadejte seznam čísel oddělených čárkou: ";
@@ -34,7 +71,24 @@ int main()
     std::getline(std::cin, vstup);
 
     std::vector<int> cisla;
-    // TODO: Načtěte čísla ze vstupu do vektoru cisla
+    std::stringstream ss(vstup);
+    std::string token;
+
+    // Parse the input string and convert to integers
+    while (std::getline(ss, token, ','))
+    {
+        try
+        {
+            int number = std::stoi(token);
+            cisla.push_back(number);
+        }
+        catch (const std::invalid_argument& e)
+        {
+            std::cerr << "Invalid input: " << token << std::endl;
+            return -1;
+        }
+    }
+
 
     std::cout << "Součet: " << soucet(cisla) << std::endl;
     std::cout << "Součin: " << soucin(cisla) << std::endl;
@@ -43,4 +97,4 @@ int main()
 
     return 0;
 }
-#endif // __TEST__
+//#endif // __TEST__

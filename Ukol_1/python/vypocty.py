@@ -1,48 +1,34 @@
 def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součet čísel.
-    """
-    pass
+    """Vypočítá součet čísel v seznamu."""
+    soucet = 0
+    for cislo in cisla:
+        soucet += cislo
+    return soucet
 
 
 def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
+    """Vypočítá součin čísel v seznamu."""
+    soucin = 1
+    for cislo in cisla:
+        soucin *= cislo
+    return soucin
 
 
 def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
+    """Vypočítá průměrnou hodnotu čísel v seznamu."""
+    prumer = round((soucet(cisla) / len(cisla)),2)
+    return prumer
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
+    
 
 
 def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Medián čísel.
-    """
+    """Vypočítá medián čísel v seznamu."""
+    sorted_cisla = sorted(cisla)
+    if len(cisla) % 2 == 0:
+        return (sorted_cisla[len(cisla) // 2 - 1] + sorted_cisla[len(cisla) // 2]) / 2
+    else:
+        return sorted_cisla[len(cisla) // 2]
     pass  # TODO: Implementujte funkci
 
 
