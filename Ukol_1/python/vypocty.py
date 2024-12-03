@@ -1,48 +1,43 @@
-def soucet(cisla: list[int]) -> int:
-  soucet = 0
-  for k in range(len(cisla)):
-    soucet += cisla[i]
-  
-  return soucet
+from typing import List
+import statistics
 
-def soucin(cisla: list[int]) -> int:
-  soucin = 1
-  for k in range(len(cisla)):
-    soucin *= cisla[i]
-  
-  return soucin
+def soucet(cisla: List[int]) -> int:
+    return sum(cisla)
 
+def soucin(cisla: List[int]) -> int:
+    if not cisla:
+        return 0
+    soucin = 1
+    for cislo in cisla:
+        soucin *= cislo
+    return soucin
 
-def prumer(cisla: list[int]) -> float:
-  soucet = 0
-  pocet = 0
-  for k in range(len(cisla)):
-    soucet += cisla[i]
-    pocet += 1
-  prum = float(soucet/pocet)
-  
-  return prum
+def prumer(cisla: List[int]) -> float:
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return sum(cisla) / len(cisla)
 
-
-def median(cisla: list[int]) -> float:
-  delka = len(cisla)
-  cisla.sort()
-  if(delka % 2 == 0):
-    return (cisla[delka//2 - 1] + cisla[delka//2]) / 2
-  else:
-    return cisla[delka//2]
-
+def median(cisla: List[int]) -> float:
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return statistics.median(cisla)
 
 def main():
-    """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
-    cisla = [int(cislo) for cislo in vstup.split(",")]
+    try:
+        cisla = [int(cislo) for cislo in vstup.split(",")]
+    except ValueError:
+        print("Chyba: Vstup musí obsahovat pouze celá čísla oddělená čárkami.")
+        return
+
+    if not cisla:
+        print("Chyba: Seznam čísel nesmí být prázdný.")
+        return
 
     print("Součet:", soucet(cisla))
     print("Součin:", soucin(cisla))
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
-
 
 if __name__ == "__main__":
     main()
