@@ -25,8 +25,6 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud mají kompatibilní rozměry."""
-    print(f"matice1: {matice1}")
-    print(f"matice2: {matice2}")
     if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
         return None
     if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
