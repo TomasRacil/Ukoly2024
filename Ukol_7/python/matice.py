@@ -1,24 +1,34 @@
 import random
 
 
-def vytvormatici(n: int, m: int) -> list[list[int]]:
+def vytvor_matici(n: int, m: int) -> list[list[int]]:
+    """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
     matice: list[list[int]] = []
     return matice
 
-def reprezentacematice(matice: list[list[int]]) -> str:
+
+def reprezentace_matice(matice: list[list[int]]) -> str:
+    """Vrátí stringovou reprezentaci matice."""
     return ""
 
-def soucetmatic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    """Sečte dvě matice, pokud mají stejné rozměry."""
     matice: list[list[int]] = []
     return matice
 
-def nasobenimatic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    """Vynásobí dvě matice, pokud je násobení proveditelné."""
     matice: list[list[int]] = []
     return matice
+
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
+    """Provede transpozici matice."""
     matice: list[list[int]] = []
     return matice
+
 
 if __name__ == "__main__":
     matice1: list[list[int]] = vytvor_matici(3, 2)
