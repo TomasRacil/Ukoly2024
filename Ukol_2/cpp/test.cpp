@@ -58,7 +58,7 @@ TEST(SifrovaciAlgoritmyTest, XORSifra)
 
 TEST(SifrovaciAlgoritmyTest, UlozDoSouboru)
 {
-    std::string testovaci_text = "Testovací text pro uložení";
+    std::string testovaci_text = "Testovaci text pro ulozeni";
     std::string jmeno_souboru = "test_ulozeni.txt";
     uloz_do_souboru(jmeno_souboru, testovaci_text);
 
