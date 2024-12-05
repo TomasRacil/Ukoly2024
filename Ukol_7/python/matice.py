@@ -20,7 +20,7 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     matice: list[list[int]] = []
     return matice
 
-if __name == "__main":
+if __name__ == "__main__":
     matice1: list[list[int]] = vytvor_matici(3, 2)
     matice2: list[list[int]] = vytvor_matici(2, 4)
 
