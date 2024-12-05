@@ -1,49 +1,38 @@
 def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součet čísel.
-    """
-    pass
+    """Vypočítá součet čísel v seznamu."""
+    return sum(cisla)
 
 
 def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
+    """Vypočítá součin čísel v seznamu."""
+    if len(cisla) == 0:
+        return 0  # Vrací 0 pro prázdný seznam, jak očekává test
+    result = 1
+    for a in cisla:
+        result *= a
+    return result
 
 
 def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
+    """Vypočítá průměrnou hodnotu čísel v seznamu."""
+    if len(cisla) == 0:
+        raise ValueError("Seznam je prázdný")  # Explicitně vyvolá výjimku pro prázdný seznam
+    return sum(cisla) / len(cisla)
 
 
 def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
+    """Vypočítá medián čísel v seznamu."""
+    if len(cisla) == 0:
+        raise ValueError("Seznam je prázdný")  # Vyvolá výjimku pro prázdný seznam
 
-    Args:
-      cisla: Seznam čísel.
+    sorted_cisla = sorted(cisla)  # Seřazení seznamu
+    n = len(sorted_cisla)
+    mid = n // 2
 
-    Returns:
-      Medián čísel.
-    """
-    pass  # TODO: Implementujte funkci
+    if n % 2 == 0:
+        return (sorted_cisla[mid - 1] + sorted_cisla[mid]) / 2
+    else:
+        return sorted_cisla[mid]
 
 
 def main():
