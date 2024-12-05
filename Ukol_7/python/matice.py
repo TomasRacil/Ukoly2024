@@ -42,14 +42,12 @@ if __name__ == "__main__":
     print(reprezentace_matice(matice2))
 
     soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
-    if soucet:
-        print("Součet matic:")
-        print(reprezentace_matice(soucet))
+    print("Součet matic:")
+    print(reprezentace_matice(soucet))
 
     nasobek = nasobeni_matic(matice1, matice2)
-    if nasobek:
-        print("Násobení matic:")
-        print(reprezentace_matice(nasobek))
+    print("Násobení matic:")
+    print(reprezentace_matice(nasobek))
 
     transponovana = transpozice_matice(matice1)
     print("Transponovaná matice:")
