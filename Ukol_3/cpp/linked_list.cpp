@@ -167,7 +167,8 @@ std::ostream& operator<<(std::ostream& os, Uzel* hlava) {
 }
 
 #ifndef __TEST__ 
-int main() {
+int main() 
+{
     // Vytvoření seznamu
     Uzel* hlava = nullptr;
     vlozNaZacatek(&hlava, 1);
