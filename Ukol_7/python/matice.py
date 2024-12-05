@@ -62,11 +62,13 @@ if __name__ == "__main__":
 
     soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
     print("Součet matic:")
-    print(reprezentace_matice(soucet))
+    if soucet is not None:
+        print(reprezentace_matice(soucet))
 
     nasobek = nasobeni_matic(matice1, matice2)
     print("Násobení matic:")
-    print(reprezentace_matice(nasobek))
+    if nasobek is not None:
+        print(reprezentace_matice(nasobek))
 
     transponovana = transpozice_matice(matice1)
     print("Transponovaná matice:")
