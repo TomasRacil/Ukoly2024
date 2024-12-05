@@ -1,33 +1,50 @@
+from __future__ import annotations
+
 import random
 
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
-    matice: list[list[int]] = []
-    return matice
+    return [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
 
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return ""
+    if not matice:
+        return ""
+    return "\n".join(" ".join(map(str, radek)) for radek in matice) + "\n"
 
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Sečte dvě matice, pokud mají stejné rozměry."""
-    matice: list[list[int]] = []
-    return matice
+    if len(matice1) != len(matice2) or any(len(radek1) != len(radek2) for radek1, radek2 in zip(matice1, matice2)):
+        print("Chyba: Matice nemají stejné rozměry.")
+        return None
+    return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
 
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    matice: list[list[int]] = []
-    return matice
+    if not matice1 and not matice2:  # Obě matice prázdné
+        return []
+    if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
+        print("Chyba: Počet sloupců první matice se nerovná počtu řádků druhé matice.")
+        return None
+    return [
+        [
+            sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2)))
+            for j in range(len(matice2[0]))
+        ]
+        for i in range(len(matice1))
+    ]
+
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    matice: list[list[int]] = []
-    return matice
+    if not matice or not matice[0]:
+        return [[]] if matice else []
+    return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 
 if __name__ == "__main__":
@@ -41,11 +58,13 @@ if __name__ == "__main__":
 
     soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
     print("Součet matic:")
-    print(reprezentace_matice(soucet))
+    if soucet is not None:
+        print(reprezentace_matice(soucet))
 
     nasobek = nasobeni_matic(matice1, matice2)
     print("Násobení matic:")
-    print(reprezentace_matice(nasobek))
+    if nasobek is not None:
+        print(reprezentace_matice(nasobek))
 
     transponovana = transpozice_matice(matice1)
     print("Transponovaná matice:")
