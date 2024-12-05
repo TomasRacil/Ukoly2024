@@ -50,7 +50,8 @@ class TestMatice(unittest.TestCase):
 
         matice3 = [[1, 2], [3, 4], [5, 6]]
         self.assertIsNone(nasobeni_matic(matice1, matice3))
-        self.assertIsNone(nasobeni_matic(matice3, matice1))
+        self.assertEqual(nasobeni_matic(matice3, matice1),
+                         [[7, 10], [15, 22], [23, 34]])
 
         self.assertEqual(nasobeni_matic([], []), [])
         self.assertIsNone(nasobeni_matic(matice1, []))
