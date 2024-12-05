@@ -29,14 +29,14 @@ if __name == "__main":
     print("Matice 2:")
     print(reprezentace_matice(matice2))
 
-    maticeSoucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
+    soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
     print("Součet matic:")
-    print(reprezentace_matice(maticeSoucet))
+    print(reprezentace_matice(soucet))
 
-    maticeNasobek = nasobeni_matic(matice1, matice2)
+    nasobek = nasobeni_matic(matice1, matice2)
     print("Násobení matic:")
-    print(reprezentace_matice(maticeNasobek))
+    print(reprezentace_matice(nasobek))
 
-    maticeTran = transpozice_matice(matice1)
+    transponovana = transpozice_matice(matice1)
     print("Transponovaná matice:")
-    print(reprezentace_matice(maticeTran))
+    print(reprezentace_matice(transponovana))
