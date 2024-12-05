@@ -13,7 +13,7 @@ class Matice:
         #Matrix A = (aij) of type n*m, where i = 1,2,3,...,n and j = 1,2,3,...,m has n rows and m columns 
         if n < 0 or m < 0:
             return None
-        self.data = [[ randrange(0,9) for element in range(m)] for row in range(n)]
+        self.data = [[ randrange(0,9) for _ in range(m)] for _ in range(n)]
 
 
     def __str__(self) -> str:
@@ -35,15 +35,10 @@ class Matice:
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
-        if self.n == other.n:
-
-            if self.n == 0:
-                #both matrixes are empty
-                return Matice(0,0,[])
-            if self.m == other.m:
-                new_data = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
-                return Matice(self.n,self.m, new_data)
-        return None
+        if self.n == other.n and self.m == other.m:
+            new_data = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
+            return Matice(self.n,self.m, new_data)
+        raise ValueError
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
@@ -55,34 +50,34 @@ class Matice:
                 #check if m = u
                 if self.m != other.n:
                     #cannot multiply
-                    return None
+                    raise ValueError
             elif other.n == 0:
                 #both matrixes are empty
                 return []
             else:
                 #only one of the matrixes is empty
-                return None
+                raise ValueError
 
             #result of AB = R(nv)
             #init result matrix R with zeroes
-            R = Matice(self.n, other.m, [[0 for _ in range(other.m)] for _ in range(self.n)])
+            new_data = [[0 for _ in range(other.m)] for _ in range(self.n)]
 
             #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj)
-            for i in range(R.n):
-                for j in range(R.m):
+            for i in range(self.n):
+                for j in range(other.m):
                     for k in range(other.n):
-                        R.data[i][j] += self.data[i][k] * other.data[k][j]
+                        new_data[i][j] += self.data[i][k] * other.data[k][j]
             
-            return R
+            return Matice(self.n, other.m,new_data)
         except AttributeError:
             #other is int
-            R = Matice(self.n,self.m,[])
+            new_data = []
             for row in self.data:
                 new_row = []
                 for element in row:
                     new_row.append(element * other)
-                R.data.append(new_row)
-            return R
+                new_data.append(new_row)
+            return Matice(self.n,self.m,new_data)
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
@@ -93,6 +88,11 @@ class Matice:
             return Matice(len(self.data),0,[[] for i in range(len(self.data))])
         #0 rows
         return Matice(0,0,[])
+    
+    def __eq__(self, other):
+        if not isinstance(other, Matice):
+            return False
+        return self.n == other.n and self.m == other.m and self.data == other.data
 
 
 if __name__ == "__main__":
