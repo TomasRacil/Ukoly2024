@@ -9,13 +9,13 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return "\n".join(" ".join(str(element) for element in row) for row in matice)
+    return "\n".join(" ".join(str(element) for element in row) for row in matice) + "\n"
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
     if not matice1 or not matice2:
-        return []
+        return None
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
         return None
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
@@ -24,7 +24,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     if not matice1 or not matice2:
-        return []
+        return None
     if len(matice1[0]) != len(matice2):
         return None
     return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice1[0]))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
