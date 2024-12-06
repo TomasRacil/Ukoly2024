@@ -8,16 +8,16 @@ def vytvor_matici(pocet_radku: int, pocet_sloupcu: int) -> list[list[int]]:
 def reprezentace_matice(matice: list[list[int]]) -> str:
     if not matice:
         return ""
-    return "\n".join(" ".join(map(str, radek)) for radek in matice)
+    return "\n".join(" ".join(map(str, radek)) for radek in matice) + "\n"  # Opraveno přidání nového řádku
 
 def soucet_matic(matice_1: list[list[int]], matice_2: list[list[int]]) -> list[list[int]]:
     if len(matice_1) != len(matice_2) or len(matice_1[0]) != len(matice_2[0]):
-        return []  
+        return None  # Opraveno: vracíme None, ne prázdný seznam
     return [[matice_1[r][s] + matice_2[r][s] for s in range(len(matice_1[0]))] for r in range(len(matice_1))]
 
 def nasobeni_matic(matice_1: list[list[int]], matice_2: list[list[int]]) -> list[list[int]]:
     if not matice_1 or not matice_2 or len(matice_1[0]) != len(matice_2):
-        return []  
+        return None  # Opraveno: vracíme None, ne prázdný seznam
     return [
         [
             sum(matice_1[i][k] * matice_2[k][j] for k in range(len(matice_2)))  # len slouží ke zjištění délky...
