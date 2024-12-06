@@ -7,17 +7,31 @@ class Matice:
     def __init__(self, n: int, m: int, data=None):
         self.n = n
         self.m = m
+
         if data != None:
-            self.data = data
-            return
-        #Matrix A = (aij) of type n*m, where i = 1,2,3,...,n and j = 1,2,3,...,m has n rows and m columns 
+            #fill matrix with data
+
+            if self.n == len(data):
+                if self.n != 0 and self.m != len(data[0]):
+                    #matrix has some rows but they don't have the correct number of elements
+                    raise ValueError
+                elif self.n == 0 and self.m != 0:
+                    #matrix has 0 rows but non-zero columns, which is not possible in this implementation
+                    raise ValueError
+                else:
+                    self.data = data
+                    return
+            else:
+                #n doesn't match data rows
+                raise ValueError
         if n < 0 or m < 0:
-            return None
+            #matrix must have positive integer dimensions (0 is tolerated even though it's incorrect because of the tests)
+            raise ValueError
+        #fill matrix with random values
         self.data = [[ randrange(0,9) for _ in range(m)] for _ in range(n)]
 
 
     def __str__(self) -> str:
-        """Vrátí stringovou reprezentaci matice."""
         str_matrix : str = ""
         if self.data != None:
             for i in range(len(self.data)):
@@ -28,24 +42,24 @@ class Matice:
                     if j < len(self.data[i]) - 1:
                         str_matrix += str(" ")
                 str_matrix += "\n"
-        #delete last newline
+        #delete last newline character
         str_matrix = str_matrix[:-1]
         return str_matrix
 
     def __add__(self, other: Matice) -> Matice:
-        """Sečte aktuální matici s maticí other."""
-        # Implementace součtu matic
-        if self.n == other.n and self.m == other.m:
+        if self.n == other.n:
+            if self.n == 0:
+                return Matice(0,0,[])
+        if self.m == other.m:
             new_data = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
             return Matice(self.n,self.m, new_data)
+        #dimensions don't match
         raise ValueError
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
-        """Vynásobí aktuální matici maticí nebo skalárem."""
-
+        #zkusi nasobit matici matici
         try:
             #A(nm) B(uv) are matrixes with dimensions n*m and u*v
-
             if self.n != 0:
                 #check if m = u
                 if self.m != other.n:
@@ -70,7 +84,7 @@ class Matice:
             
             return Matice(self.n, other.m,new_data)
         except AttributeError:
-            #other is int
+            #other must be integer since matrix mult failed
             new_data = []
             for row in self.data:
                 new_row = []
@@ -80,7 +94,6 @@ class Matice:
             return Matice(self.n,self.m,new_data)
 
     def transpozice(self) -> Matice:
-        """Vrátí transponovanou matici."""
         if len(self.data) > 0 and len(self.data[0]) > 0:
             return Matice(self.m,self.n,[[self.data[j][i] for j in range(len(self.data))] for i in range(len(self.data[0]))])
         elif len(self.data) > 0 and len(self.data[0]) == 0:
@@ -89,9 +102,9 @@ class Matice:
         #0 rows
         return Matice(0,0,[])
     
+    #must be defined, otherwise tests cannot compare matrixes correctly (since they're objects)
     def __eq__(self, other):
-        if not isinstance(other, Matice):
-            return False
+        #matrixes are equal if their dimensions and data are the same
         return self.n == other.n and self.m == other.m and self.data == other.data
 
 
