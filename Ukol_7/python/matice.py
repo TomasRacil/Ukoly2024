@@ -11,7 +11,7 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
     return "\n".join(" ".join(map(str, radek)) for radek in matice) + "\n"  # Opraveno přidání nového řádku
 
 def soucet_matic(matice_1: list[list[int]], matice_2: list[list[int]]) -> list[list[int]]:
-    if len(matice_1) != len(matice_2) or len(matice_1[0]) != len(matice_2[0]):
+    if not matice_1 or not matice_2 or len(matice_1) != len(matice_2) or len(matice_1[0]) != len(matice_2[0]):
         return None  # Opraveno: vracíme None, ne prázdný seznam
     return [[matice_1[r][s] + matice_2[r][s] for s in range(len(matice_1[0]))] for r in range(len(matice_1))]
 
@@ -27,8 +27,8 @@ def nasobeni_matic(matice_1: list[list[int]], matice_2: list[list[int]]) -> list
     ]
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    if not matice:
-        return []
+    if not matice or not matice[0]:  # Opraveno: kontrola na prázdný seznam nebo prázdný vnitřní seznam
+        return [[]]  # Opraveno pro správný výstup prázdné matice
     return [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
 
 if __name__ == "__main__":
