@@ -17,6 +17,12 @@ class Matice:
         """Vrátí stringovou reprezentaci matice."""
         return "\n".join(" ".join(map(str, row)) for row in self.data)
 
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná dvě matice na základě jejich dat."""
+        if not isinstance(other, Matice):
+            return False
+        return self.data == other.data
+
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         if self.n != other.n or self.m != other.m:
@@ -53,6 +59,7 @@ class Matice:
 
 
 if __name__ == "__main__":
+    # Vytvořte instance třídy Matice a otestujte metody
     matice1 = Matice(3, 2)
     matice2 = Matice(2, 4)
 
@@ -61,11 +68,11 @@ if __name__ == "__main__":
     print("Matice 2:")
     print(matice2)
 
-    soucet = matice1 + matice1
+    soucet = matice1 + matice1  # Sečteme matici1 samu se sebou
     print("Součet matic:")
     print(soucet)
 
-    nasobek = matice1 * matice2
+    nasobek = matice1 * matice2  # Násobíme matice1 a matice2
     print("Násobení matic:")
     print(nasobek)
 
