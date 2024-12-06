@@ -14,6 +14,8 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
+    if not matice1 or not matice2:
+        return []
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
         return None
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
@@ -21,14 +23,17 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
+    if not matice1 or not matice2:
+        return []
     if len(matice1[0]) != len(matice2):
         return None
-    result = [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice1[0]))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
-    return result
+    return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice1[0]))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
+    if not matice:
+        return []
     return [list(row) for row in zip(*matice)]
 
 
@@ -41,7 +46,7 @@ if __name__ == "__main__":
     print("Matice 2:")
     print(reprezentace_matice(matice2))
 
-    soucet = soucet_matic(matice1, matice1)  
+    soucet = soucet_matic(matice1, matice1)  # Sečteme matici1 samu se sebou
     print("Součet matic:")
     print(reprezentace_matice(soucet))
 
