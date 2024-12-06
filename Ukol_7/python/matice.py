@@ -32,6 +32,9 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
     if not matice:
         return []
+    # Správné řešení pro prázdné řádky
+    if len(matice) == 1 and len(matice[0]) == 0:
+        return [[]]
     return [list(row) for row in zip(*matice)]
 
 if __name__ == "__main__":
@@ -54,3 +57,4 @@ if __name__ == "__main__":
     transponovana = transpozice_matice(matice1)
     print("Transponovaná matice:")
     print(reprezentace_matice(transponovana))
+
