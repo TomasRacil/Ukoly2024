@@ -6,25 +6,47 @@ import random
 class Matice:
     def __init__(self, n: int, m: int, data=None):
         """Inicializuje matici n x m."""
-        pass
+        self.n = n
+        self.m = m
+        if data is None:
+            self.data = [[random.randint(0,9) for _ in range (m)] for _ in range(n)]
+        else:
+            self.data = data
+        
+        
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        pass
+        return "\n".join(" ".join(map(str, row)) for row in self.data)
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
-        pass
+        if self.n != other.n or self.m != other.m:
+            return None
+        else:
+          return Matice(self.n, self.m, [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)])
+            
+            
+        
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
-        pass
+        if isinstance(other, int):
+            return Matice(self.n, self.m, [[self.data[i][j] * other for j in range(self.m)] for i in range(self.n)])
+        
+        elif isinstance(other, Matice):
+            if self.m != other.n:
+                return None
+            
+            return Matice(self.n, other.m, [[sum(self.data[i][k] * other.data[k][j] for k in range(self.m)) for j in range(other.m)] for i in range(self.n)])
+        
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
+        return Matice(self.n, self.m, [[self.data[i][j] for i in range(self.n)] for j in range(self.m)])
 
 
 if __name__ == "__main__":
