@@ -1,7 +1,6 @@
 from __future__ import annotations
-from typing import Union
 import random
-
+from typing import Union
 
 class Matice:
     def __init__(self, n: int, m: int, data=None):
@@ -89,32 +88,12 @@ class Matice:
             transponovana.append(novy_radek)
         
         return Matice(self.m, self.n, transponovana)
-    
-
-
 
 if __name__ == "__main__":
-    # Vytvořte instance třídy Matice a otestujte metody
-    matice1 = Matice(3, 2)
-    matice2 = Matice(2, 4)
 
-    print("Matice 1:")
-    print(matice1)
-    print("Matice 2:")
-    print(matice2)
+# Příklad použití
+    matice1 = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
 
-    soucet = matice1+matice1  # Sečteme matici1 samu se sebou
-    print("Součet matic:")
-    print(soucet)
-
-    nasobek = matice1*matice2  # Násobujeme matice1 a matice2
-    print("Násobení matic:")
-    print(nasobek)
-
-    skalarni_nasobek = matice1*10
-    print("Skálární násobek:")
-    print(skalarni_nasobek)
-
-    transponovana = matice1.transpozice()
-    print("Transponovaná matice:")
-    print(transponovana)
+    # Maticové násobení
+    vysledek = matice1.transpozice()
+    print(vysledek)
