@@ -31,8 +31,13 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud je násobení proveditelné. Jinak vrátí None."""
+    # Pokud je alespoň jedna z matic prázdná, vrátíme prázdnou matici.
+    if not matice1 or not matice2:
+        return []
+    # Kontrola kompatibility rozměrů pro násobení
     if len(matice1[0]) != len(matice2):
-        return None  # Return None if matrices cannot be multiplied
+        return None
+    # Výpočet výsledné matice
     return [
         [
             sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2)))

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cassert> // pro ASSERT
 
 using namespace std;
 
@@ -13,7 +14,10 @@ struct Tah {
 
 // Funkce pro provedení tahu
 void provedTah(vector<vector<int>>& veze, char z, char na) {
-    // Přesuň disk ze zdrojového kolíku na cílový
+    if (veze[z - 'A'].empty()) {
+        cerr << "Error: Zdrojový kolík je prázdný!" << endl;
+        return;
+    }
     veze[na - 'A'].push_back(veze[z - 'A'].back());
     veze[z - 'A'].pop_back();
 }

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// Funkce pro otevření souboru
+// Funkce pro otevření souboru a vrácení jeho obsahu jako string
 std::string otevri_soubor(const std::string &jmeno_souboru)
 {
     std::ifstream soubor_vstup(jmeno_souboru);
@@ -45,14 +45,14 @@ std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
     return result;
 }
 
-// Funkce pro Vigenerovu šifru
+// Funkce pro Vigenérovou šifru
 std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
 {
+    if (klic.empty())
+        throw std::invalid_argument("Klíč nesmí být prázdný.");
     std::string result;
     size_t keyIndex = 0;
     int keyLength = klic.length();
-    if (keyLength == 0)
-        throw std::invalid_argument("Klíč nesmí být prázdný.");
     for (char ch : text)
     {
         if (std::isalpha(ch))
@@ -81,17 +81,4 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
         result += text[i] ^ klic[i % klic.size()];
     }
     return result;
-}
-
-// Funkce pro uložení řetězce do souboru
-void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
-{
-    std::ofstream outFile(jmeno_souboru);
-    if (!outFile)
-    {
-        std::cerr << "Chyba při otevírání souboru: " << jmeno_souboru << std::endl;
-        return;
-    }
-    outFile << obsah;
-    outFile.close();
 }
