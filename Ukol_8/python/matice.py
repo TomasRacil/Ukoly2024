@@ -17,7 +17,8 @@ class Matice:
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        return "\n".join(" ".join(map(str, row)) for row in self.data)
+        return "\n".join(" ".join(map(str, row)) for row in self.data) + "\n"
+    
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""

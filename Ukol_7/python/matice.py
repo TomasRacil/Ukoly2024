@@ -27,17 +27,12 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    if not matice1 or not matice2:
+    if len(matice1) == 0 and len(matice2) == 0:
         return []
     if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
-        return None
-    
-    # Transponování druhé matice pro efektivnější práci s ní
-    matice2_transponovana = list(zip(*matice2))
-    
-    # Vytvoření výsledné matice součinu
-    matice: list[list[int]] = [[sum(a * b for a, b in zip(radek1, radek2))for radek2 in matice2_transponovana]for radek1 in matice1]   
-    return matice
+        print("Chyba: Počet sloupců první matice není roven počtu řádků druhé matice.")
+        
+    return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 
     
 
