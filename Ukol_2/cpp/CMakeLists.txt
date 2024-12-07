@@ -11,4 +11,4 @@ add_executable(sifry src/sifry.cpp)
 
 # Find and link GTest
 find_package(GTest REQUIRED)
-target_link_libraries(sifry GTest::GTest GTest::Main)
+target_link_libraries(sifry ${GTEST_LIBRARIES})
