@@ -6,8 +6,7 @@
 #include <stdexcept>
 #include <vector>
 #include <cctype>
-
-using namespace std;
+#include "gtest/gtest.h"
 
 // Funkce pro otevření souboru a vrácení jeho obsahu jako string
 std::string otevri_soubor(const std::string &jmeno_souboru)
@@ -81,4 +80,21 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
         result += text[i] ^ klic[i % klic.size()];
     }
     return result;
+}
+
+// Funkce pro uložení textu do souboru
+void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &text)
+{
+    std::ofstream soubor_vystup(jmeno_souboru);
+    if (soubor_vystup.is_open())
+    {
+        soubor_vystup << text;
+    }
+}
+
+// Hlavní program pro spuštění testů
+int main(int argc, char **argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
