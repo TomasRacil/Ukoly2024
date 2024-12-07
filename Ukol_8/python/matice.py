@@ -37,6 +37,10 @@ class Matice:
     def __add__(self, other: "Matice") -> "Matice":
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
+
+        if self.n != other.n or self.m != other.m:
+            raise ValueError("Matice musí mít stejné rozměry pro sčítání.")
+    
         vysledek = []
         for i in range(len(self.data)):
             novy_radek = []
@@ -90,7 +94,12 @@ class Matice:
         
         return Matice(self.m, self.n, transponovana)
     
-
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná aktuální matici s jinou maticí."""
+        if not isinstance(other, Matice):
+            return False
+        return self.n == other.n and self.m == other.m and self.data == other.data
+    
 
 
 if __name__ == "__main__":

@@ -92,8 +92,10 @@ class Matice:
 if __name__ == "__main__":
 
 # Příklad použití
-    matice1 = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
+    matice1 = Matice(2, 2, [[1, 2], [3, 4]])
+    matice2 = Matice(2, 2, [[5, 6], [7, 8]])
+    matice3 = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
 
     # Maticové násobení
-    vysledek = matice1.transpozice()
+    vysledek = matice1+matice3
     print(vysledek)
