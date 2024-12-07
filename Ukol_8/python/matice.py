@@ -17,7 +17,7 @@ class Matice:
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        return "\n".join(" ".join(map(str, row)) for row in self.data) + "\n"
+        return "\n".join(" ".join(map(str, row)) for row in self.data)
     
 
     def __add__(self, other: Matice) -> Matice:
@@ -25,8 +25,9 @@ class Matice:
         # Implementace součtu matic
         if self.n != other.n or self.m != other.m:
             return None
-        else:
-          return Matice(self.n, self.m, [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)])
+        
+        new_data = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
+        return Matice(self.n, self.m, new_data)
             
             
         
@@ -35,19 +36,23 @@ class Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
         if isinstance(other, int):
-            return Matice(self.n, self.m, [[self.data[i][j] * other for j in range(self.m)] for i in range(self.n)])
+            
+            new_data = [[self.data[i][j] * other for j in range(self.m)] for i in range(self.n)]
+            return Matice(self.n, self.m, new_data)
         
         elif isinstance(other, Matice):
             if self.m != other.n:
                 return None
             
-            return Matice(self.n, other.m, [[sum(self.data[i][k] * other.data[k][j] for k in range(self.m)) for j in range(other.m)] for i in range(self.n)])
+            new_data = [[sum(self.data[i][k] * other.data[k][j] for k in range(self.m)) for j in range(other.m)] for i in range(self.n)]
+            return Matice(self.n, other.m, new_data)
         
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
-        return Matice(self.n, self.m, [[self.data[i][j] for i in range(self.n)] for j in range(self.m)])
+        new_data = [[self.data[i][j] for i in range(self.n)] for j in range(self.m)]
+        return Matice(self.n, self.m, new_data)
 
 
 if __name__ == "__main__":
