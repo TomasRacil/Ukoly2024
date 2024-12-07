@@ -24,7 +24,7 @@ class Matice:
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
         if self.n != other.n or self.m != other.m:
-            return None
+            raise ValueError("Matice musí mít stejné rozměry pro sčítání.")
         
         new_data = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
         return Matice(self.n, self.m, new_data)
@@ -42,7 +42,7 @@ class Matice:
         
         elif isinstance(other, Matice):
             if self.m != other.n:
-                return None
+                raise ValueError("Počet sloupců první matice musí odpovídat počtu řádků druhé matice.")
             
             new_data = [[sum(self.data[i][k] * other.data[k][j] for k in range(self.m)) for j in range(other.m)] for i in range(self.n)]
             return Matice(self.n, other.m, new_data)
@@ -52,7 +52,11 @@ class Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
         new_data = [[self.data[i][j] for i in range(self.n)] for j in range(self.m)]
-        return Matice(self.n, self.m, new_data)
+        return Matice(self.m, self.n, new_data)
+    
+    
+    def __eq__(self, other: Matice) -> bool:
+        return self.n == other.n and self.m == other.m and self.data == other.data
 
 
 if __name__ == "__main__":
