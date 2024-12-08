@@ -6,20 +6,18 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    return '\n'.join(' '.join(map(str, row)) for row in matice) + '\n'
+    return '\n'.join([' '.join(map(str, radek)) for radek in matice])
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] or None:
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        print("Chyba: Matice musí mít stejné rozměry")
-        return None
+        raise ValueError("Matice musí mít stejné rozměry")
     return [[matice1[i][j] + matice2[i][j] for j in range(len(matice1[0]))] for i in range(len(matice1))]
 
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] or None:
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     if len(matice1[0]) != len(matice2):
-        print("Chyba: Počet sloupců první matice musí být roven počtu řádků druhé matice")
-        return None
+        raise ValueError("Počet sloupců první matice musí být roven počtu řádků druhé matice")
     return [[sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))] for i in range(len(matice1))]
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
