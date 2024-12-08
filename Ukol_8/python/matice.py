@@ -6,26 +6,78 @@ import random
 class Matice:
     def __init__(self, n: int, m: int, data=None):
         """Inicializuje matici n x m."""
-        pass
+        self.n = n #pocet radku
+        self.m = m #pocet sloupcu
+        if data is None:
+            self.data = []
+            for i in range(n):
+                row = []
+                for j in range(m):
+                    row.append(random.randint(0, 9))
+                self.data.append(row)
+            
+        else:
+            self.data = data
+        
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        pass
+        reprezentace = []
+        for row in self.data:
+            #pro kazdy prvek v aktualnim radku row pouzijeme funkci
+            #pouzijeme funkci str(prvek), ktera prvek prevede na string
+            #join pak spoji vsechny prevedene hodnoty do jednoho retezce
+            #ve kterem mezi hodnotami bude mezera
+            reprezentace.append(" ".join(str(prvek) for prvek in row))
+        return "\n".join(reprezentace) #tento radek spoji vsechny radky do jednoho a vlozi do reperezentace
+
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
-        # Implementace součtu matic
-        pass
+        if self.n != other.n or self.m != other.m:
+            raise ValueError("Matice nemaji stejne rozmery pro soucet")
+        
+        result = [] #prazdny seznam ktery bude uchovavat radky vysledne matice
+        for radek in range(self.n): #radek je index aktualniho radku
+            row = [self.data[i][j] + other.data[i][j] for j in range(self.m)]
+            result.append(row)
+        return Matice(self.n, self.m, result)
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
-        pass
+        if isinstance(other, Matice): #pokud je other instanci tridy Matice:
+            if self.m != other.n: #pokud pocet sloupcu prvni matice 
+                #neni roven poctu radku druhe matice 
+                #vyvolame vyjjimku
+                raise ValueError("Pocet sloupcu prvni matice neni roven poctu radku druhe")
+            
+            result = []
+            for i in range(self.n):
+                row = []
+                for j in range(other.m):
+                    value = sum(self.data[i][k] * other.data[k][j] for k in range(self.m))
+                    row.append(value)
+                result.append(row)
+            return Matice(self.n, other.m, result)
+        
+        elif isinstance(other, int): #pokud other neni matice ale skalar:
+            result = []
+            for i in range(self.n):
+                row = [self.data[i][j] * other for j in range(self.m)]
+                result.append(row)
+            return Matice(self.n, self.m, result)
+        
+        else:
+            raise ValueError("Muzete nasobit pouze matici nebo celym cislem")
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
-        # Implementace transpozice matice
-
+        transponovana = []
+        for j in range(self.m):
+            row = [self.data[i][j] for i in range(self.n)]
+            transponovana.append(row)
+        return Matice(self.m, self.n, transponovana)
 
 if __name__ == "__main__":
     # Vytvořte instance třídy Matice a otestujte metody
