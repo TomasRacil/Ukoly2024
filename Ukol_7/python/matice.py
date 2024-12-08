@@ -47,10 +47,10 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     # Zkontrolovat, zda matice nejsou prázdné
-    if not matice1 or not matice2:  # Pokud je alespoň jedna matice prázdná
-        print("Jedna z matic je prázdná")
+    if not matice1 and not matice2:
+        return []
+    if not matice1 or not matice2:
         return None
-
     # Rozměry matic
     m1_rows, m1_cols = len(matice1), len(matice1[0])
     m2_rows, m2_cols = len(matice2), len(matice2[0])
