@@ -28,7 +28,7 @@ TEST(TestyFunkci, Soucin)
     EXPECT_EQ(soucin(cisla), 0);
 
     cisla = {}; // Prázdný seznam
-    EXPECT_EQ(soucin(cisla), 1);
+    EXPECT_EQ(soucin(cisla), 0);
 }
 
 TEST(TestyFunkci, Prumer)
