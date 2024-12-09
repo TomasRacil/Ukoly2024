@@ -1,14 +1,25 @@
-cmake_minimum_required(VERSION 3.10)
-project(Ukol_2)
+cmake_minimum_required(VERSION 3.0)
+project(Ukol_1)
 
-set(CMAKE_CXX_STANDARD 11)
 
-# Include directories
-include_directories(${GTEST_INCLUDE_DIRS})
 
-# Add the executable
-add_executable(sifry src/sifry.cpp)
+# Add your main executable
+add_executable(sifry ${CMAKE_CURRENT_SOURCE_DIR}/sifry.cpp)
 
-# Find and link GTest
+# Set the build directory to be a subdirectory of the project directory
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
+
+# Add your test executable
+add_executable(mytests ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
+
+# Najdi Google Test framework
+enable_testing()
 find_package(GTest REQUIRED)
-target_link_libraries(sifry ${GTEST_LIBRARIES})
+# Propoj test s Google Testem
+include_directories(${GTEST_INCLUDE_DIRS})
+target_link_libraries(mytests GTest::gtest_main pthread) 
+
+# Define __TEST__ for the test compilation
+target_compile_definitions(mytests PRIVATE __TEST__)
+
+add_test(NAME mytests COMMAND mytests)
