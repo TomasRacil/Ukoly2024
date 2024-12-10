@@ -34,7 +34,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     #vynásobí dvě matice, pokud je násobení proveditelné. Pokud ne, vrátí None.
-    :return: Výsledek násobení matic nebo None, pokud není násobení proveditelné
+    return: Výsledek násobení matic nebo None, pokud není násobení proveditelné
     
     #zkontrolujeme, zda je násobení proveditelné
     if len(matice1[0]) != len(matice2):
