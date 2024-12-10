@@ -39,9 +39,10 @@ class Matice:
         
         result = [] #prazdny seznam ktery bude uchovavat radky vysledne matice
         for radek in range(self.n): #radek je index aktualniho radku
-            row = [self.data[i][j] + other.data[i][j] for j in range(self.m)]
+            row = [self.data[radek][j] + other.data[radek][j] for j in range(self.m)]
             result.append(row)
         return Matice(self.n, self.m, result)
+
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
@@ -78,6 +79,12 @@ class Matice:
             row = [self.data[i][j] for i in range(self.n)]
             transponovana.append(row)
         return Matice(self.m, self.n, transponovana)
+
+
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná dvě matice, zda mají stejné rozměry a data."""
+        return self.n == other.n and self.m == other.m and self.data == other.data
+
 
 if __name__ == "__main__":
     # Vytvořte instance třídy Matice a otestujte metody
