@@ -3,7 +3,7 @@
 #include <string>
 
 // Funkce pro otevření souboru a načtení jeho obsahu
-std::string otevri_soubor(const std::string& jmeno_souboru)
+std::string otevri_soubor(const std::string &jmeno_souboru)
 {
     std::ifstream soubor(jmeno_souboru);
     if (!soubor)
@@ -111,12 +111,12 @@ int main()
     uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
 
     // Dešifrování textů
-    std::cout << "Dešifrovany text pomocí Caesarovy šifry: "
-        << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
-    std::cout << "Dešifrovany text pomocí Vigenerovy šifry: "
-        << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajnyklic", false) << std::endl;
-    std::cout << "Dešifrovany text pomocí XOR šifry: "
-        << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
+    std::cout << "Dešifrovany text pomocí Caesarovy šifry: " 
+              << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
+    std::cout << "Dešifrovany text pomocí Vigenerovy šifry: " 
+              << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajnyklic", false) << std::endl;
+    std::cout << "Dešifrovany text pomocí XOR šifry: " 
+              << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
 
     return 0;
 }
