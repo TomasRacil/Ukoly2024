@@ -70,7 +70,6 @@ std::string xor_sifra(const std::string &vstup, const std::string &klic, bool si
     if (klic.empty()) {
         throw std::invalid_argument("Heslo nesmí být prázdné!");
     }
-<<<<<<< HEAD
 
     std::string vysledek;
     size_t delka_klice = klic.size();
@@ -114,73 +113,6 @@ int main() {
         std::cerr << "Chyba: " << e.what() << std::endl;
     }
 
-=======
-
-    std::string vysledek;
-    size_t delka_klice = klic.size();
-
-    if (sifrovat) {
-        // Šifrování - převod na binární formát
-        for (size_t i = 0; i < vstup.size(); ++i) {
-            char sifrovany_znak = vstup[i] ^ klic[i % delka_klice];
-            for (int j = 7; j >= 0; --j) {
-                vysledek += ((sifrovany_znak >> j) & 1) ? '1' : '0';
-            }
-        }
-    } else {
-        // Dešifrování - binární formát na původní text
-        if (vstup.size() % 8 != 0) {
-            throw std::invalid_argument("Binární text musí být násobkem 8!");
-        }
-
-        for (size_t i = 0; i < vstup.size(); i += 8) {
-            char binarni_znak = 0;
-            for (int j = 0; j < 8; ++j) {
-                binarni_znak = (binarni_znak << 1) | (vstup[i + j] - '0');
-            }
-            char puvodni_znak = binarni_znak ^ klic[(i / 8) % delka_klice];
-            vysledek += puvodni_znak;
-        }
-    }
-
-    return vysledek;
-}
-
-#ifndef __TEST__
-int main() {
-    try {
-        // Načtení vstupního souboru
-        std::string vstupni_text = otevri_soubor("vstup.txt");
-
-        // Šifrování pomocí Caesarovy šifry
-        std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
-        uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
-
-        // Dešifrování pomocí Caesarovy šifry
-        std::string desifrovany_text_caesar = caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false);
-        std::cout << "Dešifrovaný text Caesar: " << desifrovany_text_caesar << std::endl;
-
-        // Šifrování pomocí XOR šifry
-        std::string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
-        uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
-
-        // Dešifrování pomocí XOR šifry
-        std::string desifrovany_text_xor = xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false);
-        std::cout << "Dešifrovaný text XOR: " << desifrovany_text_xor << std::endl;
-
-        // Šifrování pomocí Vigenerovy šifry
-        std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
-        uloz_do_souboru("sifrovany_vigener.txt", sifrovany_text_vigener);
-
-        // Dešifrování pomocí Vigenerovy šifry
-        std::string desifrovany_text_vigener = vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false);
-        std::cout << "Dešifrovaný text Vigener: " << desifrovany_text_vigener << std::endl;
-
-    } catch (const std::exception &e) {
-        std::cerr << "Chyba: " << e.what() << std::endl;
-    }
-
->>>>>>> 542dbae877edd3dfbb616e1f632fd7ff961df88b
     return 0;
 }
 #endif
