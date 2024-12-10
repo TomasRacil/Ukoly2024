@@ -6,7 +6,7 @@
 #include <string>
 
 // Funkce pro otevření souboru
-std::string otevri_soubor(const std::string& jmeno_souboru)
+std::string otevri_soubor(const std::string& vstup.txt)
 {
     std::ifstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
