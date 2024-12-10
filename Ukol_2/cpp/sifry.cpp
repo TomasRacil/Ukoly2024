@@ -7,12 +7,8 @@
 std::string otevri_soubor(const std::string &jmeno_souboru) {
     std::ifstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
-<<<<<<< HEAD
         // throw std::runtime_error("Nepodařilo se otevřít soubor: " + jmeno_souboru);
         return "";
-=======
-        throw std::runtime_error("Nepodařilo se otevřít soubor: " + jmeno_souboru);
->>>>>>> 542dbae877edd3dfbb616e1f632fd7ff961df88b
     }
 
     std::string obsah((std::istreambuf_iterator<char>(soubor)),

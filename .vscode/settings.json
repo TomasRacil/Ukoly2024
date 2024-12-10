@@ -74,7 +74,8 @@
         "xmemory": "cpp",
         "xstring": "cpp",
         "xtr1common": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "bitset": "cpp"
     },
     "cmake.sourceDirectory": "C:/Users/mates/Ukoly2024/Ukol_2/cpp",
     "C_Cpp.errorSquiggles": "disabled"
