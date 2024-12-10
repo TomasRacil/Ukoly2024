@@ -7,7 +7,8 @@
 std::string otevri_soubor(const std::string &jmeno_souboru) {
     std::ifstream soubor(jmeno_souboru);
     if (!soubor.is_open()) {
-        throw std::runtime_error("Nepodařilo se otevřít soubor: " + jmeno_souboru);
+        // throw std::runtime_error("Nepodařilo se otevřít soubor: " + jmeno_souboru);
+        return "";
     }
 
     std::string obsah((std::istreambuf_iterator<char>(soubor)),
@@ -73,29 +74,7 @@ std::string xor_sifra(const std::string &vstup, const std::string &klic, bool si
     std::string vysledek;
     size_t delka_klice = klic.size();
 
-    if (sifrovat) {
-        // Šifrování - převod na binární formát
-        for (size_t i = 0; i < vstup.size(); ++i) {
-            char sifrovany_znak = vstup[i] ^ klic[i % delka_klice];
-            for (int j = 7; j >= 0; --j) {
-                vysledek += ((sifrovany_znak >> j) & 1) ? '1' : '0';
-            }
-        }
-    } else {
-        // Dešifrování - binární formát na původní text
-        if (vstup.size() % 8 != 0) {
-            throw std::invalid_argument("Binární text musí být násobkem 8!");
-        }
-
-        for (size_t i = 0; i < vstup.size(); i += 8) {
-            char binarni_znak = 0;
-            for (int j = 0; j < 8; ++j) {
-                binarni_znak = (binarni_znak << 1) | (vstup[i + j] - '0');
-            }
-            char puvodni_znak = binarni_znak ^ klic[(i / 8) % delka_klice];
-            vysledek += puvodni_znak;
-        }
-    }
+    for (size_t i = 0; i < vstup.size(); ++i){ vysledek += vstup[i] ^ klic[i % delka_klice]; }
 
     return vysledek;
 }
