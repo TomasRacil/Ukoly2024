@@ -24,16 +24,16 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
     return matice
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
-    """Vynásobí dvě matice, pokud mají kompatibilní rozměry."""
-    if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
+    if not matice1 or not matice2:
+        return [] if not matice1 and not matice2 else None
+    if len(matice1[0]) != len(matice2):
         return None
-    if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
-       return None
     matice = [
         [sum(matice1[i][k] * matice2[k][j] for k in range(len(matice2))) for j in range(len(matice2[0]))]
         for i in range(len(matice1))
     ]
     return matice
+
 
 
 
