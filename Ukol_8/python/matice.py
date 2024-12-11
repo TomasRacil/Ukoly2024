@@ -17,6 +17,10 @@ class Matice:
         """Vrátí stringovou reprezentaci matice."""
         return '\n'.join(' '.join(map(str, row)) for row in self.data)
 
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná dvě matice na rovnost."""
+        return self.n == other.n and self.m == other.m and self.data == other.data
+
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         if self.n != other.n or self.m != other.m:
