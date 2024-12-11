@@ -1,54 +1,64 @@
-from __future__ import annotations
-from typing import Union
-import random
+import unittest
+from matice import Matice
 
 
-class Matice:
-    def __init__(self, n: int, m: int, data=None):
-        """Inicializuje matici n x m."""
-        pass
+class TestMatice(unittest.TestCase):
 
-    def __str__(self) -> str:
-        """Vrátí stringovou reprezentaci matice."""
-        pass
+    def test_init(self):
+        matice = Matice(3, 2)
+        self.assertEqual(matice.n, 3)
+        self.assertEqual(matice.m, 2)
+        for row in matice.data:
+            self.assertEqual(len(row), 2)
+            for element in row:
+                self.assertTrue(0 <= element <= 9)
 
-    def __add__(self, other: Matice) -> Matice:
-        """Sečte aktuální matici s maticí other."""
-        # Implementace součtu matic
-        pass
+        data = [[1, 2], [3, 4]]
+        matice = Matice(2, 2, data)
+        self.assertEqual(matice.data, data)
 
-    def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
-        """Vynásobí aktuální matici maticí nebo skalárem."""
-        # Implementace násobení matic
-        pass
+    def test_str(self):
+        matice = Matice(2, 2, [[1, 2], [3, 4]])
+        expected_representation = "1 2\n3 4"
+        self.assertEqual(str(matice), expected_representation)
 
-    def transpozice(self) -> Matice:
-        """Vrátí transponovanou matici."""
-        # Implementace transpozice matice
+        matice = Matice(0, 0, [])
+        self.assertEqual(str(matice), "")
+
+    def test_add(self):
+        matice1 = Matice(2, 2, [[1, 2], [3, 4]])
+        matice2 = Matice(2, 2, [[5, 6], [7, 8]])
+        expected_sum = Matice(2, 2, [[6, 8], [10, 12]])
+        self.assertEqual(matice1 + matice2, expected_sum)
+
+        matice3 = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
+        with self.assertRaises(ValueError):
+            matice1 + matice3
+
+    def test_mul(self):
+        matice1 = Matice(2, 2, [[1, 2], [3, 4]])
+        matice2 = Matice(2, 2, [[5, 6], [7, 8]])
+        expected_product = Matice(2, 2, [[19, 22], [43, 50]])
+        self.assertEqual(matice1 * matice2, expected_product)
+
+        matice3 = Matice(3, 2, [[1, 2], [3, 4], [5, 6]])
+        with self.assertRaises(ValueError):
+            matice1 * matice3
+
+        expected_product = Matice(3, 2, [[7, 10], [15, 22], [23, 34]])
+        self.assertEqual(matice3 * matice1, expected_product)
+
+        expected_scalar_product = Matice(2, 2, [[2, 4], [6, 8]])
+        self.assertEqual(matice1 * 2, expected_scalar_product)
+
+    def test_transpozice(self):
+        matice = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
+        expected_transpose = Matice(3, 2, [[1, 4], [2, 5], [3, 6]])
+        self.assertEqual(matice.transpozice(), expected_transpose)
+
+        matice = Matice(0, 0, [])
+        self.assertEqual(matice.transpozice().data, [])
 
 
-if __name__ == "__main__":
-    # Vytvořte instance třídy Matice a otestujte metody
-    matice1 = Matice(3, 2)
-    matice2 = Matice(2, 4)
-
-    print("Matice 1:")
-    print(matice1)
-    print("Matice 2:")
-    print(matice2)
-
-    soucet = matice1+matice1  # Sečteme matici1 samu se sebou
-    print("Součet matic:")
-    print(soucet)
-
-    nasobek = matice1*matice2  # Násobujeme matice1 a matice2
-    print("Násobení matic:")
-    print(nasobek)
-
-    skalarni_nasobek = matice1*10
-    print("Skálární násobek:")
-    print(skalarni_nasobek)
-
-    transponovana = matice1.transpozice()
-    print("Transponovaná matice:")
-    print(transponovana)
+if __name__ == '__main__':
+    unittest.main()
