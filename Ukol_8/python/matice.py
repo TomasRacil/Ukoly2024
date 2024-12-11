@@ -12,7 +12,6 @@ class Matice:
             self.data = data
         self.n = n
         self.m = m
-        pass
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
@@ -50,6 +49,9 @@ class Matice:
         vysledek = [[self.data[j][i] for j in range(self.n)] for i in range(self.m)]
         return Matice(self.m, self.n, vysledek)
 
+    def __eq__(self, other):
+        """Porovná dvě matice."""
+        return self.data == other.data
 
 if __name__ == "__main__":
     # Vytvořte instance třídy Matice a otestujte metody

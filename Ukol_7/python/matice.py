@@ -21,8 +21,13 @@ def reprezentace_matice(matice: list[list[int]]) -> str:
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
+    if matice1 == [] or matice2 == []:
+        if matice1 == [] and matice2 == []:
+            return []
+        else:
+            return None
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        raise ValueError("Matice nemají stejné rozměry.")
+        return None
     if len(matice1) == len(matice2):
         matice: list[list[int]] = []
         for i in range(len(matice1)):
@@ -35,8 +40,14 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
+    if matice1 == [] or matice2 == []:
+        if matice1 == [] and matice2 == []:
+            return []
+        else:
+            return None
+   
     if len(matice1[0]) != len(matice2):
-        raise ValueError("Nelze provést násobení matic.")
+        return None
     else:
         matice: list[list[int]] = []
         for i in range(len(matice1)):
@@ -60,9 +71,10 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
                 radek.append(matice[j][i])
             transponovana.append(radek)
         return transponovana
-    else:
+    elif matice == []:
         return []
-
+    elif matice == [[]]:
+        return [[]]
 
 if __name__ == "__main__":
     matice1: list[list[int]] = vytvor_matici(3, 2)
