@@ -1,10 +1,10 @@
-from _future_ import annotations
+from __future__ import annotations
 from typing import Union, List
 import random
 
 
 class Matice:
-    def _init_(self, n: int, m: int, data=None):
+    def __init__(self, n: int, m: int, data=None):
         """Inicializuje matici n x m."""
         self.n = n  # Počet řádků
         self.m = m  # Počet sloupců
@@ -15,11 +15,11 @@ class Matice:
             # Pokud jsou data poskytnuta, použijeme je
             self.data = data
 
-    def _str_(self) -> str:
+    def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
         return '\n'.join([' '.join(map(str, row)) for row in self.data])
 
-    def _add_(self, other: Matice) -> Matice:
+    def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         if self.n != other.n or self.m != other.m:
             raise ValueError("Matice musí mít stejné rozměry pro sčítání.")
@@ -30,7 +30,7 @@ class Matice:
         ]
         return Matice(self.n, self.m, result_data)
 
-    def _mul_(self, other: Union[Matice, int]) -> Union[Matice, int]:
+    def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         if isinstance(other, Matice):
             # Násobení matic (pro maticové násobení musí být počet sloupců první matice
@@ -64,7 +64,7 @@ class Matice:
         return Matice(self.m, self.n, result_data)
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     # Vytvoření instancí matic
     matice1 = Matice(3, 2)  # Matice 3x2
     matice2 = Matice(2, 4)  # Matice 2x4
