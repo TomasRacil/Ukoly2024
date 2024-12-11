@@ -65,9 +65,6 @@ class Matice:
 
 
 if __name__ == "__main__":
-     # Vytvořte instance třídy Matice a otestujte metody
-    matice1 = Matice(3, 2)
-    matice2 = Matice(2, 4)
     # Vytvoření instancí matic
     matice1 = Matice(3, 2)  # Matice 3x2
     matice2 = Matice(2, 4)  # Matice 2x4
