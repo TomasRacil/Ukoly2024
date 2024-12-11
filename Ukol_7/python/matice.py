@@ -47,7 +47,6 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     if not matice:
         return []
     if len(matice) == 1 and not matice[0]:
-        
         return [[]]
     return [list(radek) for radek in zip(*matice)]
 
