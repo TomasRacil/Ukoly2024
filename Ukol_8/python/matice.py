@@ -7,7 +7,7 @@ MAX_VALUE = 9
 
 class Matice:
     def __init__(self, n: int, m: int, data=None):
-        """Inicializuje matici n x m.""
+        """Inicializuje matici n x m."""
         self.n = n
         self.m = m
         if data is None:
@@ -20,7 +20,7 @@ class Matice:
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        if not self.data: return "prazdna matice"
+        if not self.data: return ""
         else: return '\n'.join(' '.join(map(str, row)) for row in self.data)
 
     def __add__(self, other: Matice) -> Matice:
