@@ -16,7 +16,7 @@ std::string otevri_soubor(const std::string &jmeno_souboru)
 }
 
 // Funkce pro Caesarovu šifru
-std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
+std::string caesar_sifra(const std::string& text, int posun, bool sifrovat)
 {
     std::string vysledek = "";
     int real_posun = sifrovat ? posun : 26 - posun; // Opačný posun pro dešifrování
@@ -34,7 +34,7 @@ std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
 }
 
 // Funkce pro Vigenerovu šifru
-std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
+std::string vigener_sifra(const std::string& text, const std::string& klic, bool sifrovat)
 {
     std::string vysledek = "";
     int delka_klice = klic.length();
@@ -57,7 +57,7 @@ std::string vigener_sifra(const std::string &text, const std::string &klic, bool
 }
 
 // Funkce pro XOR šifru
-std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
+std::string xor_sifra(const std::string& text, const std::string& klic, bool sifrovat)
 {
     std::string vysledek = "";
     int delka_klice = klic.length();
@@ -70,7 +70,7 @@ std::string xor_sifra(const std::string &text, const std::string &klic, bool sif
 }
 
 // Funkce pro uložení řetězce do souboru
-void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
+void uloz_do_souboru(const std::string& jmeno_souboru, const std::string& obsah)
 {
     std::ofstream soubor(jmeno_souboru);
     if (!soubor)
@@ -121,4 +121,3 @@ int main()
     return 0;
 }
 #endif // __TEST__
-
