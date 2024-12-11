@@ -4,7 +4,7 @@ import random
 
 
 class Matice:
-    def __init__(self, n: int, m: int, data=None):
+    def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
         self.n = n
         self.m = m
