@@ -63,6 +63,10 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
+    if matice == []:
+        return []
+    if matice == [[]]:
+        return [[]]
     if matice:
         transponovana = []
         for i in range(len(matice[0])):
@@ -71,10 +75,7 @@ def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
                 radek.append(matice[j][i])
             transponovana.append(radek)
         return transponovana
-    elif matice == []:
-        return []
-    elif matice == [[]]:
-        return [[]]
+
 
 if __name__ == "__main__":
     matice1: list[list[int]] = vytvor_matici(3, 2)

@@ -40,7 +40,7 @@ int soucin(const std::vector<int> &cisla)
 double prumer(const std::vector<int> &cisla)
 {
     if (cisla.empty()) {
-        return 0.0; // Return 0.0 if the vector is empty
+        throw std::invalid_argument("Empty vector"); // Throw an exception if the vector is empty
     }
     int prumerr = 0;
     for (int i = 0; i < cisla.size(); i++)
