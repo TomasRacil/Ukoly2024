@@ -9,13 +9,19 @@ class Matice:
         self.n = n
         self.m = m
         if data is None:
-            self.data = [[random.randint(0, 10) for _ in range(m)] for _ in range(n)]
+            self.data = [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
         else:
             self.data = data
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
         return '\n'.join([' '.join(map(str, row)) for row in self.data])
+
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná dvě matice na základě jejich dat."""
+        if self.n != other.n or self.m != other.m:
+            return False
+        return self.data == other.data
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
