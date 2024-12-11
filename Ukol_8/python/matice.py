@@ -11,30 +11,31 @@ class Matice:
         self.n = n
         self.m = m
         if data is None:
-            self.matice = [[random.randint(MIN_VALUE, MAX_VALUE) for a in range(m)] for a in range(n)]
+            self.data = [[random.randint(MIN_VALUE, MAX_VALUE) for a in range(m)] for a in range(n)]
         else:
-            self.matice = data
+            self.data = data
+
     def __eq__(self, other: Matice) -> bool:
-        return self.n == other.n and self.m == other.m and self.matice == other.matice
+        return self.n == other.n and self.m == other.m and self.data == other.data
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
-        if not self.matice: return ""
-        else: return '\n'.join(' '.join(map(str, row)) for row in self.matice)
+        if not self.data: return ""
+        else: return '\n'.join(' '.join(map(str, row)) for row in self.data)
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
-        if not self.matice and not other: return []
+        if not self.data and not other: return []
         matice: list[list[int]] = []
-        if len(self.matice) != len(other.matice) or any(len(row1) != len(row2) for row1, row2 in zip(self.matice, other.matice)):
-            return None
+        if len(self.data) != len(other.data) or any(len(row1) != len(row2) for row1, row2 in zip(self.data, other.data)):
+            raise ValueError
     
         matice = []
-        for r in range(len(self.matice)):
+        for r in range(len(self.data)):
             row = []
-            for c in range(len(self.matice[0])):
-                row.append(self.matice[r][c] + other.matice[r][c])
+            for c in range(len(self.data[0])):
+                row.append(self.data[r][c] + other.data[r][c])
             matice.append(row)
         
         return Matice(self.n, self.m, matice)
@@ -43,33 +44,33 @@ class Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
         if isinstance(other, int):
-            return Matice(self.n, self.m, [[other*num for num in row] for row in self.matice])
-        if not self.matice and not other.matice:
+            return Matice(self.n, self.m, [[other*num for num in row] for row in self.data])
+        if not self.data and not other.data:
             return []
-        if not self.matice and not other.matice:
-            return None
-        if len(self.matice[0]) != len(other.matice):
-            return None
+        if not self.data and not other.data:
+            raise ValueError
+        if len(self.data[0]) != len(other.data):
+            raise ValueError
         matice = []
 
-        for r in range(len(self.matice)):
+        for r in range(len(self.data)):
             row = []
-            for c in range(len(other.matice[0])):
-                row.append(sum(self.matice[r][d] * other.matice[d][c] for d in range(len(other.matice))))
+            for c in range(len(other.data[0])):
+                row.append(sum(self.data[r][d] * other.data[d][c] for d in range(len(other.data))))
             matice.append(row)
         return Matice(self.n, self.m, matice)
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
-        if not self.matice: return []
-        if not self.matice[0]: return [[]]
+        if not self.data: return []
+        if not self.data[0]: return [[]]
 
         matice = []
         for c in range(self.m):
             row = []
             for r in range(self.n): 
-                row.append(self.matice[r][c])
+                row.append(self.data[r][c])
             matice.append(row)
         
         return Matice(self.m, self.n, matice)
