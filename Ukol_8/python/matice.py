@@ -15,7 +15,7 @@ class Matice:
         else:
             self.matice = data
     def __eq__(self, other: Matice) -> bool:
-        return self.n == other.n and self.m == other.m and self.data == other.data
+        return self.n == other.n and self.m == other.m and self.matice == other.matice
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
@@ -66,11 +66,12 @@ class Matice:
         if not self.matice[0]: return [[]]
 
         matice = []
-        for r in range(self.n):
+        for c in range(self.m):
             row = []
-            for c in range(self.m):
-                row.append(self.matice[c][r])
+            for r in range(self.n): 
+                row.append(self.matice[r][c])
             matice.append(row)
+        
         return Matice(self.m, self.n, matice)
 
 if __name__ == "__main__":
