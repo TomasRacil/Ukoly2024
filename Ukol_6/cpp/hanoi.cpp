@@ -22,6 +22,12 @@ void provedTah(vector<vector<int> >& veze, Tah tah) {
 
 
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int> >& veze, vector<Tah>& tahy) {
+    if (n <= 0) {
+        return;
+    }
+    if (veze[0].empty() && veze[1].empty() && veze[2].empty())
+        for (int i=n;i>0;--i)
+            veze[0].push_back(i);
     if (n == 1) {
         Tah tah = {1, z, cil, veze};
         provedTah(veze, tah);
