@@ -21,20 +21,19 @@ void provedTah(vector<vector<int> >& veze, Tah tah) {
 }
 
 
-void hanoi(int n, char z, char pomocny, char cil, vector<vector<int> >& veze, vector<Tah>& tahy,int& pocetkroku) {
+void hanoi(int n, char z, char pomocny, char cil, vector<vector<int> >& veze, vector<Tah>& tahy) {
     if (n == 1) {
         Tah tah = {1, z, cil, veze};
         provedTah(veze, tah);
         tahy.push_back(tah);
-        pocetkroku++;
+        
     } else {
-        hanoi(n - 1, z, cil, pomocny, veze, tahy,pocetkroku);
+        hanoi(n - 1, z, cil, pomocny, veze, tahy);
         Tah tah = {n, z, cil, veze};
         provedTah(veze, tah);
         tahy.push_back(tah);
-        hanoi(n - 1, pomocny, z, cil, veze, tahy,pocetkroku);
-        pocetkroku++;
-    }
+        hanoi(n - 1, pomocny, z, cil, veze, tahy);
+            }
 }
 
 
@@ -79,7 +78,7 @@ int main()
 
     vector<Tah> tahy; // Vektor pro uložení tahů
     int pocetkroku=0;
-    hanoi(n, 'A', 'B', 'C', veze, tahy,pocetkroku);
+    hanoi(n, 'A', 'B', 'C', veze, tahy);
     
     // Zobrazení tahů a stavů věží
     for (Tah tah: tahy)
@@ -88,7 +87,6 @@ int main()
         cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
         zobrazVeze(tah.stavVezi,n); // Zobrazení stavu věží po tahu
     }
-    cout << "Celkem kroku: " << pocetkroku << endl;
     return 0;
 }
 #endif // __TEST__

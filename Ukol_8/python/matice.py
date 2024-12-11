@@ -6,25 +6,49 @@ import random
 class Matice:
     def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
+        if data is None:        # Pokud není data zadaná, vytvoříme náhodnou matici
+            self.data = [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
+        else:
+            self.data = data
+        self.n = n
+        self.m = m
         pass
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
+        return "\n".join(" ".join(map(str, row)) for row in self.data)
         pass
 
     def __add__(self, other: Matice) -> Matice:
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
-        pass
+        if self.n != other.n or self.m != other.m:
+            print("Matice nemají stejné rozměry.")
+            raise ValueError("Matice nemají stejné rozměry.")
+        else:
+            vysledek = [[self.data[i][j] + other.data[i][j] for j in range(self.m)] for i in range(self.n)]
+            return Matice(self.n, self.m, vysledek)
 
     def __mul__(self, other: Union[Matice, int]) -> Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
+        if isinstance(other, int):
+            vysledek = [[self.data[i][j] * other for j in range(self.m)] for i in range(self.n)]
+            return Matice(self.n, self.m, vysledek)
+        elif isinstance(other, Matice):
+            if self.m != other.n:
+                print("Nelze provést násobení matic.")
+                raise ValueError("Nelze provést násobení matic.")
+            else:
+                vysledek = [[sum(self.data[i][k] * other.data[k][j] for k in range(self.m)) for j in range(other.m)] for i in range(self.n)]
+                return Matice(self.n, other.m, vysledek)
         pass
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
+        vysledek = [[self.data[j][i] for j in range(self.n)] for i in range(self.m)]
+        return Matice(self.m, self.n, vysledek)
 
 
 if __name__ == "__main__":
