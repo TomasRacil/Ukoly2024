@@ -40,7 +40,7 @@ int soucin(const std::vector<int> &cisla)
 double prumer(const std::vector<int> &cisla)
 {
     if (cisla.empty()) {
-        throw std::invalid_argument("Empty vector"); // Throw an exception if the vector is empty
+        throw exception(); // Throw an exception if the vector is empty
     }
     int prumerr = 0;
     for (int i = 0; i < cisla.size(); i++)
@@ -52,6 +52,9 @@ double prumer(const std::vector<int> &cisla)
 
 double median(std::vector<int> &cisla)
 {
+    if (cisla.empty()) {
+        throw exception(); // Throw an exception if the vector is empty
+    }
     sort(cisla.begin(), cisla.end());
     int pocet = cisla.size();
     double median = 0.0;
