@@ -63,9 +63,6 @@ class Matice:
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
         # Implementace transpozice matice
-        if not self.data: return []
-        if not self.data[0]: return [[]]
-
         matice = []
         for c in range(self.m):
             row = []
