@@ -67,8 +67,16 @@ int totalWidth = vyska * 2 +1; // sirka vezi
 int main()
 {
     int n;
+    string mezi;
     cout << "Zadejte pocet disku: ";
-    cin >> n;
+    cin >> mezi;
+    if (mezi.find_first_not_of("0123456789") != string::npos) {
+        cout << "Nespravny vstup." << endl;
+        return 0;
+    }
+    else {
+        n = stoi(mezi);
+    }
     cin.ignore();
 
     vector<vector<int> > veze(3);
