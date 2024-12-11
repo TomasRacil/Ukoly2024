@@ -1,61 +1,44 @@
-def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
+from typing import List
+import statistics
 
-    Args:
-      cisla: Seznam čísel.
+def soucet(cisla: List[int]) -> int:
+    return sum(cisla)
 
-    Returns:
-      Součet čísel.
-    """
-    pass
+def soucin(cisla: List[int]) -> int:
+    if not cisla:
+        return 0
+    soucin = 1
+    for cislo in cisla:
+        soucin *= cislo
+    return soucin
 
+def prumer(cisla: List[int]) -> float:
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return sum(cisla) / len(cisla)
 
-def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
-
-
-def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
-
-
-def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Medián čísel.
-    """
-    pass  # TODO: Implementujte funkci
-
+def median(cisla: List[int]) -> float:
+    if not cisla:
+        raise ValueError("Seznam čísel nesmí být prázdný.")
+    return statistics.median(cisla)
 
 def main():
     """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
-    cisla = [int(cislo) for cislo in vstup.split(",")]
+    try:
+        cisla = [int(cislo) for cislo in vstup.split(",")]
+    except ValueError:
+        print("Chyba: Vstup musí obsahovat pouze celá čísla oddělená čárkami.")
+        return
+
+    if not cisla:
+        print("Chyba: Seznam čísel nesmí být prázdný.")
+        return
 
     print("Součet:", soucet(cisla))
     print("Součin:", soucin(cisla))
     print("Průměrná hodnota:", prumer(cisla))
     print("Medián:", median(cisla))
-
 
 if __name__ == "__main__":
     main()
