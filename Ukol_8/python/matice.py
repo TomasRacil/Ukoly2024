@@ -14,6 +14,8 @@ class Matice:
             self.matice = [[random.randint(MIN_VALUE, MAX_VALUE) for a in range(m)] for a in range(n)]
         else:
             self.matice = data
+    def __eq__(self, other: Matice) -> bool:
+        return self.n == other.n and self.m == other.m and self.data == other.data
 
     def __str__(self) -> str:
         """Vrátí stringovou reprezentaci matice."""
@@ -35,7 +37,7 @@ class Matice:
                 row.append(self.matice[r][c] + other.matice[r][c])
             matice.append(row)
         
-        return matice
+        return Matice(self.n, self.m, matice)
 
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
@@ -55,7 +57,7 @@ class Matice:
             for c in range(len(other.matice[0])):
                 row.append(sum(self.matice[r][d] * other.matice[d][c] for d in range(len(other.matice))))
             matice.append(row)
-        return matice
+        return Matice(self.n, self.m, matice)
 
     def transpozice(self) -> Matice:
         """Vrátí transponovanou matici."""
@@ -64,13 +66,12 @@ class Matice:
         if not self.matice[0]: return [[]]
 
         matice = []
-        for r in range(len(self.matice)):
+        for r in range(self.n):
             row = []
-            for c in range(len(self.matice[0])):
+            for c in range(self.m):
                 row.append(self.matice[c][r])
             matice.append(row)
-        return matice
-
+        return Matice(self.m, self.n, matice)
 
 if __name__ == "__main__":
     # Vytvořte instance třídy Matice a otestujte metody
