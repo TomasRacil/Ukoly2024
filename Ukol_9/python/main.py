@@ -39,10 +39,8 @@ if __name__ == "__main__":
     knihovna.zrus_registraci_ctenare(ctenar1)
     print(f"Seznam čtenářů po odebrání: {[str(c) for c in knihovna.ctenari]}")
 
-    print(f"Vyhledávání knih podle klíčových slov: {
-          [str(kniha) for kniha in knihovna.vyhledej_knihu(klicova_slovo='1984')]}")
-    print(f"Vyhledávání čtenářů podle klíčových slov: {
-          [str(ctenar) for ctenar in knihovna.vyhledej_ctenare(klicova_slovo='Petr')]}")
+    print(f"Vyhledávání knih podle klíčových slov: {[str(kniha) for kniha in knihovna.vyhledej_knihu(klicova_slovo='1984')]}")
+    print(f"Vyhledávání čtenářů podle klíčových slov: {[str(ctenar) for ctenar in knihovna.vyhledej_ctenare(klicova_slovo='Petr')]}")
 
     knihovna.pridej_knihu(kniha1)
     knihovna.vypujc_knihu(kniha1.isbn, ctenar2)

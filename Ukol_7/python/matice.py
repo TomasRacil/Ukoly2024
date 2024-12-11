@@ -14,19 +14,15 @@ def vytvor_matici(n: int, m: int) -> list[list[int]]:
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
     """Vrátí stringovou reprezentaci matice."""
-    if matice:
-        reprezentace = ""
-        for radek in matice:
-            reprezentace += str(radek) + "\n"
-        return reprezentace
-    else:
-        return ""
+    if len(matice) == 0:
+        return ''
+    return '\n'.join([' '.join(map(str, radek)) for radek in matice]) + '\n'
 
 
 def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Sečte dvě matice, pokud mají stejné rozměry."""
     if len(matice1) != len(matice2) or len(matice1[0]) != len(matice2[0]):
-        print("Matice nemají stejné rozměry.")
+        raise ValueError("Matice nemají stejné rozměry.")
     if len(matice1) == len(matice2):
         matice: list[list[int]] = []
         for i in range(len(matice1)):
@@ -39,10 +35,10 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    matice: list[list[int]] = []
     if len(matice1[0]) != len(matice2):
-        print("Nelze provést násobení matic.")
+        raise ValueError("Nelze provést násobení matic.")
     else:
+        matice: list[list[int]] = []
         for i in range(len(matice1)):
             radek: list[int] = []
             for j in range(len(matice2[0])):
@@ -56,13 +52,16 @@ def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[l
 
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
     """Provede transpozici matice."""
-    transponovana = []
-    for i in range(len(matice[0])):
-        radek = []
-        for j in range(len(matice)):
-            radek.append(matice[j][i])
-        transponovana.append(radek)
-    return transponovana
+    if matice:
+        transponovana = []
+        for i in range(len(matice[0])):
+            radek = []
+            for j in range(len(matice)):
+                radek.append(matice[j][i])
+            transponovana.append(radek)
+        return transponovana
+    else:
+        return []
 
 
 if __name__ == "__main__":
