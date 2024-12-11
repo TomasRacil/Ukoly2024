@@ -63,6 +63,12 @@ class Matice:
         ]
         return Matice(self.m, self.n, result_data)
 
+    def __eq__(self, other: Matice) -> bool:
+        """Porovná matici s jinou maticí."""
+        if not isinstance(other, Matice):
+            return False
+        return self.data == other.data
+
 
 if __name__ == "__main__":
     # Vytvoření instancí matic
