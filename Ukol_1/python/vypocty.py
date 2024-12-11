@@ -23,7 +23,6 @@ def median(cisla: List[int]) -> float:
     return statistics.median(cisla)
 
 def main():
-    """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
     vstup = input("Zadejte seznam čísel oddělených čárkou: ")
     try:
         cisla = [int(cislo) for cislo in vstup.split(",")]

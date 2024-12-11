@@ -1,26 +1,27 @@
 #include "rostlina.h"
 #include "prostredi.h"
-#include <cstdlib>
 
-Rostlina::Rostlina(int x, int y, Prostredi* prostredi) : Organismus(x, y, prostredi)
+Rostlina::Rostlina(int x, int y, Prostredi *prostredi) : Organismus(x,y,prostredi)
 {
     energie = 10;
 }
 
-void Rostlina::pohyb() {}
+void Rostlina ::pohyb()
+{
 
-void Rostlina::metabolismus()
+}
+
+void Rostlina ::metabolismus()
 {
     energie += 1;
 }
 
-void Rostlina::rozmnozovani()
+void Rostlina ::rozmnozovani()
 {
-    if (energie > 30)
+    if(energie > 30)
     {
         int pocetPotomku = rand() % 10;
-
-        for (int i = 0; i < pocetPotomku; ++i)
+        for(int i = 0; i < pocetPotomku; i++)
         {
             prostredi->pridejOrganismus<Rostlina>();
             energie /= 2;
@@ -28,6 +29,12 @@ void Rostlina::rozmnozovani()
     }
 }
 
-void Rostlina::konzumuj(Organismus* other) {}
+void Rostlina ::konzumuj(Organismus *other)
+{
 
-char Rostlina::getTyp() { return 'R'; }
+}
+
+char Rostlina :: getType() const
+{
+    return 'R';
+}

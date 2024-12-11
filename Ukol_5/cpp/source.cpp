@@ -1,8 +1,12 @@
+#include "organismus.h"
+#include "rostlina.h"
+#include "bylozravec.h"
+#include "masozravec.h"
 #include "prostredi.h"
 
 int main()
 {
-    Prostredi prostredi(20, 20);
+    Prostredi prostredi(20,20);
 
     prostredi.pridejOrganismus<Rostlina>();
     prostredi.pridejOrganismus<Rostlina>();
