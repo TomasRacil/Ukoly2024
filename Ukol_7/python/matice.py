@@ -24,7 +24,7 @@ def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[lis
 def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
     if not matice1 or not matice2:
-        return []
+        return None
     if len(matice1[0]) != len(matice2):
         print("Chyba: Počet sloupců první matice není roven počtu řádků druhé matice.")
         return None
