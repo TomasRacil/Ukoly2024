@@ -30,16 +30,16 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int> >& veze, ve
             veze[0].push_back(i);
     if (n == 1) {
         Tah tah = {1, z, cil, veze};
-        provedTah(veze, tah);
         tahy.push_back(tah);
+        provedTah(veze, tah);
         tah.stavVezi = veze;
         } 
         
     else {
         hanoi(n - 1, z, cil, pomocny, veze, tahy);
         Tah tah = {n, z, cil, veze};
-        provedTah(veze, tah);
         tahy.push_back(tah);
+        provedTah(veze, tah);
         tah.stavVezi = veze;
         hanoi(n - 1, pomocny, z, cil, veze, tahy);
             }
