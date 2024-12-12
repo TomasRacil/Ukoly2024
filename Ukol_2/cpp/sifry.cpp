@@ -1,110 +1,129 @@
-#include <iostream>		//jen lodky
+#include <iostream>
 #include <fstream>
-#include <cmath>
 #include <string>
+#include <cctype>  // Pro funkce isalpha, isupper
 
-class Lod 
+// Funkce pro otevření souboru
+std::string otevri_soubor(const std::string &jmeno_souboru)
 {
-private:
-    int x, y;   
-    int wx, wy; 
-    char smer;  
-public:
-    Lod(int x_start, int y_start, char pocatecni_smer, int wx_start, int wy_start)
-        : x(x_start), y(y_start), wx(wx_start), wy(wy_start), smer(pocatecni_smer) {}
+    std::ifstream soubor(jmeno_souboru);
+    if (!soubor) {
+        std::cerr << "Chyba při otevírání souboru!" << std::endl;
+        return "";
+    }
 
-    int naviguj(std::string cesta_soubor, bool druhe_reseni) 
-    {
-        std::ifstream soubor(cesta_soubor);
-        if (!soubor.is_open()) 
-        {
-            std::cerr << "Nepodařilo se otevřít soubor: " << cesta_soubor << std::endl;
-            return -1;
-        }
-        std::string instrukce;
-        while (soubor >> instrukce) 
-        {
-            char akce = instrukce[0];
-            int hodnota = std::stoi(instrukce.substr(1));
-            if (!druhe_reseni) 
-            {
-                navigujBezWaypointu(akce, hodnota);
+    std::string obsah;
+    std::string radek;
+    while (std::getline(soubor, radek)) {
+        obsah += radek;
+    }
+
+    return obsah;
+}
+
+// Funkce pro Caesarovu šifru
+std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
+{
+    std::string vysledek = text;
+
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];  // Získáme znak na pozici i
+
+        if (isalpha(c)) {  // Pokud je znak písmenem
+            char offset = isupper(c) ? 'A' : 'a';  // Určíme, zda je písmeno velké nebo malé
+
+            if (sifrovat) {
+                // Šifrování
+                c = (char)(((c - offset + posun) % 26 + 26) % 26 + offset);
+            } else {
+                // Dešifrování
+                c = (char)(((c - offset - posun + 26) % 26 + 26) % 26 + offset);
             }
-            else 
-            {
-                navigujSWaypointem(akce, hodnota);
+        }
+    }
+    return vysledek;
+}
+
+// Funkce pro Vigenerovu šifru
+std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
+{
+    std::string vysledek = text;
+    int klic_index = 0;
+    int klic_dlouh = klic.length();
+
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];
+        if (isalpha(c)) {
+            char offset = isupper(c) ? 'A' : 'a';  // Určíme, zda je písmeno velké nebo malé
+            char klic_znak = klic[klic_index % klic_dlouh];  // Cyklíme klíč
+
+            if (sifrovat) {
+                c = (char)((((c - offset) + (klic_znak - offset)) % 26 + 26) % 26 + offset);  // Šifrování
+            } else {
+                c = (char)((((c - offset) - (klic_znak - offset) + 26) % 26 + 26) % 26 + offset);  // Dešifrování
             }
+
+            klic_index++;  // Posuneme index klíče
         }
-        return std::abs(x) + std::abs(y); 
+    }
+    return vysledek;
+}
+
+// Funkce pro XOR šifru
+std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
+{
+    std::string vysledek = text;
+    int klic_index = 0;
+    int klic_dlouh = klic.length();
+
+    for (int i = 0; i < vysledek.length(); ++i) {
+        char &c = vysledek[i];
+        c ^= klic[klic_index % klic_dlouh];  // XOR operace s klíčem
+        klic_index++;  // Posuneme index klíče
+    }
+    return vysledek;
+}
+
+// Funkce pro uložení řetězce do souboru
+void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
+{
+    std::ofstream soubor(jmeno_souboru);
+    if (!soubor) {
+        std::cerr << "Chyba při otevírání souboru pro zápis!" << std::endl;
+        return;
     }
 
-    void navigujBezWaypointu(char akce, int hodnota) 
-    {
-        if (akce == 'N') y += hodnota;
-        else if (akce == 'S') y -= hodnota;
-        else if (akce == 'E') x += hodnota;
-        else if (akce == 'W') x -= hodnota;
-        else if (akce == 'L' || akce == 'R') 
-        {
-            otocSmer(hodnota, akce == 'R');
-        }
-        else if (akce == 'F') 
-        {
-            pohybVpred(hodnota);
-        }
-    }
+    soubor << obsah;
+}
 
-    void navigujSWaypointem(char akce, int hodnota) 
-    {
-        if (akce == 'N') wy += hodnota;
-        else if (akce == 'S') wy -= hodnota;
-        else if (akce == 'E') wx += hodnota;
-        else if (akce == 'W') wx -= hodnota;
-        else if (akce == 'L' || akce == 'R') 
-        {
-            otocWaypoint(hodnota, akce == 'R');
-        }
-        else if (akce == 'F') 
-        {
-            x += wx * hodnota;
-            y += wy * hodnota;
-        }
-    }
+#ifndef __TEST__ // Podmíněný překlad pro testování
+int main()
+{
+    // Načtení vstupního souboru
+    std::string vstupni_text = otevri_soubor("vstup.txt");
 
-    void otocSmer(int stupne, bool doprava) 
-    {
-        const std::string smery = "NESW";
-        int index = smery.find(smer);
-        int kroky = (stupne / 90) * (doprava ? 1 : -1);
-        index = (index + kroky + 4) % 4;
-        smer = smery[index];
-    }
-    
-    void pohybVpred(int hodnota) 
-    {
-        if (smer == 'N') y += hodnota;
-        else if (smer == 'S') y -= hodnota;
-        else if (smer == 'E') x += hodnota;
-        else if (smer == 'W') x -= hodnota;
-    }
-    
-    void otocWaypoint(int stupne, bool doprava) 
-    {
-        int kroky = (doprava ? -stupne : stupne) / 90;
-        for (int i = 0; i < std::abs(kroky); ++i) 
-        {
-            int temp = wx;
-            wx = kroky > 0 ? -wy : wy;
-            wy = kroky > 0 ? temp : -temp;
-        }
-    }
-};
-#ifndef __TEST__
-int main() {
-    Lod lod(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost bez waypointu: " << lod.naviguj("vstup_1.txt", false) << std::endl;
-    Lod lod2(0, 0, 'E', 10, 1);
-    std::cout << "Manhattan vzdálenost s waypointem: " << lod2.naviguj("vstup_1.txt", true) << std::endl;
+    // Šifrování textu pomocí Caesarovy šifry
+    std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
+    std::cout << "Šifrování Caesarovou šifrou: " << sifrovany_text_caesar << std::endl;
+
+    // Šifrování textu pomocí Vigenerovy šifry
+    std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
+    std::cout << "Šifrování Vigenerovou šifrou: " << sifrovany_text_vigener << std::endl;
+
+    // Šifrování textu pomocí XOR šifry
+    std::string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
+    std::cout << "Šifrování XOR šifrou: " << sifrovany_text_xor << std::endl;
+
+    // Uložení šifrovaných textů do souborů
+    uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
+    uloz_do_souboru("sifrovany_vigener.txt", sifrovany_text_vigener);
+    uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
+
+    // Dešifrování textů
+    std::cout << "Dešifrování textu pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
+    std::cout << "Dešifrování textu pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false) << std::endl;
+    std::cout << "Dešifrování textu pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
+
     return 0;
 }
 #endif // __TEST__
