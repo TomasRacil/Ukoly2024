@@ -3,9 +3,6 @@
 #include <vector>    // Pro použití vektorů
 #include <cmath>     // Pro matematické funkce, jako je abs()
 
-//komentáře slouží k vysvětlení kódu a samostudiu
-
-
 class Lod
 {
 private:

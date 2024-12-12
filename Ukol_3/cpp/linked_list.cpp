@@ -1,168 +1,171 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
-struct Uzel {
+struct Node {
     int data;
-    Uzel* dalsi;
+    Node* next;
 };
 
 // Funkce pro vytvoření nového uzlu
-Uzel* vytvorUzel(int data) {
-    Uzel* novyUzel = new Uzel();
-    novyUzel->data = data;
-    novyUzel->dalsi = nullptr;
-    return novyUzel;
+Node* createNode(int data) {
+    Node* newNode = new Node();
+    newNode->data = data;
+    newNode->next = nullptr;
+    return newNode;
 }
 
 // Funkce pro vložení uzlu na začátek seznamu
-void vlozNaZacatek(Uzel** hlava, int data) {
-    Uzel* novyUzel = vytvorUzel(data);
-    novyUzel->dalsi = *hlava;
-    *hlava = novyUzel;
+void insertAtBeginning(Node** head, int data) {
+    Node* newNode = createNode(data);
+    newNode->next = *head;
+    *head = newNode;
 }
 
 // Funkce pro vložení uzlu na konec seznamu
-void vlozNaKonec(Uzel** hlava, const int data) {
-    Uzel* novyUzel = vytvorUzel(data);
-    if (*hlava == nullptr) {
-        *hlava = novyUzel;
+void insertAtEnd(Node** head, int data) {
+    Node* newNode = createNode(data);
+    if (*head == nullptr) {
+        *head = newNode;
     } else {
-        Uzel* temp = *hlava;
-        while (temp->dalsi != nullptr) {
-            temp = temp->dalsi;
+        Node* temp = *head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
         }
-        temp->dalsi = novyUzel;
+        temp->next = newNode;
     }
 }
 
 // Funkce pro vložení na index
-void vlozNaIndex(Uzel** hlava, int data, int index) {
+void insertAtIndex(Node** head, int data, int index) {
     if (index == 0) {
-        vlozNaZacatek(hlava, data);
+        insertAtBeginning(head, data);
         return;
     }
-    Uzel* novyUzel = vytvorUzel(data);
-    Uzel* temp = *hlava;
+    Node* newNode = createNode(data);
+    Node* temp = *head;
     for (int i = 0; i < index - 1 && temp != nullptr; i++) {
-        temp = temp->dalsi;
+        temp = temp->next;
     }
     if (temp == nullptr) {
         std::cout << "Index mimo rozsah" << std::endl;
-        delete novyUzel;
+        delete newNode;
     } else {
-        novyUzel->dalsi = temp->dalsi;
-        temp->dalsi = novyUzel;
+        newNode->next = temp->next;
+        temp->next = newNode;
     }
 }
 
 // Funkce pro smazání uzlu ze začátku seznamu
-void smazNaZacatku(Uzel** hlava) {
-    if (*hlava == nullptr) {
+void deleteAtBeginning(Node** head) {
+    if (*head == nullptr) {
         std::cout << "Seznam je prázdný" << std::endl;
         return;
     }
-    Uzel* temp = *hlava;
-    *hlava = (*hlava)->dalsi;
+    Node* temp = *head;
+    *head = (*head)->next;
     delete temp;
 }
 
 // Funkce pro smazání uzlu z konce seznamu
-void smazNaKonci(Uzel** hlava) {
-    if (*hlava == nullptr) {
+void deleteAtEnd(Node** head) {
+    if (*head == nullptr) {
         std::cout << "Seznam je prázdný" << std::endl;
         return;
     }
-    if ((*hlava)->dalsi == nullptr) {
-        delete *hlava;
-        *hlava = nullptr;
+    if ((*head)->next == nullptr) {
+        delete *head;
+        *head = nullptr;
         return;
     }
-    Uzel* temp = *hlava;
-    while (temp->dalsi->dalsi != nullptr) {
-        temp = temp->dalsi;
+    Node* temp = *head;
+    while (temp->next->next != nullptr) {
+        temp = temp->next;
     }
-    delete temp->dalsi;
-    temp->dalsi = nullptr;
+    delete temp->next;
+    temp->next = nullptr;
 }
 
 // Funkce pro smazání uzlu na indexu
-void smazNaIndexu(Uzel* hlava, int index) {
+void deleteAtIndex(Node* head, int index) {
     if (index == 0) {
-        smazNaZacatku(&hlava);
+        deleteAtBeginning(&head);
         return;
     }
-    Uzel* temp = hlava;
+    Node* temp = head;
     for (int i = 0; i < index - 1 && temp != nullptr; i++) {
-        temp = temp->dalsi;
+        temp = temp->next;
     }
-    if (temp == nullptr || temp->dalsi == nullptr) {
+    if (temp == nullptr || temp->next == nullptr) {
         std::cout << "Index mimo rozsah" << std::endl;
     } else {
-        Uzel* uzelKeSmazani = temp->dalsi;
-        temp->dalsi = temp->dalsi->dalsi;
-        delete uzelKeSmazani;
+        Node* nodeToDelete = temp->next;
+        temp->next = temp->next->next;
+        delete nodeToDelete;
     }
 }
 
 // Funkce pro nalezení prvního výskytu
-int najdiPrvniVyskyt(Uzel* hlava, int hodnota) {
-    Uzel* temp = hlava;
+int findFirstOccurrence(Node* head, int value) {
+    Node* temp = head;
     int index = 0;
     while (temp != nullptr) {
-        if (temp->data == hodnota) {
+        if (temp->data == value) {
             return index;
         }
-        temp = temp->dalsi;
+        temp = temp->next;
         index++;
     }
     return -1; // Hodnota nenalezena
 }
 
 // Funkce pro třídění seznamu
-void seradSeznam(Uzel** hlava) {
-    if (*hlava == nullptr || (*hlava)->dalsi == nullptr) {
+void sortList(Node** head) {
+    if (*head == nullptr || (*head)->next == nullptr) {
         return;
     }
-    Uzel* serazeny = nullptr;
-    Uzel* aktualni = *hlava;
-    while (aktualni != nullptr) {
-        Uzel* dalsi = aktualni->dalsi;
-        if (serazeny == nullptr || serazeny->data >= aktualni->data) {
-            aktualni->dalsi = serazeny;
-            serazeny = aktualni;
+    Node* sorted = nullptr;
+    Node* current = *head;
+    while (current != nullptr) {
+        Node* next = current->next;
+        if (sorted == nullptr || sorted->data >= current->data) {
+            current->next = sorted;
+            sorted = current;
         } else {
-            Uzel* temp = serazeny;
-            while (temp->dalsi != nullptr && temp->dalsi->data < aktualni->data) {
-                temp = temp->dalsi;
+            Node* temp = sorted;
+            while (temp->next != nullptr && temp->next->data < current->data) {
+                temp = temp->next;
             }
-            aktualni->dalsi = temp->dalsi;
-            temp->dalsi = aktualni;
+            current->next = temp->next;
+            temp->next = current;
         }
-        aktualni = dalsi;
+        current = next;
     }
-    *hlava = serazeny;
+    *head = sorted;
 }
 
 // Funkce pro smazání (dealokaci) seznamu
-void smazSeznam(Uzel** hlava) {
-    Uzel* aktualni = *hlava;
-    Uzel* dalsi;
-    while (aktualni != nullptr) {
-        dalsi = aktualni->dalsi;
-        delete aktualni;
-        aktualni = dalsi;
+void deleteList(Node** head) {
+    Node* current = *head;
+    Node* next;
+    while (current != nullptr) {
+        next = current->next;
+        delete current;
+        current = next;
     }
-    *hlava = nullptr;
+    *head = nullptr;
 }
 
 // Operátor pro tisk dat
-std::ostream& operator<<(std::ostream& os, Uzel* hlava) {
-    Uzel* temp = hlava;
+std::ostream& operator<<(std::ostream& os, Node* head) {
+    Node* temp = head;
     while (temp != nullptr) {
-        os << temp->data << " -> ";
-        temp = temp->dalsi;
+        os << temp->data;
+        if (temp->next != nullptr) {
+            os << " ";
+        }
+        temp = temp->next;
     }
-    os << "nullptr";
     return os;
 }
 
@@ -170,24 +173,24 @@ std::ostream& operator<<(std::ostream& os, Uzel* hlava) {
 int main() 
 {
     // Vytvoření seznamu
-    Uzel* hlava = nullptr;
-    vlozNaZacatek(&hlava, 1);
-    vlozNaZacatek(&hlava, 2);
-    vlozNaKonec(&hlava, 3);
-    vlozNaKonec(&hlava, 4);
-    vlozNaIndex(&hlava, 5, 2);
-    std::cout << "Seznam po vložení prvků: " << hlava << std::endl;
-    std::cout << "První výskyt hodnoty 3 je na indexu: " << najdiPrvniVyskyt(hlava, 3) << std::endl;
-    std::cout << "Seznam před tříděním: " << hlava << std::endl;
-    seradSeznam(&hlava);
-    std::cout << "Seznam po třídění: " << hlava << std::endl;
-    smazNaZacatku(&hlava);
-    smazNaKonci(&hlava);
-    std::cout << "Seznam po smazání prvků: " << hlava << std::endl;
-    smazNaIndexu(hlava, 1);
-    std::cout << "Seznam po smazání prvků: " << hlava << std::endl;
-    smazSeznam(&hlava);
+    Node* head = nullptr;
+    insertAtBeginning(&head, 1);
+    insertAtBeginning(&head, 2);
+    insertAtEnd(&head, 3);
+    insertAtEnd(&head, 4);
+    insertAtIndex(&head, 5, 2);
+    std::cout << "Seznam po vložení prvků: " << head << std::endl;
+    std::cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << std::endl;
+    std::cout << "Seznam před tříděním: " << head << std::endl;
+    sortList(&head);
+    std::cout << "Seznam po třídění: " << head << std::endl;
+    deleteAtBeginning(&head);
+    deleteAtEnd(&head);
+    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    deleteAtIndex(head, 1);
+    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    deleteList(&head);
 
     return 0;
 }
-#endif 
+#endif

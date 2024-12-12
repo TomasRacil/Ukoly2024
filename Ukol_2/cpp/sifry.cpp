@@ -1,12 +1,3 @@
-// Poznámky: Abych nemusel řešit cestu k textovému na svém počítači (protože s tím mám obecně problémy už roky, nevím proč. Proto taky
-// instalace VSCode mi trvala takovou dobu...), tak jsem do skriptu dal předpoklad, že textový soubor musí být ve stejné složce 
-// jako skript pod názvem ze zadání ,,vstup.txt". Text se zašifruje vámi zvolenou metodou a uloží do textového souboru pod názvem 
-// ,,zasifrovany_vstup.txt", proces je stejný s dešifrováním
-
-//obecně jsem si pomáhal s internetem, protože osobně ještě nedisponuji takovými znalostmi abych takovýhle program celý napsal sám
-//myslím, že na mou úroveň to byl těžký úkol
-
-//knihovny (poslední tři knihovny jsem si vyhledal, že jsou nutné pro playfairovu šifru):
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -16,14 +7,39 @@
 
 using namespace std;
 
+// Funkce pro otevření souboru
+string otevri_soubor(const string& nazev_souboru) 
+{
+    ifstream inputFile(nazev_souboru);
+    if (!inputFile) {
+        cerr << "Nepodařilo se otevřít soubor." << endl;
+        return "";
+    }
+    string obsah((istreambuf_iterator<char>(inputFile)), istreambuf_iterator<char>());
+    inputFile.close();
+    return obsah;
+}
+
+// Funkce pro uložení do souboru
+void uloz_do_souboru(const string& nazev_souboru, const string& obsah) 
+{
+    ofstream outputFile(nazev_souboru);
+    if (!outputFile) {
+        cerr << "Nepodařilo se vytvořit výstupní soubor." << endl;
+        return;
+    }
+    outputFile << obsah;
+    outputFile.close();
+}
+
 // Caesarova šifra
-string caesarCipher(string text, int shift) 
+string caesar_sifra(string text, int shift, bool encrypt) 
 {
     string result = "";
     for (char& c : text) {
         if (isalpha(c)) {
             char base = islower(c) ? 'a' : 'A';
-            c = (c - base + shift) % 26 + base;
+            c = (c - base + (encrypt ? shift : 26 - shift)) % 26 + base;
         }
         result += c;
     }
@@ -31,7 +47,7 @@ string caesarCipher(string text, int shift)
 }
 
 // XOR šifra
-string xorCipher(string text, string key) 
+string xor_sifra(string text, string key, bool encrypt) 
 {
     string result = "";
     int keyLength = key.length();
@@ -42,7 +58,7 @@ string xorCipher(string text, string key)
 }
 
 // Vigenérova šifra
-string vigenereCipher(string text, string key, bool encrypt) 
+string vigener_sifra(string text, string key, bool encrypt) 
 {
     string result = "";
     int keyIndex = 0;
@@ -154,14 +170,10 @@ int main()
     cin >> action;
 
     string filePath = (action == 1) ? "vstup.txt" : "zasifrovany_vstup.txt";
-    ifstream inputFile(filePath);
-    if (!inputFile) {
-        cerr << "Nepodařilo se otevřít soubor." << endl;
+    string text = otevri_soubor(filePath);
+    if (text.empty()) {
         return 1;
     }
-
-    string text((istreambuf_iterator<char>(inputFile)), istreambuf_iterator<char>());
-    inputFile.close();
 
     int choice;
     cout << "\nVyber šifru:\n1. Caesarova šifra\n2. XOR šifra\n3. Vigenérova šifra\n4. Playfairova šifra\n";
@@ -175,7 +187,7 @@ int main()
             int shift;
             cout << "Zadej číselný posun pro Caesarovu šifru: ";
             cin >> shift;
-            resultText = caesarCipher(text, (action == 1) ? shift : 26 - shift);
+            resultText = caesar_sifra(text, shift, action == 1);
             break;
         }
 
@@ -184,7 +196,7 @@ int main()
             string key;
             cout << "Zadej binární klíč pro XOR šifru: ";
             cin >> key;
-            resultText = xorCipher(text, key);
+            resultText = xor_sifra(text, key, action == 1);
             break;
         }
 
@@ -193,7 +205,7 @@ int main()
             string key;
             cout << "Zadej slovní klíč pro Vigenérovu šifru: ";
             cin >> key;
-            resultText = vigenereCipher(text, key, action == 1);
+            resultText = vigener_sifra(text, key, action == 1);
             break;
         }
         
@@ -211,14 +223,7 @@ int main()
     }
 
     string outputPath = (action == 1) ? "zasifrovany_vstup.txt" : "desifrovany_vstup.txt";
-    ofstream outputFile(outputPath);
-    if (!outputFile) {
-        cerr << "Nepodařilo se vytvořit výstupní soubor." << endl;
-        return 1;
-    }
-
-    outputFile << resultText;
-    outputFile.close();
+    uloz_do_souboru(outputPath, resultText);
 
     cout << "Text byl " << ((action == 1) ? "zašifrován" : "dešifrován") << " a uložen do souboru " << outputPath << endl;
     return 0;

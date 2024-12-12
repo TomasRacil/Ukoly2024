@@ -12,7 +12,7 @@ struct Tah {
 };
 
 // Funkce pro provedení tahu
-void provedTah(vector<vector<int>> &veze, Tah tah) {
+void provedTah(vector<vector<int>> &veze, Tah &tah) {
     // Najdeme indexy věží
     int zIndex = tah.z - 'A';
     int naIndex = tah.na - 'A';
@@ -28,6 +28,9 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
+    if (n <= 0) {
+        return; // Invalid number of disks, do nothing
+    }
     if (n == 1) {
         // Provedeme tah a uložíme ho
         Tah tah = {n, z, cil, veze};
@@ -45,7 +48,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vec
     }
 }
 
-void zobrazVeze(vector<vector<int>> &veze) {
+void zobrazVeze(const vector<vector<int>> &veze) {
     for (int i = 0; i < 3; ++i) {
         cout << "Věž " << char('A' + i) << ": ";
         for (int disk : veze[i]) {
@@ -72,7 +75,7 @@ int main() {
     hanoi(n, 'A', 'B', 'C', veze, tahy);
 
     // Zobrazení tahů a stavů věží
-    for (Tah tah : tahy) {
+    for (const Tah &tah : tahy) {
         cout << "Přesuň disk " << tah.disk << " z kolíku " << tah.z << " na kolík " << tah.na << endl;
         zobrazVeze(tah.stavVezi); // Zobrazení stavu věží po tahu
     }
