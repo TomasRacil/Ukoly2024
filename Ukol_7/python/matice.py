@@ -1,4 +1,4 @@
-import random
+import random       #znovu
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
     """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""

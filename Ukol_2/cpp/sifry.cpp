@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>     //znovu
 #include <fstream>
 #include <string>
 #include <cctype> 

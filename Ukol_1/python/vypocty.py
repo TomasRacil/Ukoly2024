@@ -1,4 +1,4 @@
-def soucet(cisla: list[int]) -> int:
+def soucet(cisla: list[int]) -> int:        #znovu
     return sum(cisla)
 
 def soucin(cisla: list[int]) -> int:

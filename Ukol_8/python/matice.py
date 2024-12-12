@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations          #znovu
 from typing import Union
 from random import randrange
 
