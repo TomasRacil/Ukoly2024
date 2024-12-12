@@ -94,9 +94,7 @@ int main()
     }
 
     vector<Tah> tahy; // Vektor pro uložení tahů
-    //tyhle dva radky jsem vytvarel hodinu
-    Tah tah = {0, 'A', 'A', veze}; // Počáteční stav věží
-    tahy.push_back(tah); // Uložení počátečního stavu věží
+    
     hanoi(n, 'A', 'B', 'C', veze, tahy);
     
     // Zobrazení tahů a stavů věží
