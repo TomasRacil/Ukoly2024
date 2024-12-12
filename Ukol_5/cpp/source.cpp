@@ -1,5 +1,3 @@
-
-//tady je jedna verze ktará mi jakš takš funguje dole jsou ty části rozdělené ale uplně nevím jak to odevzdat správně takže to dám jako komentář
 #include <iostream>
 #include <vector>
 
@@ -95,8 +93,6 @@ int main() {
 
     return 0;
 }
-
-//tady je ten kod podle zadaní rozdělený na více menších ale jak jsem říkal uplně nevím jak to mám odevzdat správně a pořád mi to nechce fungovat tak jak bych chtěl
 
 /*
 // ========================== organismus.h ==========================

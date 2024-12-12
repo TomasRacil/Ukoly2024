@@ -109,32 +109,3 @@ int main() {
     return 0;
 }
 #endif // __TEST__
-
-
-//  TESTY   cd Ukol_4/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
-/*
--- Configuring done
--- Generating done
--- Build files have been written to: /workspaces/Ukoly2024/Ukol_4/cpp/build
-Scanning dependencies of target mytests
-[ 25%] Building CXX object CMakeFiles/mytests.dir/test.cpp.o
-[ 50%] Linking CXX executable mytests
-[ 50%] Built target mytests
-Scanning dependencies of target advent_lod
-[ 75%] Building CXX object CMakeFiles/advent_lod.dir/advent_lod.cpp.o
-[100%] Linking CXX executable advent_lod
-[100%] Built target advent_lod
-Running main() from /build/googletest-YnT0O3/googletest-1.10.0.20201025/googletest/src/gtest_main.cc
-[==========] Running 2 tests from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 2 tests from AdventLod
-[ RUN      ] AdventLod.Naviguj_1
-[       OK ] AdventLod.Naviguj_1 (1 ms)
-[ RUN      ] AdventLod.Naviguj_2
-[       OK ] AdventLod.Naviguj_2 (0 ms)
-[----------] 2 tests from AdventLod (1 ms total)
-
-[----------] Global test environment tear-down
-[==========] 2 tests from 1 test suite ran. (1 ms total)
-[  PASSED  ] 2 tests.
-*/
