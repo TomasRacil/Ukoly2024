@@ -1,4 +1,5 @@
-#include <iostream>     //znovu
+//jen lodky
+#include <iostream>
 #include <fstream>
 #include <cmath>
 #include <string>

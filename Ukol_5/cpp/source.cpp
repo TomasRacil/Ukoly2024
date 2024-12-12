@@ -1,4 +1,4 @@
-#include <iostream>     //znovu
+#include <iostream>
 #include <vector>
 
 using namespace std;
