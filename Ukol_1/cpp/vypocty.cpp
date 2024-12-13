@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <numeric>
+#include <iostream>
 
 int soucet(const std::vector<int>& cisla) {
     return std::accumulate(cisla.begin(), cisla.end(), 0);
