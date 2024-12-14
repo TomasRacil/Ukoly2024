@@ -4,6 +4,31 @@ from random import randrange
 
 
 class Matice:
+    def __init__(self, n: int, m: int, data=None):
+        self.n = n
+        self.m = m
+
+        if data != None:
+            #fill matrix with data
+
+            if self.n == len(data):
+                if self.n != 0 and self.m != len(data[0]):
+                    #matrix has some rows but they don't have the correct number of elements
+                    raise ValueError
+                elif self.n == 0 and self.m != 0:
+                    #matrix has 0 rows but non-zero columns, which is not possible in this implementation
+                    raise ValueError
+                else:
+                    self.data = data
+                    return
+            else:
+                #n doesn't match data rows
+                raise ValueError
+        if n < 0 or m < 0:
+            #matrix must have positive integer dimensions (0 is tolerated even though it's incorrect because of the tests)
+            raise ValueError
+        #fill matrix with random values
+        self.data = [[ randrange(0,9) for _ in range(m)] for _ in range(n)]
 
 
     def __str__(self) -> str:
@@ -30,6 +55,43 @@ class Matice:
             return Matice(self.n,self.m, new_data)
         #dimensions don't match
         raise ValueError
+
+    def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
+        #zkusi nasobit matici matici
+        try:
+            #A(nm) B(uv) are matrixes with dimensions n*m and u*v
+            if self.n != 0:
+                #check if m = u
+                if self.m != other.n:
+                    #cannot multiply
+                    raise ValueError
+            elif other.n == 0:
+                #both matrixes are empty
+                return []
+            else:
+                #only one of the matrixes is empty
+                raise ValueError
+
+            #result of AB = R(nv)
+            #init result matrix R with zeroes
+            new_data = [[0 for _ in range(other.m)] for _ in range(self.n)]
+
+            #R(ij) = A(i0)B(0j) + A(i1)B(1j) + ... + A(im)B(uj)
+            for i in range(self.n):
+                for j in range(other.m):
+                    for k in range(other.n):
+                        new_data[i][j] += self.data[i][k] * other.data[k][j]
+            
+            return Matice(self.n, other.m,new_data)
+        except AttributeError:
+            #other must be integer since matrix mult failed
+            new_data = []
+            for row in self.data:
+                new_row = []
+                for element in row:
+                    new_row.append(element * other)
+                new_data.append(new_row)
+            return Matice(self.n,self.m,new_data)
 
     def transpozice(self) -> Matice:
         if len(self.data) > 0 and len(self.data[0]) > 0:
