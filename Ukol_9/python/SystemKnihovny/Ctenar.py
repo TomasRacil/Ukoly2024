@@ -8,7 +8,6 @@ class Ctenar:
         self._prijmeni = prijmeni
         self._cislo_prukazky = self.vygeneruj_cislo_prukazky()
 
-    # doplňte potřebné gettry a settry
     @property
     def jmeno(self):
         return self._jmeno
@@ -30,17 +29,21 @@ class Ctenar:
         if val > 0:
             self._cislo_prukazky = val
         else:
-            raise ValueError('Cislo prukazky musi byt kladne cele cislo')
+            raise ValueError('Membership card ID must be positive integer.')
 
     @staticmethod
     def vygeneruj_cislo_prukazky() -> int:
+        #cislo_prukazky is positive integer in range <1,100>
         return random.randint(1,100)
 
 
     def __str__(self) -> str:
         out = "\n"
-        out += self._jmeno + " " + self._prijmeni + "\tCislo prukazky: " + str(self._cislo_prukazky)
+        out += self.jmeno + " " 
+        out += self.prijmeni 
+        out += "\t[membership card ID: " + str(self.cislo_prukazky) + "]"
         return out
     
     def __eq__(self, other):
-        return self._jmeno == other._jmeno and self._prijmeni == other._prijmeni and self.cislo_prukazky == other.cislo_prukazky
+        #defines equality of book objects
+        return self.jmeno == other.jmeno and self.prijmeni == other.prijmeni and self.cislo_prukazky == other.cislo_prukazky

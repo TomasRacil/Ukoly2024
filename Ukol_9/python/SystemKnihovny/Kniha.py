@@ -3,13 +3,15 @@ class Kniha:
         self._nazev = nazev
         self._autor = autor
         self._rok_vydani = rok_vydani
-        if int(isbn) > 0:
-            self.isbn = isbn
-        else:
-            raise ValueError('ISBN must have 13 digits!')
+        try:
+            if int(isbn) > 0:
+                self.isbn = isbn
+            else:
+                raise ValueError
+        except Exception:
+            raise ValueError('Invalid ISBN.')
 
-    # doplňte potřebné gettry a setry
-    #getters:
+    #getters - must be implemented all bcs of the tests
     @property
     def nazev(self):
         return self._nazev
@@ -35,14 +37,19 @@ class Kniha:
         self._rok_vydani = val
     @isbn.setter
     def isbn(self, val: str):
+        #check if val is integer
+        try:
+            int(val)
+        except Exception:
+            raise ValueError('Invalid ISBN.')
         if len(val) != 13:
             raise ValueError('ISBN must have 13 digits!')
         self._isbn = val
 
     def __str__(self) -> str:
         kniha : str = "\n"
-        kniha += "Nazev:\t" + self.nazev + "\n"
-        kniha += "\tAutor:\t\t" + self.autor + "\n"
-        kniha += "\tRok vydani\t" + str(self.rok_vydani) + "\n"
-        kniha += "\tISBN:\t\t" + str(self.isbn)
+        kniha += "Title: " + self.nazev
+        kniha += "\n\tAuthor:\t\t\t" + self.autor + "\n"
+        kniha += "\tYear of publication\t" + str(self.rok_vydani) + "\n"
+        kniha += "\tISBN:\t\t\t" + str(self.isbn)
         return kniha
