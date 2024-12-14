@@ -33,6 +33,7 @@ void hanoi(int n, char z, char pomocny, char cil, vector<vector<int> >& veze, ve
         tahy.push_back(tah);
         provedTah(veze, tah);
         tah.stavVezi = veze;
+
         } 
         
     else {
@@ -95,8 +96,6 @@ int main()
     }
 
     vector<Tah> tahy; // Vektor pro uložení tahů
-    Tah tah = {0, 'A', 'A', veze}; // Počáteční stav věží
-    tahy.push_back(tah); // Uložení počátečního stavu věží
     hanoi(n, 'A', 'B', 'C', veze, tahy);
    
     // Zobrazení tahů a stavů věží
