@@ -4,7 +4,7 @@ import random
 
 
 class Matice:
-    def __init__(self, n: int, m: int, data=None):
+    def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
         self.n = n
         self.m = m
@@ -37,20 +37,8 @@ class Matice:
     def __add__(self, other: "Matice") -> "Matice":
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
+        pass
 
-        if self.n != other.n or self.m != other.m:
-            raise ValueError("Matice musí mít stejné rozměry pro sčítání.")
-    
-        vysledek = []
-        for i in range(len(self.data)):
-            novy_radek = []
-            for j in range(len(self.data[0])):
-                soucet = self.data[i][j] + other.data[i][j]
-                novy_radek.append(soucet)
-            vysledek.append(novy_radek)
-
-        return Matice(self.n, self.m, vysledek)
-        
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
