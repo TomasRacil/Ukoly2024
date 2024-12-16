@@ -2,7 +2,7 @@ import csv
 import random
 import datetime
 
-from Ukol_9.python.SystemKnihovny import Knihovna
+from .SystemKnihovny import Knihovna
 
 
 class Kniha:
