@@ -1,5 +1,6 @@
+from __future__ import annotations
+from typing import Union
 import random
-from typing import Union, Optional, List
 
 
 class Matice:
