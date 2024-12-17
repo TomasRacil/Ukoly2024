@@ -42,6 +42,7 @@ if __name__ == "__main__":
           f"{[str(kniha) for kniha in knihovna.vyhledej_knihu(klicova_slovo='1984')]}")
     print(f"Vyhledávání čtenářů podle klíčových slov: "
           f"{[str(ctenar) for ctenar in knihovna.vyhledej_ctenare(klicova_slovo='Petr')]}")
+
     knihovna.pridej_knihu(kniha1)
     knihovna.vypujc_knihu(kniha1.isbn, ctenar2)
     print(f"Vypůjčené knihy: {[(isbn, str(ctenar), str(datum))
