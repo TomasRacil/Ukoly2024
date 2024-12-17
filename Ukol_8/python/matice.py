@@ -6,7 +6,7 @@ MIN_VALUE = 0
 MAX_VALUE = 9
 
 class Matice:
-    def __init__(self, n: int, m: int, data=None):
+    def __init__(self, n: int, m: int, data: list[list[int]] = None):
         """Inicializuje matici n x m."""
         self.n = n
         self.m = m
@@ -40,7 +40,7 @@ class Matice:
         
         return Matice(self.n, self.m, matice)
 
-    def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
+    def __mul__(self, other: Union[Matice, int]) -> Matice:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
         if isinstance(other, int):
