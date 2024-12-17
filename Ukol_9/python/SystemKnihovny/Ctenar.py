@@ -7,11 +7,19 @@ class Ctenar:
         self._prijmeni = prijmeni
         self.cislo_prukazky = self.vygeneruj_cislo_prukazky()
 
-    # doplňte potřebné gettry a settry
+    @property
+    def cislo_prukazky(self):
+        return self._cislo_prukazky
+
+    @cislo_prukazky.setter
+    def cislo_prukazky(self, value):
+        if value <= 0:
+            raise ValueError("Číslo průkazky musí být kladné celé číslo.")
+        self._cislo_prukazky = value
 
     @staticmethod
     def vygeneruj_cislo_prukazky() -> int:
-        pass
+        return random.randint(1000, 9999)
 
     def __str__(self) -> str:
-        return ""
+        return f"{self._jmeno} {self._prijmeni} (Průkazka: {self.cislo_prukazky})"

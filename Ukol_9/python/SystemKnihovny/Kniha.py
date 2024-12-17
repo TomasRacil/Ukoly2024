@@ -5,7 +5,15 @@ class Kniha:
         self._rok_vydani = rok_vydani
         self.isbn = isbn
 
-    # doplňte potřebné gettry a setry
+    @property
+    def isbn(self):
+        return self._isbn
+
+    @isbn.setter
+    def isbn(self, value):
+        if not (value.isdigit() and len(value) == 13):
+            raise ValueError("ISBN musí mít formát ISBN-13 (13 číslic).")
+        self._isbn = value
 
     def __str__(self) -> str:
-        return ""
+        return f"{self._nazev} od {self._autor} ({self._rok_vydani}) - ISBN: {self.isbn}"
