@@ -45,10 +45,9 @@ if __name__ == "__main__":
 
     knihovna.pridej_knihu(kniha1)
     knihovna.vypujc_knihu(kniha1.isbn, ctenar2)
-    print(f"Vypůjčené knihy: {[(isbn, str(ctenar), str(datum))
-                               for isbn, (ctenar, datum) in knihovna.vypujcene_knihy.items()]}")
-    knihovna.vrat_knihu(kniha1.isbn, ctenar2)
-    print(f"Vypůjčené knihy po vrácení: {[(isbn, str(ctenar), str(datum))
-                                          for isbn, (ctenar, datum) in knihovna.vypujcene_knihy.items()]}")
+    print(
+        f"Vypůjčené knihy: {[(isbn, str(ctenar), str(datum)) for isbn, (ctenar, datum) in knihovna.vypujcene_knihy.items()]}")
+    print(
+        f"Vypůjčené knihy po vrácení: {[(isbn, str(ctenar), str(datum)) for isbn, (ctenar, datum) in knihovna.vypujcene_knihy.items()]}")
 
     print(knihovna)
