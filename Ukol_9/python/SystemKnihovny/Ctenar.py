@@ -1,11 +1,10 @@
 import random
 
-
 class Ctenar:
     def __init__(self, jmeno: str, prijmeni: str):
         self.jmeno = jmeno
         self.prijmeni = prijmeni
-        self.cislo_prukazky = self.vygeneruj_cislo_prukazky()
+        self._cislo_prukazky = self.vygeneruj_cislo_prukazky()
 
     @staticmethod
     def vygeneruj_cislo_prukazky() -> int:

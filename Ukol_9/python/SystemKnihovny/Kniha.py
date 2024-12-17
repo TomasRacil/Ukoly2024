@@ -16,4 +16,4 @@ class Kniha:
         self._isbn = value
 
     def __str__(self) -> str:
-        return f"{self.nazev} od {self.autor} ({self.rok_vydani}) - ISBN: {self.isbn}"
+        return f"'{self.nazev}' od {self.autor} ({self.rok_vydani}) - ISBN: {self.isbn}"
