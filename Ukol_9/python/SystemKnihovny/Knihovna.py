@@ -18,7 +18,7 @@ class Knihovna:
         with open(soubor, "r", encoding="utf-8") as file:
             reader = csv.reader(file)
 
-            # Načtení názvu knihovny z prvního řádku
+            # Načtení názvu knihovny
             prvni_radek = next(reader)
             nazev_knihovny = prvni_radek[0].split(":", 1)[1].strip()
 
@@ -27,7 +27,7 @@ class Knihovna:
 
             knihovna = cls(nazev_knihovny)
 
-            # Načítání dat knih a čtenářů
+            # Načítání dat
             for radek in reader:
                 if radek[0] == "kniha":
                     kniha = Kniha(
@@ -36,14 +36,18 @@ class Knihovna:
                         rok_vydani=int(radek[3]),
                         isbn=radek[4],
                     )
-                    knihovna.knihy.append(kniha)
+                    knihovna.pridej_knihu(kniha)
                 elif radek[0] == "ctenar":
                     ctenar = Ctenar(
                         jmeno=radek[5],
                         prijmeni=radek[6],
                     )
-                    knihovna.ctenari.append(ctenar)
+                    knihovna.registruj_ctenare(ctenar)
         return knihovna
+
+    def pridej_knihu(self, kniha: Kniha):
+        """Přidá knihu do knihovny."""
+        self.knihy.append(kniha)
 
     def odeber_knihu(self, isbn: str):
         """Odebere knihu z knihovny."""
@@ -60,6 +64,10 @@ class Knihovna:
     def zrus_registraci_ctenare(self, ctenar: Ctenar):
         """Zruší registraci čtenáře."""
         self.ctenari = [c for c in self.ctenari if c != ctenar]
+
+    def vyhledej_ctenare(self, klicova_slovo: str = "") -> list[Ctenar]:
+        """Vyhledá čtenáře podle klíčového slova."""
+        return [ctenar for ctenar in self.ctenari if klicova_slovo.lower() in ctenar.jmeno.lower()]
 
     def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
         """Vypůjčí knihu čtenáři."""
