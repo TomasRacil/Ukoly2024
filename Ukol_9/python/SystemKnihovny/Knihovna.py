@@ -72,6 +72,8 @@ class Knihovna:
         """Vypůjčí knihu čtenáři."""
         if isbn in self.vypujcene_knihy:
             raise ValueError(f"Kniha s ISBN {isbn} je již vypůjčena.")
+        if not any(k.isbn == isbn for k in self.knihy):
+            raise ValueError(f"Kniha s ISBN {isbn} neexistuje.")
         self.vypujcene_knihy[isbn] = (ctenar, datetime.date.today())
 
     def vrat_knihu(self, isbn: str, ctenar: Ctenar):
