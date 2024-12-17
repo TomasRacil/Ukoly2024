@@ -12,17 +12,6 @@ class Knihovna:
         self.ctenari: list[Ctenar] = []
         self.vypujcene_knihy = {}
 
-    # Dekorátor pro kontrolu existence knihy
-    def kniha_existuje(funkce):
-        """
-        Dekorátor kontrolující existenci knihy v knihovně.
-        """
-        def wrapper(self, isbn: str, *args, **kwargs):
-            if not any(kniha.isbn == isbn for kniha in self.knihy):
-                raise ValueError(f"Kniha s ISBN {isbn} neexistuje.")
-            return funkce(self, isbn, *args, **kwargs)
-        return wrapper
-
     @classmethod
     def z_csv(cls, soubor: str) -> Knihovna:
         """
@@ -32,22 +21,22 @@ class Knihovna:
             with open(soubor, "r", encoding="utf-8") as file:
                 reader = csv.reader(file)
 
-                # Zpracování prvního řádku
-                prvni_radek = next(reader)
+                # Ignorování nevalidních prvních řádků
+                prvni_radek = next(reader, None)
                 if prvni_radek and "knihovna:" in prvni_radek[0]:
                     nazev_knihovny = prvni_radek[0].split(":", 1)[1].strip()
                 else:
-                    raise ValueError("Chybný formát názvu knihovny na prvním řádku CSV!")
+                    # Defaultní název knihovny, pokud první řádek není validní
+                    nazev_knihovny = "Neznámá knihovna"
 
-                # Zpracování záhlaví
-                zahlavi = next(reader)
+                # Validace záhlaví
+                zahlavi = next(reader, None)
                 if zahlavi != ["typ", "nazev", "autor", "rok_vydani", "isbn", "jmeno", "prijmeni"]:
                     raise ValueError("Chybný formát záhlaví CSV souboru!")
 
-                # Inicializace knihovny
                 knihovna = cls(nazev_knihovny)
 
-                # Zpracování datových řádků
+                # Zpracování řádků CSV
                 for radek in reader:
                     if radek[0] == "kniha":
                         kniha = Kniha(
@@ -66,65 +55,14 @@ class Knihovna:
 
             return knihovna
 
-        except StopIteration:
-            raise ValueError("CSV soubor je prázdný nebo má nesprávný formát!")
         except Exception as e:
             raise ValueError(f"Chybný formát CSV souboru: {e}")
 
     def pridej_knihu(self, kniha: Kniha):
-        """Přidá knihu do knihovny."""
         self.knihy.append(kniha)
 
-    @kniha_existuje
-    def odeber_knihu(self, isbn: str):
-        """Odebere knihu z knihovny."""
-        self.knihy = [kniha for kniha in self.knihy if kniha.isbn != isbn]
-
-    def vyhledej_knihu(self, klicova_slovo: str = "", isbn: str = ""):
-        """Vyhledá knihu podle klíčového slova nebo ISBN."""
-        vysledky = []
-        for kniha in self.knihy:
-            if isbn and kniha.isbn == isbn:
-                vysledky.append(kniha)
-            elif klicova_slovo and (klicova_slovo.lower() in kniha.nazev.lower()
-                                    or klicova_slovo.lower() in kniha.autor.lower()):
-                vysledky.append(kniha)
-        return vysledky
-
     def registruj_ctenare(self, ctenar: Ctenar):
-        """Zaregistruje čtenáře."""
         self.ctenari.append(ctenar)
-
-    def zrus_registraci_ctenare(self, ctenar: Ctenar):
-        """Zruší registraci čtenáře."""
-        self.ctenari = [c for c in self.ctenari if c.cislo_prukazky != ctenar.cislo_prukazky]
-
-    def vyhledej_ctenare(self, klicova_slovo: str = "", cislo_prukazky: int = None):
-        """Vyhledá čtenáře podle klíčového slova nebo čísla průkazky."""
-        vysledky = []
-        for ctenar in self.ctenari:
-            if cislo_prukazky and ctenar.cislo_prukazky == cislo_prukazky:
-                vysledky.append(ctenar)
-            elif klicova_slovo and (klicova_slovo.lower() in ctenar.jmeno.lower()
-                                    or klicova_slovo.lower() in ctenar.prijmeni.lower()):
-                vysledky.append(ctenar)
-        return vysledky
-
-    @kniha_existuje
-    def vypujc_knihu(self, isbn: str, ctenar: Ctenar):
-        """Vypůjčí knihu čtenáři."""
-        if isbn in self.vypujcene_knihy:
-            raise ValueError(f"Kniha s ISBN {isbn} je již vypůjčena.")
-        self.vypujcene_knihy[isbn] = (ctenar, datetime.date.today())
-
-    @kniha_existuje
-    def vrat_knihu(self, isbn: str, ctenar: Ctenar):
-        """Vrátí vypůjčenou knihu."""
-        if isbn not in self.vypujcene_knihy:
-            raise ValueError(f"Kniha s ISBN {isbn} není vypůjčena.")
-        if self.vypujcene_knihy[isbn][0] != ctenar:
-            raise ValueError(f"Kniha s ISBN {isbn} není vypůjčena tímto čtenářem.")
-        del self.vypujcene_knihy[isbn]
 
     def __str__(self) -> str:
         knihy_info = "\n".join(str(kniha) for kniha in self.knihy)
