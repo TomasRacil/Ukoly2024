@@ -1,10 +1,9 @@
 from __future__ import annotations
-from typing import Union
 import random
-
+from typing import Union
 
 class Matice:
-    def __init__(self, n: int, m: int, data: list[list[int]] = None):
+    def __init__(self, n: int, m: int, data=None):
         """Inicializuje matici n x m."""
         self.n = n
         self.m = m
@@ -37,8 +36,16 @@ class Matice:
     def __add__(self, other: "Matice") -> "Matice":
         """Sečte aktuální matici s maticí other."""
         # Implementace součtu matic
-        pass
+        vysledek = []
+        for i in range(len(self.data)):
+            novy_radek = []
+            for j in range(len(self.data[0])):
+                soucet = self.data[i][j] + other.data[i][j]
+                novy_radek.append(soucet)
+            vysledek.append(novy_radek)
 
+        return Matice(self.n, self.m, vysledek)
+        
     def __mul__(self, other: Union[Matice, int]) -> Union[Matice, int]:
         """Vynásobí aktuální matici maticí nebo skalárem."""
         # Implementace násobení matic
@@ -81,37 +88,14 @@ class Matice:
             transponovana.append(novy_radek)
         
         return Matice(self.m, self.n, transponovana)
-    
-    def __eq__(self, other: Matice) -> bool:
-        """Porovná aktuální matici s jinou maticí."""
-        if not isinstance(other, Matice):
-            return False
-        return self.n == other.n and self.m == other.m and self.data == other.data
-    
-
 
 if __name__ == "__main__":
-    # Vytvořte instance třídy Matice a otestujte metody
-    matice1 = Matice(3, 2)
-    matice2 = Matice(2, 4)
 
-    print("Matice 1:")
-    print(matice1)
-    print("Matice 2:")
-    print(matice2)
+# Příklad použití
+    matice1 = Matice(2, 2, [[1, 2], [3, 4]])
+    matice2 = Matice(2, 2, [[5, 6], [7, 8]])
+    matice3 = Matice(2, 3, [[1, 2, 3], [4, 5, 6]])
 
-    soucet = matice1+matice1  # Sečteme matici1 samu se sebou
-    print("Součet matic:")
-    print(soucet)
-
-    nasobek = matice1*matice2  # Násobujeme matice1 a matice2
-    print("Násobení matic:")
-    print(nasobek)
-
-    skalarni_nasobek = matice1*10
-    print("Skálární násobek:")
-    print(skalarni_nasobek)
-
-    transponovana = matice1.transpozice()
-    print("Transponovaná matice:")
-    print(transponovana)
+    # Maticové násobení
+    vysledek = matice1+matice3
+    print(vysledek)
