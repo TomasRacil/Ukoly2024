@@ -1,4 +1,4 @@
-## Správa knihovny
+## Zadání úkolu: Správa knihovny
 
 Cílem tohoto úkolu je vytvořit systém pro správu knihovny s využitím objektově orientovaného programování v Pythonu. Zaměříte se na pokročilé koncepty jako setry, getry, dekorátory, statické a class metody.
 
@@ -7,8 +7,7 @@ Cílem tohoto úkolu je vytvořit systém pro správu knihovny s využitím obje
 1. **Třídy:**
     * Vytvořte třídu `Kniha` s atributy: `nazev` (str), `autor` (str), `rok_vydani` (int) a `isbn` (str).
     * Vytvořte třídu `Ctenar` s atributy: `jmeno` (str), `prijmeni` (str), `cislo_prukazky` (int).
-    * Vytvořte třídu `Knihovna` s atributy: `nazev` (str), `knihy` (seznam objektů třídy `Kniha`), `ctenari` (seznam objektů třídy `Ctenar`) a `vypujcene_knihy` (slovník, kde klíčem je ISBN knihy a hodnotou je seznam obsahující objekt `Ctenar` a datum výpůjčky).
-
+    * Vytvořte třídu `Knihovna` s atributy: `nazev` (str) a `knihy` (seznam objektů třídy `Kniha`).
 
 2. **Setry a getry:**
     * Implementujte setry a getry pro atributy `isbn` v třídě `Kniha` a `cislo_prukazky` v třídě `Ctenar`.
@@ -19,7 +18,7 @@ Cílem tohoto úkolu je vytvořit systém pro správu knihovny s využitím obje
 
 3. **Dekorátory:**
     * Vytvořte dekorátor `kniha_existuje`, který bude kontrolovat, zda daná kniha (identifikovaná pomocí ISBN) existuje v knihovně.
-    * Použijte tento dekorátor pro metody v třídě `Knihovna`, které pracují s knihami (např. pro metodu pro vypůjčení knihy).
+    * Použijte tento dekorátor pro metody v třídě `Knihovna`, které pracují s knihami (vypůjčení knihy, odstraneni z knihovny, vraceni knihy).
     * Dekorátor by měl v případě, že kniha neexistuje, vyvolat ValueError s informativní chybovou zprávou.
 
 4. **Statické a class metody:**
