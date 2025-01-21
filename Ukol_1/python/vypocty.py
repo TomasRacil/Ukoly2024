@@ -1,61 +1,56 @@
 def soucet(cisla: list[int]) -> int:
-    """Vypočítá součet čísel v seznamu.
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součet čísel.
-    """
-    pass
+    return sum(cisla)
 
 
 def soucin(cisla: list[int]) -> int:
-    """Vypočítá součin čísel v seznamu.
 
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Součin čísel.
-    """
-    pass  # TODO: Implementujte funkci
+    if not cisla:  # Handle the empty list case
+        return 0
+    soucin = 1
+    for cislo in cisla:
+        soucin *= cislo
+    return soucin
 
 
 def prumer(cisla: list[int]) -> float:
-    """Vypočítá průměrnou hodnotu čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Průměrná hodnota čísel.
-    """
-    pass
+    if not cisla:  # Handle the empty list case
+        raise ValueError("Cannot calculate the average of an empty list")
+    return sum(cisla) / len(cisla)
 
 
 def median(cisla: list[int]) -> float:
-    """Vypočítá medián čísel v seznamu.
-
-    Args:
-      cisla: Seznam čísel.
-
-    Returns:
-      Medián čísel.
-    """
-    pass  # TODO: Implementujte funkci
+    if not cisla:  # Handle the empty list case
+        raise ValueError("Cannot calculate the average of an empty list")
+    cisla = sorted(cisla)
+    n = len(cisla)
+    if n % 2 == 1:
+        return cisla[n // 2]
+    else:
+        return (cisla[n // 2 - 1] + cisla[n // 2]) / 2.0
 
 
 def main():
-    """Načte vstup od uživatele, zavolá funkce pro výpočet a vypíše výsledky."""
-    vstup = input("Zadejte seznam čísel oddělených čárkou: ")
-    cisla = [int(cislo) for cislo in vstup.split(",")]
 
-    print("Součet:", soucet(cisla))
-    print("Součin:", soucin(cisla))
-    print("Průměrná hodnota:", prumer(cisla))
-    print("Medián:", median(cisla))
+    try:
+        vstup = input("Zadejte seznam cisel oddelenych carkou: ")
+        cisla = [int(cislo) for cislo in vstup.split(",")]
 
+        print("Soucet:", soucet(cisla))
+        print("Soucin:", soucin(cisla))
+
+        try:
+            print("Prumerna hodnota:", prumer(cisla))
+        except ValueError as e:
+            print(e)
+
+        try:
+            print("Median:", median(cisla))
+        except ValueError as e:
+            print(e)
+
+    except ValueError:
+        print("Zadali jste neplatny vstup. Zkuste to znovu.")
 
 if __name__ == "__main__":
     main()
