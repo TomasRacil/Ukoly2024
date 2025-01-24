@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 struct Node{
@@ -93,6 +94,7 @@ int findFirstOccurrence(Node* head, int value){
         head = head->next;
         index++;
     }
+
     return -1; 
 }
 void sortList(Node** head){
@@ -109,6 +111,7 @@ void sortList(Node** head){
         i = i->next;
     }
 }
+
 void deleteList(Node** head){
     while (*head != nullptr){
         deleteAtBeginning(head); 
@@ -124,6 +127,7 @@ std::ostream& operator<<(std::ostream& os, Node* head){
     }
     return os;
 }
+
 #ifndef __TEST__ 
 int main(){
     // Vytvoření seznamu
@@ -144,48 +148,9 @@ int main(){
     deleteAtIndex(head, 1);
     std::cout << "Seznam po smazání prvků: " << head << std::endl;
     deleteList(&head);
+
     return 0;
 }
 #endif // __TEST__
 
-//  TESTY   cd Ukol_3/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
-/*
--- Configuring done
--- Generating done
--- Build files have been written to: /workspaces/Ukoly2024/Ukol_3/cpp/build
-Scanning dependencies of target mytests
-[ 25%] Building CXX object CMakeFiles/mytests.dir/test.cpp.o
-[ 50%] Linking CXX executable mytests
-[ 50%] Built target mytests
-Scanning dependencies of target liked_list
-[ 75%] Building CXX object CMakeFiles/liked_list.dir/linked_list.cpp.o
-[100%] Linking CXX executable liked_list
-[100%] Built target liked_list
-Running main() from /build/googletest-YnT0O3/googletest-1.10.0.20201025/googletest/src/gtest_main.cc
-[==========] Running 9 tests from 1 test suite.
-[----------] Global test environment set-up.
-[----------] 9 tests from LinkedListTest
-[ RUN      ] LinkedListTest.InsertAtBeginning
-[       OK ] LinkedListTest.InsertAtBeginning (0 ms)
-[ RUN      ] LinkedListTest.InsertAtEnd
-[       OK ] LinkedListTest.InsertAtEnd (0 ms)
-[ RUN      ] LinkedListTest.InsertAtIndex
-[       OK ] LinkedListTest.InsertAtIndex (0 ms)
-[ RUN      ] LinkedListTest.DeleteAtBeginning
-[       OK ] LinkedListTest.DeleteAtBeginning (0 ms)
-[ RUN      ] LinkedListTest.DeleteAtEnd
-[       OK ] LinkedListTest.DeleteAtEnd (0 ms)
-[ RUN      ] LinkedListTest.DeleteAtIndex
-[       OK ] LinkedListTest.DeleteAtIndex (0 ms)
-[ RUN      ] LinkedListTest.FindFirstOccurrence
-[       OK ] LinkedListTest.FindFirstOccurrence (0 ms)
-[ RUN      ] LinkedListTest.SortList
-[       OK ] LinkedListTest.SortList (0 ms)
-[ RUN      ] LinkedListTest.OperatorPrint
-[       OK ] LinkedListTest.OperatorPrint (0 ms)
-[----------] 9 tests from LinkedListTest (0 ms total)
 
-[----------] Global test environment tear-down
-[==========] 9 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 9 tests.
-*/
