@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
-project(Ukol_1)
+project(Ukol_4)
 
 
 
 # Add your main executable
-add_executable(vypocty ${CMAKE_CURRENT_SOURCE_DIR}/vypocty.cpp)
+add_executable(advent_lod ${CMAKE_CURRENT_SOURCE_DIR}/advent_lod.cpp)
 
 # Set the build directory to be a subdirectory of the project directory
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
