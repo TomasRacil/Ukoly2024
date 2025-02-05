@@ -1,90 +1,214 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
 struct Node
 {
     int data;
-    Node *next;
+    Node* next;
 };
 
-// Funkce pro vytvoření nového uzlu
-Node *createNode(int data)
+Node* createNode(int data)
 {
-    return nullptr;
+    Node* node = new Node();
+    node->data = data;
+    node->next = nullptr;
+    return node;
+
 }
 
-// Funkce pro vložení uzlu na začátek seznamu
-void insertAtBeginning(Node **head, int data)
+void insertAtBeginning(Node** head, int data)
 {
+    Node* node = createNode(data);
+    node->next = *head;
+    *head = node;
 }
 
-// Funkce pro vložení uzlu na konec seznamu
-void insertAtEnd(Node **head, const int data)
+void insertAtEnd(Node** head, const int data)
 {
+    Node* node = createNode(data);
+    if (*head == nullptr) 
+    {
+        *head = node;
+        return;
+    }
+    Node* node2 = *head;
+    while (node2->next != nullptr)  
+    {
+        node2 = node2->next;
+    }
+    node2->next = node; 
+
 }
 
-// Funkce pro vložení na index
-void insertAtIndex(Node **head, int data, int index)
+void insertAtIndex(Node** head, int data, int index)
 {
+    if (index == 0)
+    {
+        insertAtBeginning(head, data);
+        return;
+    }
+    Node* node = createNode(data);
+    Node* node2 = *head;
+    for (int i = 0; i < index - 1; i++) 
+    {
+        if (node2 == nullptr) 
+        {
+            insertAtEnd(head, data);
+            return;
+        }
+        node2 = node2->next;
+    }
+    node->next = node2->next;
+    node2->next = node;
+
+}
+void deleteAtBeginning(Node** head)
+{
+    if (*head == nullptr)
+    {
+        return;
+    }
+    Node* node = *head;
+    *head = node->next;
+    delete node;
+}
+void deleteAtEnd(Node** head)
+{
+    if (*head == nullptr)
+    {
+        return;
+    }
+    if ((*head)->next == nullptr) 
+    {
+        delete* head;
+        *head = nullptr;
+        return;
+    }
+    Node* node = *head;
+    while (node->next->next != nullptr) 
+    {
+        node = node->next;
+    }
+    delete node->next;
+    node->next = nullptr;
+
+}
+void deleteAtIndex(Node* head, int index)
+{
+    if (head == nullptr)    
+    {
+        return;
+    }
+    Node* node = head;
+    if (index == 0) 
+    {
+        head = node->next;
+        delete node;
+        return;
+    }
+    for (int i = 0; node != nullptr && i < index - 1; i++) 
+    {
+        node = node->next;
+    }
+    if (node == nullptr || node->next == nullptr) 
+    {
+        return;
+    }
+    Node* node2 = node->next->next;
+    delete node->next;
+    node->next = node2;
+
 }
 
-// Funkce pro smazání uzlu ze začátku seznamu
-void deleteAtBeginning(Node **head)
+int findFirstOccurrence(Node* head, int value)
 {
-}
-
-// Funkce pro smazání uzlu z konce seznamu
-void deleteAtEnd(Node **head)
-{
-}
-
-// Funkce pro smazani uzlu na indexu
-void deleteAtIndex(Node *head, int index)
-{
-}
-
-// Funkce pro nalezeni prvniho vyskytu
-int findFirstOccurrence(Node *head, int value)
-{
+    int index = 0;
+    Node* node = head;
+    while (node != nullptr)
+    {
+        if (node->data == value)
+        {
+            return index;
+        }
+        node = node->next;
+        index++;
+    }
     return -1;
 }
-
-// Funkce pro třídění seznamu
-void sortList(Node **head)
+void sortList(Node** head)
 {
+    if (*head == nullptr || (*head)->next == nullptr)   
+    {
+        return;
+    }
+    Node* sorted = nullptr;
+    Node* current = *head;
+    while (current != nullptr) 
+    {
+        Node* node = current->next;
+        if (sorted == nullptr || sorted->data >= current->data) 
+        {
+            current->next = sorted;
+            sorted = current;
+        }
+        else 
+        {
+            Node* node2 = sorted;
+            while (node2->next != nullptr && node2->next->data < current->data) 
+            {
+                node2 = node2->next;
+            }
+            current->next = node2->next;
+            node2->next = current;
+        }
+        current = node;
+    }
+    *head = sorted;
 }
 
-// Funkce pro smazani (dealokaci) seznamu
-void deleteList(Node **head)
+void deleteList(Node** head)
 {
+    Node* node = *head;
+    while (node != nullptr) // Dokud není prvek nullptr, tak se mazou všechny prvky <- syntax error řešení
+    {
+        Node* node2 = node;
+        node = node->next;
+        delete node2;
+    }
+    *head = nullptr;
 }
 
-// Operátor pro tisk dat
-std::ostream &operator<<(std::ostream &os, Node *head)
+ostream& operator<<(ostream& os, Node* head)
 {
+    Node* node = head;
+    while (node != nullptr)
+    {
+        os << node->data << (node->next ? " " : "");
+        node = node->next;
+    }
     return os;
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
+#ifndef __TEST__ 
 int main()
 {
-    // Vytvoření seznamu
-    Node *head = nullptr;
+    Node* head = nullptr;
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 4);
     insertAtIndex(&head, 5, 2);
-    std::cout << "Seznam po vložení prvků: " << head << std::endl;
-    std::cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << std::endl;
-    std::cout << "Seznam před tříděním: " << head << std::endl;
+    cout << "Seznam po vložení prvků: " << head << endl;
+    cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << endl;
+    cout << "Seznam před tříděním: " << head << endl;
     sortList(&head);
-    std::cout << "Seznam po třídění: " << head << std::endl;
+    cout << "Seznam po třídění: " << head << endl;
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
-    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    cout << "Seznam po smazání prvků: " << head << endl;
     deleteAtIndex(head, 1);
-    std::cout << "Seznam po smazání prvků: " << head << std::endl;
+    cout << "Seznam po smazání prvků: " << head << endl;
     deleteList(&head);
 
     return 0;
