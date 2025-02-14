@@ -55,3 +55,4 @@ TEST
 build
 *.cmake
 
+/Ukol_5/cpp/masozravec.cpp
