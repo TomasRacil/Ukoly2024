@@ -62,7 +62,7 @@ void provedTah(vector<vector<int>> &veze, Tah tah) {
 
 // Funkce pro řešení Hanoiských věží (bez výpisu)
 void hanoi(int n, char z, char pomocny, char cil, vector<vector<int>> &veze, vector<Tah> &tahy) {
-    // Doplňte implementaci
+    
 }
 
 void zobrazVeze(vector<vector<int>> &veze) {
