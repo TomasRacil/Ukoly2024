@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Union
 import random
 
-class matice:
+class Matice:
     def __init__(self, n: int, m: int, data: list[list[int]] = None) -> None:
         self.n: int = n
         self.m: int = m
@@ -20,11 +20,11 @@ class matice:
         return "\n".join(" ".join(str(x) for x in row) for row in self.data)
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, matice):
+        if not isinstance(other, Matice):
             return False
         return self.n == other.n and self.m == other.m and self.data == other.data
 
-    def __add__(self, other: matice) -> matice:
+    def __add__(self, other: Matice) -> Matice:
         if self.n != other.n or self.m != other.m:
             raise ValueError("matice nemaji stejne rozmery")
         new_data: list[list[int]] = []
@@ -33,13 +33,13 @@ class matice:
             for j in range(self.m):
                 new_row.append(self.data[i][j] + other.data[i][j])
             new_data.append(new_row)
-        return matice(self.n, self.m, new_data)
+        return Matice(self.n, self.m, new_data)
 
-    def __mul__(self, other: Union[matice, int]) -> matice:
+    def __mul__(self, other: Union[Matice, int]) -> Matice:
         if isinstance(other, int):
             new_data: list[list[int]] = [[x * other for x in row] for row in self.data]
-            return matice(self.n, self.m, new_data)
-        elif isinstance(other, matice):
+            return Matice(self.n, self.m, new_data)
+        elif isinstance(other, Matice):
             if self.m != other.n:
                 raise ValueError("pocet sloupcu prvni matice se nerovna poctu radku druhe")
             new_data: list[list[int]] = []
@@ -51,20 +51,20 @@ class matice:
                         sum_val += self.data[i][k] * other.data[k][j]
                     new_row.append(sum_val)
                 new_data.append(new_row)
-            return matice(self.n, other.m, new_data)
+            return Matice(self.n, other.m, new_data)
         else:
             raise ValueError("nasobeni pouze matici nebo skalarem")
 
-    def transpozice(self) -> matice:
+    def transpozice(self) -> Matice:
         if not self.data:
-            return matice(0, 0, [])
+            return Matice(0, 0, [])
         new_data: list[list[int]] = [list(row) for row in zip(*self.data)]
-        return matice(self.m, self.n, new_data)
+        return Matice(self.m, self.n, new_data)
 
 
 if __name__ == "__main__":
-    matice1 = matice(3, 2)
-    matice2 = matice(2, 4)
+    matice1 = Matice(3, 2)
+    matice2 = Matice(2, 4)
 
     print("matice 1")
     print(matice1)
