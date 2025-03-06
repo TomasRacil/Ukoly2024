@@ -23,10 +23,8 @@ public:
             default:  smer = 1; break;
         }
     }
+
     int naviguj(std::string cesta_soubor, bool druhe_reseni) {
-        if (cesta_soubor.size() >= 3 && cesta_soubor.substr(0, 3) == "../") {
-            cesta_soubor = cesta_soubor.substr(3);
-        }
         std::ifstream infile(cesta_soubor);
         std::string line;
         while (std::getline(infile, line)) {
@@ -91,7 +89,6 @@ public:
 };
 
 #ifndef __TEST__
-
 int main() {
     std::vector<std::string> files = {"vstup_1.txt", "vstup_2.txt", "vstup_3.txt"};
     for (const auto &file : files) {
@@ -101,7 +98,7 @@ int main() {
         int result2 = lod2.naviguj(file, true);
         std::cout << "soubor: " << file << "\n";
         std::cout << "prima navigace: " << result1 << "\n";
-        std::cout << "navigace s waypointem: " << result2 << "\n";
+        std::cout << "naviigace s waypointem: " << result2 << "\n";
         std::cout << "\n";
     }
     return 0;
