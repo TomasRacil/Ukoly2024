@@ -2,53 +2,90 @@ from __future__ import annotations
 from typing import Union
 import random
 
-
-class Matice:
-    def __init__(self, n: int, m: int, data: list[list[int]] = None):
-        """Inicializuje matici n x m."""
-        pass
+class matice:
+    def __init__(self, n: int, m: int, data: list[list[int]] = None) -> None:
+        self.n: int = n
+        self.m: int = m
+        if data is not None:
+            self.data: list[list[int]] = data
+        else:
+            if n <= 0:
+                self.data = []
+            else:
+                self.data = [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
 
     def __str__(self) -> str:
-        """Vrátí stringovou reprezentaci matice."""
-        pass
+        if not self.data:
+            return ""
+        return "\n".join(" ".join(str(x) for x in row) for row in self.data)
 
-    def __add__(self, other: Matice) -> Matice:
-        """Sečte aktuální matici s maticí other."""
-        # Implementace součtu matic
-        pass
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, matice):
+            return False
+        return self.n == other.n and self.m == other.m and self.data == other.data
 
-    def __mul__(self, other: Union[Matice, int]) -> Matice:
-        """Vynásobí aktuální matici maticí nebo skalárem."""
-        # Implementace násobení matic
-        pass
+    def __add__(self, other: matice) -> matice:
+        if self.n != other.n or self.m != other.m:
+            raise ValueError("matice nemaji stejne rozmery")
+        new_data: list[list[int]] = []
+        for i in range(self.n):
+            new_row: list[int] = []
+            for j in range(self.m):
+                new_row.append(self.data[i][j] + other.data[i][j])
+            new_data.append(new_row)
+        return matice(self.n, self.m, new_data)
 
-    def transpozice(self) -> Matice:
-        """Vrátí transponovanou matici."""
-        # Implementace transpozice matice
+    def __mul__(self, other: Union[matice, int]) -> matice:
+        if isinstance(other, int):
+            new_data: list[list[int]] = [[x * other for x in row] for row in self.data]
+            return matice(self.n, self.m, new_data)
+        elif isinstance(other, matice):
+            if self.m != other.n:
+                raise ValueError("pocet sloupcu prvni matice se nerovna poctu radku druhe")
+            new_data: list[list[int]] = []
+            for i in range(self.n):
+                new_row: list[int] = []
+                for j in range(other.m):
+                    sum_val: int = 0
+                    for k in range(self.m):
+                        sum_val += self.data[i][k] * other.data[k][j]
+                    new_row.append(sum_val)
+                new_data.append(new_row)
+            return matice(self.n, other.m, new_data)
+        else:
+            raise ValueError("nasobeni pouze matici nebo skalarem")
+
+    def transpozice(self) -> matice:
+        if not self.data:
+            return matice(0, 0, [])
+        new_data: list[list[int]] = [list(row) for row in zip(*self.data)]
+        return matice(self.m, self.n, new_data)
 
 
 if __name__ == "__main__":
-    # Vytvořte instance třídy Matice a otestujte metody
-    matice1 = Matice(3, 2)
-    matice2 = Matice(2, 4)
+    matice1 = matice(3, 2)
+    matice2 = matice(2, 4)
 
-    print("Matice 1:")
+    print("matice 1")
     print(matice1)
-    print("Matice 2:")
+    print("matice 2")
     print(matice2)
 
-    soucet = matice1+matice1  # Sečteme matici1 samu se sebou
-    print("Součet matic:")
+    soucet = matice1 + matice1
+    print("soucet matic")
     print(soucet)
 
-    nasobek = matice1*matice2  # Násobujeme matice1 a matice2
-    print("Násobení matic:")
-    print(nasobek)
+    try:
+        nasobek = matice1 * matice2
+        print("nasobeni matic")
+        print(nasobek)
+    except ValueError as e:
+        print(e)
 
-    skalarni_nasobek = matice1*10
-    print("Skálární násobek:")
+    skalarni_nasobek = matice1 * 10
+    print("skalarni nasobek")
     print(skalarni_nasobek)
 
     transponovana = matice1.transpozice()
-    print("Transponovaná matice:")
+    print("transponovana matice")
     print(transponovana)
