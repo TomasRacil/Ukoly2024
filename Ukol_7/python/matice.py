@@ -1,83 +1,79 @@
 import random
 
 def vytvor_matici(n: int, m: int) -> list[list[int]]:
-    """Vytvoří matici n x m s náhodnými celými čísly od 0 do 9."""
-    matice: list[list[int]] = []
-    for i in range(n):
-        radek: list[int] = []  # vytvoreni prazdneho radku
-        for j in range(m):
-            radek.append(random.randint(0, 9))  # do radku pridava nahodne cislo 0 az 9
-        matice.append(radek)
-    return matice
-
+    if n <= 0:
+        return []
+    return [[random.randint(0, 9) for _ in range(m)] for _ in range(n)]
 
 def reprezentace_matice(matice: list[list[int]]) -> str:
-    """Vrátí stringovou reprezentaci matice."""
-    if not matice:
-        return ""
-    reprezentace = ""
+    s = ""
     for radek in matice:
-        reprezentace += " ".join(map(str, radek)) + "\n"
-    return reprezentace
+        s += " ".join(str(x) for x in radek) + "\n"
+    return s
 
+def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    if matice1 == [] and matice2 == []:
+        return []
 
-def soucet_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
-    """Sečte dvě matice, pokud mají stejné rozměry."""
-    if len(matice1) != len(matice2) or any(len(row1) != len(row2) for row1, row2 in zip(matice1, matice2)):
-        print("Nelze sečíst z důvodu rozdilných rozměrů matic")
+    if matice1 == [] or matice2 == []:
+        print("chyba - matice maji ruzne rozmery")
         return None
-
-    vysledek: list[list[int]] = []
-    for i in range(len(matice1)):
-        radek: list[int] = []
-        for j in range(len(matice1[i])):
-            radek.append(matice1[i][j] + matice2[i][j])
-        vysledek.append(radek)
+    if len(matice1) != len(matice2):
+        print("chyba - matice nemaji stejny pocet radku")
+        return None
+    vysledek = []
+    for row1, row2 in zip(matice1, matice2):
+        if len(row1) != len(row2):
+            print("chyba - matice nemaji stejny pocet sloupcu")
+            return None
+        vysledek.append([a + b for a, b in zip(row1, row2)])
     return vysledek
 
-
-def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]] | None:
-    """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
-        print("Matice nelze vynásobit")
+def nasobeni_matic(matice1: list[list[int]], matice2: list[list[int]]) -> list[list[int]]:
+    if matice1 == [] and matice2 == []:
+        return []
+    if matice1 == [] or matice2 == []:
+        print("chyba - nejde nasobit matici s prazdnou matici")
         return None
-
-    vysledek = [[0 for _ in range(len(matice2[0]))] for _ in range(len(matice1))]
-    for i in range(len(matice1)):
-        for j in range(len(matice2[0])):
-            for k in range(len(matice1[0])):
+    num_rows1 = len(matice1)
+    num_cols1 = len(matice1[0])
+    num_rows2 = len(matice2)
+    num_cols2 = len(matice2[0])
+    if num_cols1 != num_rows2:
+        print("chyba - poocet sloupcu prvni matice se nerova poctu radku druhe")
+        return None
+    vysledek = [[0 for _ in range(num_cols2)] for _ in range(num_rows1)]
+    for i in range(num_rows1):
+        for j in range(num_cols2):
+            for k in range(num_cols1):
                 vysledek[i][j] += matice1[i][k] * matice2[k][j]
     return vysledek
 
-
 def transpozice_matice(matice: list[list[int]]) -> list[list[int]]:
-    """Provede transpozici matice."""
-    if not matice:
-        print("Matice je prázdná")
+    if matice == []:
         return []
-    if all(len(radek) == 0 for radek in matice):
+    if len(matice) > 0 and len(matice[0]) == 0:
         return [[]]
-    transponovana = [[matice[j][i] for j in range(len(matice))] for i in range(len(matice[0]))]
-    return transponovana
+    return [list(radek) for radek in zip(*matice)]
 
 
 if __name__ == "__main__":
     matice1: list[list[int]] = vytvor_matici(3, 2)
     matice2: list[list[int]] = vytvor_matici(2, 4)
 
-    print("Matice 1:")
+    print("matice 1")
     print(reprezentace_matice(matice1))
-    print("Matice 2:")
+    print("matice 2")
     print(reprezentace_matice(matice2))
 
     soucet = soucet_matic(matice1, matice1)
-    print("Součet matic:")
-    print(reprezentace_matice(soucet) if soucet else "Nelze sečíst.")
+    print("součet matic")
+    print(reprezentace_matice(soucet))
 
     nasobek = nasobeni_matic(matice1, matice2)
-    print("Násobení matic:")
-    print(reprezentace_matice(nasobek) if nasobek else "Nelze násobit.")
+    print("nasobeni matic")
+    print(reprezentace_matice(nasobek))
 
     transponovana = transpozice_matice(matice1)
-    print("Transponovaná matice:")
+    print("transponovana matice")
     print(reprezentace_matice(transponovana))
