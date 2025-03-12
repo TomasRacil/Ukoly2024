@@ -3,70 +3,117 @@
 #include <string>
 
 // Funkce pro otevření souboru
-std::string otevri_soubor(const std::string &jmeno_souboru)
-{
-  // Implementace funkce pro otevření souboru a načtení jeho obsahu
-  return "";
-}
+std::string otevri_soubor(const std::string &jmeno_souboru) {
+    std::ifstream soubor(jmeno_souboru);
+    if (!soubor.is_open()) {
+        std::cerr << "Chyba: Soubor nelze otevřít - " << jmeno_souboru << std::endl;
+        return "";
+    }
 
-// Funkce pro Caesarovu šifru
-std::string caesar_sifra(const std::string &text, int posun, bool sifrovat)
-{
-  // Implementace Caesarovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
-}
+    std::string obsah = std::string((std::istreambuf_iterator<char>(soubor)), std::istreambuf_iterator<char>());
 
-// Funkce pro Vigenerovu šifru
-std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat)
-{
-  // Implementace Vigenerovy šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
-}
-
-// Funkce pro XOR šifru
-std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat)
-{
-  // Implementace XOR šifry
-  // sifrovat = true pro šifrování, sifrovat = false pro dešifrování
-  return "";
+    soubor.close();
+    return obsah;
 }
 
 // Funkce pro uložení řetězce do souboru
-void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah)
-{
-  // Implementace funkce pro uložení řetězce do souboru
+void uloz_do_souboru(const std::string &jmeno_souboru, const std::string &obsah) {
+    std::ofstream soubor(jmeno_souboru);
+    if (!soubor.is_open()) {
+        std::cerr << "Chyba: Soubor nelze otevřít pro zápis - " << jmeno_souboru << std::endl;
+        return;
+    }
+
+    soubor << obsah;
+    soubor.close();
 }
 
-#ifndef __TEST__ // Add this preprocessor guard
-int main()
-{
-  // Načtení vstupního souboru
-  std::string vstupni_text = otevri_soubor("vstup.txt");
+// Funkce pro XOR šifru
+std::string xor_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
+    std::string vysledek;
+    size_t delkaKlice = klic.length();
 
-  // Šifrování textu pomocí Caesarovy šifry
-  std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
-  std::cout << sifrovany_text_caesar << std::endl;
+    for (size_t i = 0; i < text.length(); ++i) {
+        vysledek += text[i] ^ klic[i % delkaKlice];
+    }
 
-  // Šifrování textu pomocí Vigenerovy šifry
-  std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
-  std::cout << sifrovany_text_vigener << std::endl;
+    return vysledek;
+}
 
-  // Šifrování textu pomocí XOR šifry
-  std::string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
-  std::cout << sifrovany_text_xor << std::endl;
+// Funkce pro Caesarovu šifru
+std::string caesar_sifra(const std::string &text, int posun, bool sifrovat) {
+    std::string vysledek;
+    int skutecnyPosun = sifrovat ? posun : -posun;
 
-  // Uložení šifrovaných textů do souborů
-  uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
-  uloz_do_souboru("sifrovany_vigener.txt", sifrovany_text_vigener);
-  uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
+    for (char znak : text) {
+        if (isalpha(znak)) {
+            char zaklad = isupper(znak) ? 'A' : 'a';
+            znak = (znak - zaklad + skutecnyPosun + 26) % 26 + zaklad;
+        }
+        vysledek += znak;
+    }
 
-  // Dešifrování textů
-  std::cout << "Dešifrovany text pomocí Caesarovy šifry: " << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
-  std::cout << "Dešifrovany text pomocí Vigenerovy šifry: " << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false) << std::endl;
-  std::cout << "Dešifrovany text pomocí XOR šifry: " << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
+    return vysledek;
+}
 
-  return 0;
+// Funkce pro Vigenereovu šifru
+std::string vigener_sifra(const std::string &text, const std::string &klic, bool sifrovat) {
+    std::string vysledek;
+    size_t delkaKlice = klic.length();
+
+    for (size_t i = 0; i < text.length(); ++i) {
+        char znak = text[i];
+        char klicZnak = klic[i % delkaKlice];
+        int posun = sifrovat ? (klicZnak - 'a') : -(klicZnak - 'a');
+
+        if (isalpha(znak)) {
+            char zaklad = isupper(znak) ? 'A' : 'a';
+            znak = (znak - zaklad + posun + 26) % 26 + zaklad;
+        }
+
+        vysledek += znak;
+    }
+
+    return vysledek;
+}
+
+#ifndef __TEST__ 
+int main() {
+    // Načtení vstupního souboru
+    std::string vstupni_text = otevri_soubor("vstup.txt");
+
+    // Kontrola nacteni vstupniho souboru
+    if (vstupni_text.empty()) {
+        return 1;
+    }
+
+    // Šifrování textu pomocí Caesarovy šifry
+    std::string sifrovany_text_caesar = caesar_sifra(vstupni_text, 3, true);
+    std::cout << "Caesar sifra (sifrovany text): " << std::endl << sifrovany_text_caesar << std::endl;
+
+    // Šifrování textu pomocí Vigenereovy šifry
+    std::string sifrovany_text_vigener = vigener_sifra(vstupni_text, "tajny_klic", true);
+    std::cout << "Vigenere sifra (sifrovany text): " << std::endl << sifrovany_text_vigener << std::endl;
+
+    // Šifrování textu pomocí XOR šifry
+    std::string sifrovany_text_xor = xor_sifra(vstupni_text, "heslo", true);
+    std::cout << "XOR sifra (sifrovany text): " << std::endl << sifrovany_text_xor << std::endl;
+
+    // Uložení šifrovaných textů do souborů
+    uloz_do_souboru("sifrovany_caesar.txt", sifrovany_text_caesar);
+    uloz_do_souboru("sifrovany_vigener.txt", sifrovany_text_vigener);
+    uloz_do_souboru("sifrovany_xor.txt", sifrovany_text_xor);
+
+    // Dešifrování textů
+    std::cout << "Desifrovany text pomoci Caesarovy sifry: " 
+              << caesar_sifra(otevri_soubor("sifrovany_caesar.txt"), 3, false) << std::endl;
+
+    std::cout << "Desifrovany text pomoci Vigenereovy sifry: " 
+              << vigener_sifra(otevri_soubor("sifrovany_vigener.txt"), "tajny_klic", false) << std::endl;
+
+    std::cout << "Desifrovany text pomoci XOR sifry: " 
+              << xor_sifra(otevri_soubor("sifrovany_xor.txt"), "heslo", false) << std::endl;
+
+    return 0;
 }
 #endif // __TEST__
