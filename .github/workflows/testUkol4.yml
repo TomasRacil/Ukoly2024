@@ -1,4 +1,4 @@
-name: C++ Ukol 2 Tests
+name: C++ Ukol 4 Tests
 
 on:
   push:
@@ -23,4 +23,4 @@ jobs:
     - name: Install C++ dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
     - name: Build and run C++ tests
-      run: cd Ukol_2/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
+      run: cd Ukol_4/cpp && mkdir -p build && cd build && cmake .. && make && ./mytests || exit 1
