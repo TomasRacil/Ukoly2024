@@ -1,0 +1,93 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int value) : data(value), next(nullptr) {}
+};
+class LinkedList {
+private:
+    Node* head;
+public:
+    LinkedList() : head(nullptr) {}
+    ~LinkedList() { clear(); }
+    void insertAtBeginning(int value) { head = new Node(value){head}; }
+    void insertAtEnd(int value) {
+        if (!head) head = new Node(value);
+        else {
+            Node* temp = head;
+            while (temp->next) temp = temp->next;
+            temp->next = new Node(value);
+        }
+    }
+    bool insertAtIndex(int index, int value) {
+        if (index < 0) return false;
+        if (index == 0) { insertAtBeginning(value); return true; }
+        Node* temp = head;
+        for (int i = 0; i < index - 1 && temp; ++i) temp = temp->next;
+        if (!temp) return false;
+        Node* newNode = new Node(value);
+        newNode->next = temp->next;
+        temp->next = newNode;
+        return true;
+    }
+    void deleteFromBeginning() { if (head) { Node* temp = head; head = head->next; delete temp; } }
+    void deleteFromEnd() {
+        if (!head) return;
+        if (!head->next) { delete head; head = nullptr; return; }
+        Node* temp = head;
+        while (temp->next->next) temp = temp->next;
+        delete temp->next;
+        temp->next = nullptr;
+    }
+    bool deleteAtIndex(int index) {
+        if (index < 0 || !head) return false;
+        if (index == 0) { deleteFromBeginning(); return true; }
+        Node* temp = head;
+        for (int i = 0; i < index - 1 && temp->next; ++i) temp = temp->next;
+        if (!temp->next) return false;
+        Node* toDelete = temp->next;
+        temp->next = toDelete->next;
+        delete toDelete;
+        return true;
+    }
+    void clear() { while (head) deleteFromBeginning(); }
+    int find(int value) const {
+        Node* temp = head;
+        for (int index = 0; temp; temp = temp->next, ++index)
+            if (temp->data == value) return index;
+        return -1;
+    }
+    void sort() {
+        if (!head || !head->next) return;
+        for (Node* i = head; i; i = i->next)
+            for (Node* j = head; j->next; j = j->next)
+                if (j->data > j->next->data) std::swap(j->data, j->next->data);
+    }
+    friend std::ostream& operator<<(std::ostream& os, const LinkedList& list) {
+        for (Node* temp = list.head; temp; temp = temp->next) os << temp->data << " -> ";
+        return os << "nullptr";
+    }
+};
+
+int main() {
+    LinkedList list;
+    list.insertAtEnd(10);
+    list.insertAtEnd(20);
+    list.insertAtBeginning(5);
+    list.insertAtIndex(2, 15);
+    std::cout << "Seznam: " << list << std::endl;
+    list.deleteFromBeginning();
+    list.deleteFromEnd();
+    list.deleteAtIndex(1);
+    std::cout << "Po mazání: " << list << std::endl;
+    list.insertAtEnd(25);
+    list.insertAtEnd(5);
+    list.sort();
+    std::cout << "Setříděný seznam: " << list << std::endl;
+    int index = list.find(20);
+    std::cout << "Hodnota 20 je na indexu: " << index << std::endl;
+    list.clear();
+    std::cout << "Po vymazání všech prvků: " << list << std::endl;
+    return 0;
+}
